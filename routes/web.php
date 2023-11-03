@@ -36,3 +36,9 @@ Route::get('/loginadmin', function () {
         "title" => "Login Admin"
     ]);
 });
+
+Route::get('/prestasi', function () {
+    return view('prestasi', [
+        "title" => "Prestasi"
+    ]);
+});
