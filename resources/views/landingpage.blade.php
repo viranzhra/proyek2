@@ -16,7 +16,7 @@
             <div class="row gx-5" style="margin-left: 150px;">
               <div class="col">
                <div class="p-3" style="background-color: #4a9ae8; border-radius: 8px;">
-                <a href="#" class="gmbr">
+                <a href="/prestasi" class="gmbr">
                   <img class="animasi-gambar" src="../image/prestasi.png" alt="tropi" width="150px" height="150px" style="margin-bottom: 10px;"> <br> <span class="tombol1">Prestasi Siswa</span>
                 </a>
                </div>
