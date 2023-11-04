@@ -42,3 +42,21 @@ Route::get('/prestasi', function () {
         "title" => "Prestasi"
     ]);
 });
+
+Route::get('/aduan1', function () {
+    return view('admin/aduan/kelas7', [
+        "title" => "Aduan Kelas 7"
+    ]);
+});
+
+Route::get('/aduan2', function () {
+    return view('admin/aduan/kelas8', [
+        "title" => "Aduan Kelas 8"
+    ]);
+});
+
+Route::get('/aduan3', function () {
+    return view('admin/aduan/kelas9', [
+        "title" => "Aduan Kelas 9"
+    ]);
+});
