@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SessionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,3 +61,24 @@ Route::get('/aduan3', function () {
         "title" => "Aduan Kelas 9"
     ]);
 });
+
+Route::get('/data1', function () {
+    return view('admin/data_siswa/kelas7', [
+        "title" => "Data Kelas 7"
+    ]);
+});
+
+Route::get('/data2', function () {
+    return view('admin/data_siswa/kelas8', [
+        "title" => "Data Kelas 8"
+    ]);
+});
+
+Route::get('/data3', function () {
+    return view('admin/data_siswa/kelas9', [
+        "title" => "Data Kelas 9"
+    ]);
+});
+
+Route::get('/admin', [SessionController::class, 'index']);
+Route::get('/admin/login', [SessionController::class, 'login']);

@@ -3,7 +3,7 @@
 @section('content')
         <!-- Page Content  -->
       <div id="content" class="p-4 p-md-5 pt-5">
-        <h2 class="mb-4">Data Aduan Kelas 7</h2>
+        <h2 class="mb-4">Data Siswa Kelas 7</h2>
 
 	  <table id="example" class="table table-striped" style="width:100%">
         <thead>
@@ -16,7 +16,6 @@
 				<th>No.HP</th>
 				<th>Orang Tua</th>
 				<th>Email</th>
-				<th>Password</th>
             </tr>
         </thead>
         <tbody>
@@ -29,7 +28,6 @@
 				<td>089765678987</td>
 				<td>Zahra</td>
 				<td>viraz12@gmail.com</td>
-				<td>vira123</td>
             </tr>
             <tr>
                 <td>2</td>
@@ -40,7 +38,6 @@
 				<td>089765678987</td>
 				<td>Rasmin</td>
 				<td>utaaaa12@gmail.com</td>
-				<td>utaaa123</td>
             </tr>
 			<tr>
                 <td>3</td>
@@ -51,7 +48,6 @@
 				<td>089765678987</td>
 				<td>Prasetya</td>
 				<td>hurul13@gmail.com</td>
-				<td>hurul123</td>
             </tr>
         </tbody>
     </table>

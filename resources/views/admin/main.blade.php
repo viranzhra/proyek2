@@ -34,17 +34,17 @@
 	          <li>
 	            <a href="#"><span class="fa fa-home mr-3"></span> Home</a>
 	          </li>
-			  <li>
+			  <li class="active">
 	            <a href="#datasiswa" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fa fa-user mr-3"></span>Data Siswa</a>
 	            <ul class="collapse list-unstyled" id="datasiswa">
-                <li class="active">
-                    <a href="../data_siswa/kelas7.html">Kelas 7</a>
+                <li class="{{ $title === "Data Kelas 7" ? 'active' : "" }}">
+                    <a href="/data1">Kelas 7</a>
                 </li>
-                <li>
-                    <a href="#">Kelas 8</a>
+                <li class="{{ $title === "Data Kelas 8" ? 'active' : "" }}">
+                    <a href="/data2">Kelas 8</a>
                 </li>
-                <li>
-                    <a href="#">Kelas 9</a>
+                <li class="{{ $title === "Data Kelas 9" ? 'active' : "" }}">
+                    <a href="/data3">Kelas 9</a>
                 </li>
 	            </ul>
 	          </li>
@@ -76,7 +76,7 @@
 					</li>
 	            </ul>
 	          </li>
-              <li class="active">
+              <li>
 	            <a href="#aduan" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fa fa-suitcase mr-3"></span>Data Aduan Siswa</a>
 	            <ul class="collapse list-unstyled" id="aduan">
 					<li class="{{ $title === "Aduan Kelas 7" ? 'active' : "" }}">
