@@ -44,6 +44,12 @@ Route::get('/prestasi', function () {
     ]);
 });
 
+Route::get('/isiprestasi', function () {
+    return view('isiprestasi', [
+        "title" => "Isi Prestasi"
+    ]);
+});
+
 Route::get('/aduan1', function () {
     return view('admin/aduan/kelas7', [
         "title" => "Aduan Kelas 7"

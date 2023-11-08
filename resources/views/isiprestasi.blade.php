@@ -1,10 +1,10 @@
-@extends('layout.main')
+@extends('layout.tampilan')
 
 @section('content')
     <main>
-        <div class="container text-center" style="background-color: #4ea0e11f; border-radius: 8px; width: 1180px; position: relative;">
+        <div class="container text-center" style="background-color: #4ea0e11f; border-radius: 8px; width: 1180px; position: relative; margin-top: 100px;">
             <div class="row align-items-center" style="margin-bottom: 100px;">
-              <img src="../../Image/tari-1.jpg" alt="" style="width: 400px; padding: 20px; border-radius: 25px;">
+              <img src="image/tari-1.jpg" alt="" style="width: 400px; padding: 20px; border-radius: 25px;">
               <div class="col" style="color: black; font-size: 20px; margin: 50px;">
                 <h4
             class="mt-0"

@@ -1,4 +1,4 @@
-@extends('layout.main')
+@extends('layout.tampilan')
 
 @section('content')
 <main>
@@ -33,13 +33,13 @@
       <div id="carouselExample" class="carousel slide">
         <div class="carousel-inner" style="border-radius: 25px; height: 300px">
           <div class="carousel-item active">
-            <img src="../../Image/piala.jpg" class="d-block w-100" alt="..." />
+            <img src="Image/piala.jpg" class="d-block w-100" alt="..." />
           </div>
           <div class="carousel-item">
-            <img src="../../Image/piala.jpg" class="d-block w-100" alt="..." />
+            <img src="Image/piala.jpg" class="d-block w-100" alt="..." />
           </div>
           <div class="carousel-item">
-            <img src="../../Image/piala.jpg" class="d-block w-100" alt="..." />
+            <img src="Image/piala.jpg" class="d-block w-100" alt="..." />
           </div>
         </div>
         <button
@@ -66,7 +66,7 @@
     <div class="container">
       <div class="d-flex position-relative">
         <img
-          src="../../Image/orang1.jpg"
+          src="Image/orang1.jpg"
           class="flex-shrink-0 me-3"
           alt="#"
           style="width: 300px; border-radius: 25px"
@@ -92,7 +92,7 @@
             we're using it here to give the component a bit of body and size.
           </p>
           <a
-            href="isiprestasi.html"
+            href="/isiprestasi"
             class="btn btn-primary"
             style="
               float: right;
@@ -111,7 +111,7 @@
     <div class="container">
       <div class="d-flex position-relative">
         <img
-          src="../../Image/orang1.jpg"
+          src="Image/orang2.jpg"
           class="flex-shrink-0 me-3"
           alt="#"
           style="width: 300px; border-radius: 25px"
@@ -156,7 +156,7 @@
     <div class="container">
       <div class="d-flex position-relative">
         <img
-          src="../../Image/orang1.jpg"
+          src="Image/orang1.jpg"
           class="flex-shrink-0 me-3"
           alt="#"
           style="width: 300px; border-radius: 25px"
@@ -201,7 +201,7 @@
     <div class="container">
       <div class="d-flex position-relative">
         <img
-          src="../../Image/orang1.jpg"
+          src="Image/orang2.jpg"
           class="flex-shrink-0 me-3"
           alt="#"
           style="width: 300px; border-radius: 25px"
