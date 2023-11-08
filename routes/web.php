@@ -50,6 +50,19 @@ Route::get('/isiprestasi', function () {
     ]);
 });
 
+Route::get('/eskul', function () {
+    return view('eskul', [
+        "title" => "Eskul"
+    ]);
+});
+
+Route::get('/isieskul', function () {
+    return view('isieskul', [
+        "title" => "Isi Eskul"
+    ]);
+});
+
+
 Route::get('/aduan1', function () {
     return view('admin/aduan/kelas7', [
         "title" => "Aduan Kelas 7"
