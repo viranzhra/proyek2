@@ -99,5 +99,29 @@ Route::get('/data3', function () {
     ]);
 });
 
+Route::get('/pemasukan1', function () {
+    return view('admin/pemasukkan/kelas7', [
+        "title" => "Pemasukkan Kelas 7"
+    ]);
+});
+
+Route::get('/pemasukan2', function () {
+    return view('admin/pemasukkan/kelas8', [
+        "title" => "Pemasukkan Kelas 8"
+    ]);
+});
+
+Route::get('/pemasukan3', function () {
+    return view('admin/pemasukkan/kelas9', [
+        "title" => "Pemasukkan Kelas 9"
+    ]);
+});
+
+Route::get('/eskul', function () {
+    return view('eskul', [
+        "title" => "Data Kelas 9"
+    ]);
+});
+
 Route::get('/admin', [SessionController::class, 'index']);
 Route::get('/admin/login', [SessionController::class, 'login']);

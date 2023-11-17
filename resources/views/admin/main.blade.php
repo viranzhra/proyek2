@@ -15,6 +15,13 @@
 		a {
 			text-decoration: none;
 		}
+
+		.avatar {
+			width: 50px;
+			height: 50px;
+			object-fit: cover;
+			border-radius: 50%;
+    	}
 	</style>
   </head>
   <body>
@@ -28,13 +35,22 @@
 	        </button>
         </div>
 		<div class="p-4">
+			<div class="text-center mb-3 d-flex align-items-center">
+                <!-- Avatar dan Nama Admin -->
+				<a href="#">
+                	<img src="image/orang1.jpg" alt="Avatar" class="avatar"><b class="ml-2 mb-0" style="margin-top: 0; font-size: 15px; color: rgb(0, 204, 255);">viranzahra12@gmail.com</b>
+				</a>
+            </div>
+			<hr>
 			<h1><a href="#" class="logo">SiTabung <span>SMP NURUL HALIM WIDASARI</span></a></h1>
+			<hr>
+
 	        <ul class="list-unstyled components mb-5">
 			<li><span style="font-weight: bold;">Menu</span></li>
 	          <li>
 	            <a href="#"><span class="fa fa-home mr-3"></span> Home</a>
 	          </li>
-			  <li class="active">
+			  <li id="datasiswa" class="{{ Request::is('data*') ? 'active' : '' }}">
 	            <a href="#datasiswa" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fa fa-user mr-3"></span>Data Siswa</a>
 	            <ul class="collapse list-unstyled" id="datasiswa">
                 <li class="{{ $title === "Data Kelas 7" ? 'active' : "" }}">
@@ -48,21 +64,21 @@
                 </li>
 	            </ul>
 	          </li>
-			  <li>
+			  <li id="pemasukan" class="{{ Request::is('pemasukan*') ? 'active' : '' }}">
 	            <a href="#pemasukan" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fa fa-briefcase mr-3"></span>Pemasukkan Saldo</a>
 	            <ul class="collapse list-unstyled" id="pemasukan">
-					<li>
-						<a href="../pemasukkan/kelas7.html">Kelas 7</a>
+					<li class="{{ $title === "Pemasukkan Kelas 7" ? 'active' : "" }}">
+						<a href="/pemasukan1">Kelas 7</a>
 					</li>
-					<li>
-						<a href="#">Kelas 8</a>
+					<li class="{{ $title === "Pemasukkan Kelas 8" ? 'active' : "" }}">
+						<a href="/pemasukan2">Kelas 8</a>
 					</li>
-					<li>
-						<a href="#">Kelas 9</a>
+					<li class="{{ $title === "Pemasukkan Kelas 9" ? 'active' : "" }}">
+						<a href="pemasukan3">Kelas 9</a>
 					</li>
 	            </ul>
 	          </li>
-			  <li>
+			  <li id="pengeluaran" class="{{ Request::is('pengeluaran*') ? 'active' : '' }}">
 	            <a href="#pengeluaran" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fa fa-sticky-note mr-3"></span>Pengeluaran Saldo</a>
 	            <ul class="collapse list-unstyled" id="pengeluaran">
 					<li>
@@ -76,7 +92,7 @@
 					</li>
 	            </ul>
 	          </li>
-              <li>
+              <li id="aduan" class="{{ Request::is('aduan*') ? 'active' : '' }}">
 	            <a href="#aduan" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fa fa-suitcase mr-3"></span>Data Aduan Siswa</a>
 	            <ul class="collapse list-unstyled" id="aduan">
 					<li class="{{ $title === "Aduan Kelas 7" ? 'active' : "" }}">
@@ -90,16 +106,24 @@
 					</li>
 	            </ul>
 	          </li>
-			  <li>
+			  
 	          <li>
                 <a href="#"><span class="fa fa-paper-plane mr-3"></span> Data Arsip</a>
 	          </li>
 			  <li style="margin-top: 20px;"><span style="font-weight: bold;">Admin</span></li>
 			  <li>
-				<a href="#"><span class="fa fa-user mr-3"></span> Data Admin</a>
-				</li>
-			  <li>
-				<a href="#"><span class="fa fa-cogs mr-3"></span> Services</a>
+				<a href="#"><span class="fa fa-user mr-3"></span>Data Admin</a>
+				<li id="setting">
+					<a href="#setting" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fa fa-cogs mr-3"></span>Setting</a>
+					<ul class="collapse list-unstyled" id="setting">
+						<li>
+							<a href="#">Profile</a>
+						</li>
+						<li>
+							<a href="#">Ubah Password</a>
+						</li>
+					</ul>
+				  </li>
 				</li>
 	        </ul>
 

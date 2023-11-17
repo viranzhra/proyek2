@@ -30,7 +30,7 @@
               </div>
               <div class="col">
                 <div class="p-3" style="background-color: #4a9ae8; border-radius: 8px;">
-                  <a href="#" class="gmbr">
+                  <a href="/eskul" class="gmbr">
                     <img class="animasi-gambar" src="../image/eskul.png" alt="tropi" width="150px" height="150px" style="margin-bottom: 10px;"> <br> <span class="tombol1">Ekstrakurikuler</span>
                   </a>                   
                 </div>
@@ -71,7 +71,7 @@
                     <b>NPWP	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b>	027258441437000 <br>
                   </span>
                  </div>
-                <div class="p-3" style="background-color: rgb(0 140 172 / 70%); border-radius: 8px; width: 300px; position: relative; text-align: left;">
+                <div id="kontak" class="p-3" style="background-color: rgb(0 140 172 / 70%); border-radius: 8px; width: 300px; position: relative; text-align: left;">
                   <h6 style="color: rgb(0 0 0);">KONTAK SEKOLAH</h6>
                  <a href="#" style="color: #ebf4fb;">
                   <img src="../image/telpon.png" alt="telp" width="30px" height="30px"> 351669

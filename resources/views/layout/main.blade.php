@@ -25,8 +25,8 @@
                 <a class="nav-link {{ $title === "Beranda" ? 'active' : "" }}" aria-current="page" href="/" style="color: white;">BERANDA </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link {{ $title === "Kontak" ? 'active' : "" }}" href="#" style="color: white;">KONTAK</a>
-              </li>
+                <a class="nav-link {{ request()->is('kontak') ? 'active' : '' }}" href="#kontak" style="color: white;">KONTAK</a>
+              </li>            
               <li class="nav-item">
                 <a class="nav-link {{ $title === "Visi Misi" ? 'active' : "" }}" href="/visimisi" style="color: white;">VISI MISI</a>
               </li>
