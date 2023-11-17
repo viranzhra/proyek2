@@ -123,5 +123,11 @@ Route::get('/eskul', function () {
     ]);
 });
 
+Route::get('/profilguru', function () {
+    return view('profilguru', [
+        "title" => "Profil Guru"
+    ]);
+});
+
 Route::get('/admin', [SessionController::class, 'index']);
 Route::get('/admin/login', [SessionController::class, 'login']);
