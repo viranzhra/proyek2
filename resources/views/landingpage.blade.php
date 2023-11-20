@@ -23,7 +23,7 @@
               </div>
               <div class="col">
                 <div class="p-3" style="background-color:#4a9ae8; border-radius: 8px;">
-                  <a href="#" class="gmbr">
+                  <a href="/profilguru" class="gmbr">
                     <img class="animasi-gambar" src="../image/logo_guru.png" alt="tropi" width="150px" height="150px" style="margin-bottom: 10px;"> <br> <span class="tombol1">Profil Guru</span>
                   </a>                  
                 </div>

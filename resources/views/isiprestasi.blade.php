@@ -27,5 +27,13 @@
               </div>
             </div>
           </div>
+          <a href="/prestasi" class="btn btn-primary" style="
+          float: right;
+          margin-right: 20px;
+          background-color: #215382;
+          font-weight: bold;
+          border-radius: 20px;
+          margin-top: -75px;
+        ">Kembali</a>
       </main>
       @endsection
