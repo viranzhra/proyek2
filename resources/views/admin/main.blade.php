@@ -24,7 +24,7 @@
     	}
 	</style>
   </head>
-  <body>
+  <body style="background-color: #e7f3ff;">
 		
 		<div class="wrapper d-flex align-items-stretch">
 			<nav id="sidebar">

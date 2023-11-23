@@ -40,6 +40,16 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        'api' => [
+            'driver' => 'token', // Penggunaan driver token untuk autentikasi API
+            'provider' => 'users', // Menggunakan provider 'users' untuk menyediakan informasi pengguna pada API
+        ],
+    
+        'admin' => [
+            'driver' => 'session', // Penggunaan driver session untuk autentikasi admin
+            'provider' => 'admins', // Menggunakan provider 'admins' untuk menyediakan informasi admin
+        ],
     ],
 
     /*
@@ -63,6 +73,11 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+
+        'admins' => [
+            'driver' => 'eloquent', // Penggunaan driver eloquent untuk menyediakan informasi admin
+            'model' => App\Models\Admin::class, // Model yang terkait dengan provider 'admins'
         ],
 
         // 'users' => [

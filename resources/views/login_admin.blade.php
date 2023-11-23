@@ -116,24 +116,23 @@
         </div>
         <div class="text-center mt-4 name">
             Login Admin
-        </div>
-        <div class="w-50 center border rounded px-3 py-3 mx-auto"></div>
-        <form class="p-3 mt-3" action="/visimisi" method="POST">
+        </div>        
+        <form class="p-3 mt-3" action="{{ route('admin.login') }}" method="POST">
             @csrf
             <div class="form-field d-flex align-items-center">
                 <span class="far fa-user"></span>
-                <input type="text" name="username" id="username" placeholder="Username">
+                <input type="text" name="username" id="username" placeholder="Username" required>
             </div>
             <div class="form-field d-flex align-items-center">
                 <span class="fas fa-key"></span>
-                <input type="email" name="email" id="email" placeholder="Email">
+                <input type="email" name="email" id="email" placeholder="Email" required>
             </div>
             <div class="form-field d-flex align-items-center">
               <span class="fas fa-key"></span>
-              <input type="password" name="password" id="pwd" placeholder="Password">
+              <input type="password" name="password" id="pwd" placeholder="Password" required>
             </div>
             <div class="center-container">
-              <submit class="btn mt-3">Login</submit>
+              <button type="submit" class="btn mt-3">Login</button>
           </div>
         </form>
         <div class="text-center fs-6">

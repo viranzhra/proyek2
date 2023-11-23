@@ -22,13 +22,13 @@
             
             <ul class="nav nav-underline me-auto mb-2 mb-lg-0" style="margin-left: 150px;">
               <li class="nav-item">
-                <a class="nav-link {{ $title === "Beranda" ? 'active' : "" }}" aria-current="page" href="/" style="color: white;">BERANDA </a>
+                <a href="{{ route('landingpage') }}" class="nav-link {{ request()->is('/') ? 'active' : '' }}" style="color: white;">Beranda</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link {{ request()->is('kontak') ? 'active' : '' }}" href="#kontak" style="color: white;">KONTAK</a>
               </li>            
               <li class="nav-item">
-                <a class="nav-link {{ $title === "Visi Misi" ? 'active' : "" }}" href="/visimisi" style="color: white;">VISI MISI</a>
+                <a href="{{ route('visi_misi') }}" class=" nav-link{{ request()->is('/visimisi') ? 'active' : '' }}" style="color: white;">Visi Misi</a>
               </li>
             </ul>
               <a href="/loginsiswa" class="btn btn-outline-success" type="submit" style="background-color: #215382; color: white; font-weight: bold;">LOGIN</a>

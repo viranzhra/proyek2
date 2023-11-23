@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SessionController;
+use App\Http\Controllers\AdminLoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,18 +14,17 @@ use App\Http\Controllers\SessionController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
 Route::get('/', function () {
     return view('landingpage', [
         "title" => "Beranda"
     ]);
-});
+})->name('landingpage');
 
 Route::get('/visimisi', function () {
     return view('visi_misi', [
         "title" => "Visi Misi"
     ]);
-});
+})->name('visi_misi');
 
 Route::get('/loginsiswa', function () {
     return view('login_siswa', [
@@ -32,11 +32,16 @@ Route::get('/loginsiswa', function () {
     ]);
 });
 
-Route::get('/loginadmin', function () {
-    return view('login_admin', [
-        "title" => "Login Admin"
-    ]);
-});
+// Rute untuk menampilkan formulir login admin
+Route::get('/loginadmin', [AdminLoginController::class, 'showLoginForm'])->name('admin.login.form');
+ // ->name('admin.login.form') memberikan nama pada rute agar dapat diacu dengan mudah
+
+
+// Rute untuk menangani proses login admin
+Route::post('/loginadmin', [AdminLoginController::class, 'login'])->name('admin.login');
+
+// Rute untuk menangani proses logout admin
+Route::post('/loginadmin', [AdminLoginController::class, 'logout'])->name('admin.logout');
 
 Route::get('/prestasi', function () {
     return view('prestasi', [
@@ -128,6 +133,3 @@ Route::get('/profilguru', function () {
         "title" => "Profil Guru"
     ]);
 });
-
-Route::get('/admin', [SessionController::class, 'index']);
-Route::get('/admin/login', [SessionController::class, 'login']);
