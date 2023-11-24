@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\AdminLoginController;
+use App\Http\Controllers\AdminProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,17 +32,6 @@ Route::get('/loginsiswa', function () {
         "title" => "Login Siswa"
     ]);
 });
-
-// Rute untuk menampilkan formulir login admin
-Route::get('/loginadmin', [AdminLoginController::class, 'showLoginForm'])->name('admin.login.form');
- // ->name('admin.login.form') memberikan nama pada rute agar dapat diacu dengan mudah
-
-
-// Rute untuk menangani proses login admin
-Route::post('/loginadmin', [AdminLoginController::class, 'login'])->name('admin.login');
-
-// Rute untuk menangani proses logout admin
-Route::post('/loginadmin', [AdminLoginController::class, 'logout'])->name('admin.logout');
 
 Route::get('/prestasi', function () {
     return view('prestasi', [
@@ -133,3 +123,23 @@ Route::get('/profilguru', function () {
         "title" => "Profil Guru"
     ]);
 });
+
+// Rute untuk menampilkan formulir login admin
+Route::get('/loginadmin', [AdminLoginController::class, 'showLoginForm'])->name('admin.login.form');
+ // ->name('admin.login.form') memberikan nama pada rute agar dapat diacu dengan mudah
+
+
+// Rute untuk menangani proses login admin
+Route::post('/loginadmin', [AdminLoginController::class, 'login'])->name('admin.login');
+
+// Rute untuk menangani proses logout admin
+Route::post('/logoutadmin', [AdminLoginController::class, 'logout'])->name('admin.logout');
+
+Route::get('/logoutadmin', function () {
+    return view('logout_admin', [
+        "title" => "Logout Admin"
+    ]);
+})->name('logoutadmin');
+
+Route::get('/update-profile', [AdminProfileController::class, 'showUpdateForm'])->name('admin.update.profile.form');
+Route::post('/update-profile', [AdminProfileController::class, 'updateProfile'])->name('admin.update.profile');

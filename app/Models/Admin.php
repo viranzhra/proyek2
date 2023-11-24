@@ -10,5 +10,5 @@ class Admin extends Model
     use HasFactory;
 
     protected $table = 'admins'; // Nama tabel yang terkait dengan model Admin
-    protected $fillable = ['username', 'email', 'password']; // Kolom yang dapat diisi secara massal, memungkinkan pengisian data pada saat pembuatan atau pembaruan
+    protected $fillable = ['username', 'email', 'password', 'profile_picture']; // Kolom yang dapat diisi secara massal, memungkinkan pengisian data pada saat pembuatan atau pembaruan
 }

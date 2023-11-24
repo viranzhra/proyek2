@@ -13,11 +13,11 @@ class AdminLoginController extends Controller
         return view('login_admin');
     }
 
-    // Proses login admin
+   // Proses login admin
     public function login(Request $request)
     {
         // Mengambil kredensial (email dan password) dari input form
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('username','email', 'password');
 
         // Memeriksa kredensial dan mencoba login menggunakan guard 'admin' yang telah didefinisikan pada config/auth.php
         if (Auth::guard('admin')->attempt($credentials)) {
@@ -25,8 +25,11 @@ class AdminLoginController extends Controller
             return redirect()->intended('/aduan1');
         }
 
-        // Jika login gagal, kembali ke form login dengan pesan kesalahan
-        return redirect()->back()->withErrors(['email' => 'Invalid email or password']);
+        // Jika login gagal, tampilkan notifikasi SweetAlert
+        return redirect()
+            ->back()
+            ->withInput($request->only('email'))
+            ->with('error', 'Invalid email or password');
     }
 
     // Logout admin
@@ -34,6 +37,6 @@ class AdminLoginController extends Controller
     {
         // Logout menggunakan guard 'admin' dan redirect ke halaman login
         Auth::guard('admin')->logout();
-        return redirect('/login_admin');
+        return redirect('/loginadmin');
     }
 }

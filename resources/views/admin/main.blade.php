@@ -5,12 +5,14 @@
 	<link rel="icon" href="image/sitabung.png" type="image/x-icon">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="icon" href="image/logosmp.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/dashboard/style.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 	<script src="js/script.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<style>
 		a {
 			text-decoration: none;
@@ -53,13 +55,13 @@
 			  <li id="datasiswa" class="{{ Request::is('data*') ? 'active' : '' }}">
 	            <a href="#datasiswa" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fa fa-user mr-3"></span>Data Siswa</a>
 	            <ul class="collapse list-unstyled" id="datasiswa">
-                <li class="{{ $title === "Data Kelas 7" ? 'active' : "" }}">
+                <li class="{{ request()->is('/data1') ? 'active' : '' }}">
                     <a href="/data1">Kelas 7</a>
                 </li>
-                <li class="{{ $title === "Data Kelas 8" ? 'active' : "" }}">
+                <li class="{{ request()->is('/data2') ? 'active' : '' }}">
                     <a href="/data2">Kelas 8</a>
                 </li>
-                <li class="{{ $title === "Data Kelas 9" ? 'active' : "" }}">
+                <li class="{{ request()->is('/data3') ? 'active' : '' }}">
                     <a href="/data3">Kelas 9</a>
                 </li>
 	            </ul>
@@ -67,13 +69,13 @@
 			  <li id="pemasukan" class="{{ Request::is('pemasukan*') ? 'active' : '' }}">
 	            <a href="#pemasukan" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fa fa-briefcase mr-3"></span>Pemasukkan Saldo</a>
 	            <ul class="collapse list-unstyled" id="pemasukan">
-					<li class="{{ $title === "Pemasukkan Kelas 7" ? 'active' : "" }}">
+					<li class="{{ request()->is('/pemasukan1') ? 'active' : '' }}">
 						<a href="/pemasukan1">Kelas 7</a>
 					</li>
-					<li class="{{ $title === "Pemasukkan Kelas 8" ? 'active' : "" }}">
+					<li class="{{ request()->is('/pemasukan2') ? 'active' : '' }}">
 						<a href="/pemasukan2">Kelas 8</a>
 					</li>
-					<li class="{{ $title === "Pemasukkan Kelas 9" ? 'active' : "" }}">
+					<li class="{{ request()->is('/pemasukan3') ? 'active' : '' }}">
 						<a href="pemasukan3">Kelas 9</a>
 					</li>
 	            </ul>
@@ -95,13 +97,13 @@
               <li id="aduan" class="{{ Request::is('aduan*') ? 'active' : '' }}">
 	            <a href="#aduan" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fa fa-suitcase mr-3"></span>Data Aduan Siswa</a>
 	            <ul class="collapse list-unstyled" id="aduan">
-					<li class="{{ $title === "Aduan Kelas 7" ? 'active' : "" }}">
+					<li class="{{ request()->is('/aduan1') ? 'active' : '' }}">
 						<a href="/aduan1">Kelas 7</a>
 					</li>
-					<li class="{{ $title === "Aduan Kelas 8" ? 'active' : "" }}">
+					<li class="{{ request()->is('/aduan2') ? 'active' : '' }}">
 						<a href="/aduan2">Kelas 8</a>
 					</li>
-					<li class="{{ $title === "Aduan Kelas 9" ? 'active' : "" }}">
+					<li class="{{ request()->is('/aduan3') ? 'active' : '' }}">
 						<a href="/aduan3">Kelas 9</a>
 					</li>
 	            </ul>
@@ -113,17 +115,18 @@
 			  <li style="margin-top: 20px;"><span style="font-weight: bold;">Admin</span></li>
 			  <li>
 				<a href="#"><span class="fa fa-user mr-3"></span>Data Admin</a>
-				<li id="setting">
+				<li id="setting" class="{{ Request::is('update-profile*') ? 'active' : '' }}">
 					<a href="#setting" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fa fa-cogs mr-3"></span>Setting</a>
 					<ul class="collapse list-unstyled" id="setting">
-						<li>
-							<a href="#">Profile</a>
-						</li>
-						<li>
-							<a href="#">Ubah Password</a>
+						<li class="{{ request()->routeIs('admin.update.profile.form') ? 'active' : '' }}">
+							<a href="{{ route('admin.update.profile.form') }}">Profile</a>
 						</li>
 					</ul>
-				  </li>
+				</li>	
+				<li class="{{ request()->routeIs('admin.logout') ? 'active' : '' }}">
+					<a href="/logoutadmin" data-bs-toggle="modal" data-bs-target="#logoutModal">
+						<span class="fa fa-user mr-3"></span>Logout
+					</a>
 				</li>
 	        </ul>
 

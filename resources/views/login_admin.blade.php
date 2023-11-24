@@ -2,6 +2,9 @@
 
 @section('content')
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<!-- Include SweetAlert script -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
 <style>
   /* style untuk form login */
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
@@ -15,6 +18,10 @@
 
   ::placeholder {
     color: rgb(187, 187, 187);
+  }
+
+  .overlay {
+    height: 750px;
   }
 
   .wrapper {
@@ -107,6 +114,10 @@
           padding: 40px 15px 15px 15px;
       }
   }
+
+  .small-popup {
+        max-width: 300px;
+    }
 </style>
 
 <div class="overlay"></div>
@@ -117,7 +128,7 @@
         <div class="text-center mt-4 name">
             Login Admin
         </div>        
-        <form class="p-3 mt-3" action="{{ route('admin.login') }}" method="POST">
+        <form class="p-3 mt-3" action="/loginadmin" method="POST">
             @csrf
             <div class="form-field d-flex align-items-center">
                 <span class="far fa-user"></span>
@@ -139,4 +150,18 @@
             <a href="#">Forget password?</a>
         </div>
     </div>
+
+    @if(session('error'))
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: '{{ session('error') }}',
+            customClass: {
+                popup: 'small-popup',
+            },
+            iconHtml: '<i class="fas fa-exclamation-circle" style="font-size: 18px;"></i>',
+        });
+    </script>
+@endif
 @endsection
