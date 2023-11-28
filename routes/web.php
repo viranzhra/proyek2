@@ -57,6 +57,11 @@ Route::get('/isieskul', function () {
     ]);
 });
 
+Route::get('/home', function () {
+    return view('admin/home', [
+        "title" => "Home"
+    ]);
+});
 
 Route::get('/aduan1', function () {
     return view('admin/aduan/kelas7', [
@@ -140,6 +145,13 @@ Route::get('/logoutadmin', function () {
         "title" => "Logout Admin"
     ]);
 })->name('logoutadmin');
+
+// Rute untuk halaman /aduan1 yang memerlukan autentikasi
+Route::middleware('auth:admin')->group(function () {
+    Route::get('/aduan1', function () {
+        return view('admin/aduan/kelas7');
+    })->name('aduan1');
+});
 
 Route::get('/update-profile', [AdminProfileController::class, 'showUpdateForm'])->name('admin.update.profile.form');
 Route::post('/update-profile', [AdminProfileController::class, 'updateProfile'])->name('admin.update.profile');

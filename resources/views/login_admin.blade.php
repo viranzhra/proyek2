@@ -80,18 +80,12 @@
 
   .wrapper .btn {
     box-shadow: none;
-    width: 150px;
+    width: 100%; /* Mengubah lebar tombol agar sesuai dengan lebar formulir */
     height: 40px;
     background-color: #046400;
     color: #fff;
     border-radius: 25px;
     letter-spacing: 1.3px;
-  }
-
-  .center-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 
   .wrapper .btn:hover {
@@ -108,16 +102,15 @@
       color: hsl(199, 70%, 71%);
   }
 
-  @media(max-width: 380px) {
-      .wrapper {
-          margin: 30px 20px;
-          padding: 40px 15px 15px 15px;
-      }
+  .center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .small-popup {
         max-width: 300px;
-    }
+  }
 </style>
 
 <div class="overlay"></div>
@@ -128,14 +121,14 @@
         <div class="text-center mt-4 name">
             Login Admin
         </div>        
-        <form class="p-3 mt-3" action="/loginadmin" method="POST">
+        <form class="p-3 mt-3" action="{{ route('admin.login') }}" method="POST">
             @csrf
             <div class="form-field d-flex align-items-center">
                 <span class="far fa-user"></span>
                 <input type="text" name="username" id="username" placeholder="Username" required>
             </div>
             <div class="form-field d-flex align-items-center">
-                <span class="fas fa-key"></span>
+                <span class="far fa-envelope"></span> 
                 <input type="email" name="email" id="email" placeholder="Email" required>
             </div>
             <div class="form-field d-flex align-items-center">
@@ -163,5 +156,5 @@
             iconHtml: '<i class="fas fa-exclamation-circle" style="font-size: 18px;"></i>',
         });
     </script>
-@endif
+    @endif
 @endsection

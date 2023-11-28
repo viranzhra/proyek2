@@ -2,13 +2,76 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Admin extends Model
+class Admin extends Model implements Authenticatable
 {
     use HasFactory;
+    use \Illuminate\Auth\Authenticatable;
 
-    protected $table = 'admins'; // Nama tabel yang terkait dengan model Admin
-    protected $fillable = ['username', 'email', 'password', 'profile_picture']; // Kolom yang dapat diisi secara massal, memungkinkan pengisian data pada saat pembuatan atau pembaruan
+    protected $table = 'admins';
+    protected $fillable = ['username', 'email', 'password'];
+
+    /**
+     * Mendapatkan nama kolom yang digunakan sebagai identifier otentikasi.
+     *
+     * @return string
+     */
+    public function getAuthIdentifierName()
+    {
+        return 'id';
+    }
+
+    /**
+     * Mendapatkan nilai identifier otentikasi (biasanya id).
+     *
+     * @return mixed
+     */
+    public function getAuthIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Mendapatkan kata sandi untuk otentikasi.
+     *
+     * @return string
+     */
+    public function getAuthPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Mendapatkan "remember me" token jika digunakan.
+     *
+     * @return string|null
+     */
+    public function getRememberToken()
+    {
+        return $this->remember_token;
+    }
+
+    /**
+     * Menyimpan "remember me" token ke dalam basis data.
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setRememberToken($value)
+    {
+        $this->remember_token = $value;
+    }
+
+    /**
+     * Mendapatkan nama kolom untuk "remember me" token.
+     *
+     * @return string
+     */
+    public function getRememberTokenName()
+    {
+        return 'remember_token';
+    }
 }

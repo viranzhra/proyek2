@@ -3,10 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Admin;
 use Illuminate\Support\Facades\Auth;
 
 class AdminLoginController extends Controller
 {
+    // Menambahkan middleware untuk memastikan pengguna telah login
+    public function __construct()
+    {
+        $this->middleware('auth:admin')->except('showLoginForm', 'login', 'logout');
+    }
+
     // Menampilkan form login admin
     public function showLoginForm()
     {

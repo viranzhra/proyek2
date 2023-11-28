@@ -10,10 +10,10 @@
           </div>
         </div>
       </div>
-    </main>
+    
 
           <div class="container text-center" style="margin-bottom: 100px; margin-top: 600px; position: relative;">
-            <div class="row gx-5" style="margin-left: 150px;">
+            <div class="row" style="margin-left: 150px;">
               <div class="col">
                <div class="p-3" style="background-color: #4a9ae8; border-radius: 8px;">
                 <a href="/prestasi" class="gmbr">
@@ -48,13 +48,14 @@
               </div>
             </div>
           </div>
-
           <div class="container text-center" style="position: relative;">
             <div class="row gx-5">
               <div class="col">
                <div class="p-3">
-                <iframe src="https://www.google.com/maps?q=-6.4529405,108.2834457"
-                 width="450" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                <!--Google map-->
+                  <div id="map-container-google-2" class="z-depth-1-half map-container" style="height: 500px">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.5478154935236!2d108.28450517475255!3d-6.452046993539386!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6ec64de90c1a9b%3A0xf4f0c790e8ff3930!2sSMP%20NURUL%20HALIM!5e0!3m2!1sid!2sid!4v1701106100371!5m2!1sid!2sid" width="450" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                  </div>                
                </div>
                </div>
                <div class="col">
