@@ -117,6 +117,12 @@ Route::get('/pemasukan3', function () {
     ]);
 });
 
+Route::get('/data_admin', function () {
+    return view('admin/data_admin/data_admin', [
+        "title" => "Data Admin"
+    ]);
+})->name('dataadmin');
+
 Route::get('/eskul', function () {
     return view('eskul', [
         "title" => "Data Kelas 9"

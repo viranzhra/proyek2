@@ -113,8 +113,8 @@
                 <a href="#"><span class="fa fa-paper-plane mr-3"></span> Data Arsip</a>
 	          </li>
 			  <li style="margin-top: 20px;"><span style="font-weight: bold;">Admin</span></li>
-			  <li>
-				<a href="#"><span class="fa fa-user mr-3"></span>Data Admin</a>
+			  <li class="{{ request()->routeIs('dataadmin') ? 'active' : '' }}">
+				<a href="/data_admin"><span class="fa fa-user mr-3"></span>Data Admin</a>
 				<li id="setting" class="{{ Request::is('update-profile*') ? 'active' : '' }}">
 					<a href="#setting" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fa fa-cogs mr-3"></span>Setting</a>
 					<ul class="collapse list-unstyled" id="setting">
