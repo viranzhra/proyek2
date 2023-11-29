@@ -161,3 +161,15 @@ Route::middleware('auth:admin')->group(function () {
 
 Route::get('/update-profile', [AdminProfileController::class, 'showUpdateForm'])->name('admin.update.profile.form');
 Route::post('/update-profile', [AdminProfileController::class, 'updateProfile'])->name('admin.update.profile');
+
+Route::get('/profilsiswa', function () {
+    return view('siswa/profil/profil', [
+        "title" => "Profil Siswa"
+    ]);
+})->name('profilsiswa');
+
+Route::get('/aduansiswa', function () {
+    return view('siswa/ajukan_aduan/ajukan', [
+        "title" => "Ajukan Aduan Siswa"
+    ]);
+})->name('aduansiswa');
