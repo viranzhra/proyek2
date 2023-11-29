@@ -49,19 +49,19 @@
 
 	        <ul class="list-unstyled components mb-5">
 			<li><span style="font-weight: bold;">Menu</span></li>
-	          <li>
-	            <a href="#"><span class="fa fa-home mr-3"></span> Home</a>
+	          <li class="{{ $title === 'Home' ? 'active' : '' }}">
+	            <a href="/home"><span class="fa fa-home mr-3"></span>Home</a>
 	          </li>
 			  <li id="datasiswa" class="{{ Request::is('data*') ? 'active' : '' }}">
 	            <a href="#datasiswa" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fa fa-user mr-3"></span>Data Siswa</a>
 	            <ul class="collapse list-unstyled" id="datasiswa">
-                <li class="{{ request()->is('/data1') ? 'active' : '' }}">
+                <li class="{{ $title === 'Data Kelas 7' ? 'active' : '' }}">
                     <a href="/data1">Kelas 7</a>
                 </li>
-                <li class="{{ request()->is('/data2') ? 'active' : '' }}">
+                <li class="{{ $title === 'Data Kelas 8' ? 'active' : '' }}">
                     <a href="/data2">Kelas 8</a>
                 </li>
-                <li class="{{ request()->is('/data3') ? 'active' : '' }}">
+                <li class="{{ $title === 'Data Kelas 9' ? 'active' : '' }}">
                     <a href="/data3">Kelas 9</a>
                 </li>
 	            </ul>
