@@ -5,14 +5,15 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Auth\Authenticatable as AuthenticatableTrait;
 
 class Admin extends Model implements Authenticatable
 {
     use HasFactory;
-    use \Illuminate\Auth\Authenticatable;
+    use AuthenticatableTrait; // Tambahkan ini untuk menggunakan trait Authenticatable
 
     protected $table = 'admins';
-    protected $fillable = ['username', 'email', 'password'];
+    protected $fillable = ['username', 'email', 'password', 'jenis_kelamin', 'jabatan'];
 
     /**
      * Mendapatkan nama kolom yang digunakan sebagai identifier otentikasi.

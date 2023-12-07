@@ -106,11 +106,10 @@ return [
     */
 
     'passwords' => [
-        'users' => [
-            'provider' => 'users',
-            'table' => 'password_reset_tokens',
+        'admins' => [
+            'provider' => 'admins',
+            'table' => 'password_resets',
             'expire' => 60,
-            'throttle' => 60,
         ],
     ],
 

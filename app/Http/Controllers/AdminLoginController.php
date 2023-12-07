@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminLoginController extends Controller
 {
-    // Menambahkan middleware untuk memastikan pengguna telah login
+   // Menambahkan middleware untuk memastikan pengguna telah login
     public function __construct()
     {
         $this->middleware('auth:admin')->except('showLoginForm', 'login', 'logout');
@@ -20,11 +20,11 @@ class AdminLoginController extends Controller
         return view('login_admin');
     }
 
-   // Proses login admin
+    // Proses login admin
     public function login(Request $request)
     {
         // Mengambil kredensial (email dan password) dari input form
-        $credentials = $request->only('username','email', 'password');
+        $credentials = $request->only('username', 'email', 'password');
 
         // Memeriksa kredensial dan mencoba login menggunakan guard 'admin' yang telah didefinisikan pada config/auth.php
         if (Auth::guard('admin')->attempt($credentials)) {
@@ -34,19 +34,23 @@ class AdminLoginController extends Controller
 
         // Jika login gagal, tampilkan notifikasi SweetAlert
         return redirect()
-            ->back()
-            ->route('login')
+            ->route('admin.login.form') // Menggunakan route untuk meredirect ke form login
             ->withInput($request->only('email'))
             ->with('error', 'Invalid email or password');
     }
 
-    // Logout admin
     public function logout(Request $request)
     {
-        Auth::guard('admin')->logout();
-
-        $request->session()->invalidate();
-
-        return redirect()->route('admin.login.form'); // Redirect to the login form
+        if (Auth::guard('admin')->check()) {
+            Auth::guard('admin')->logout();
+            $request->session()->invalidate();
+            Session::flush();
+            Session::regenerate();
+            session()->forget('admin');
+            session_destroy();
+        }
+    
+        return redirect()->route('admin.login.form');
     }
+    
 }

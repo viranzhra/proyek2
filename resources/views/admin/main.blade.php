@@ -3,6 +3,10 @@
   <head>
   	<title>SMP NURUL HALIM</title>
 	<link rel="icon" href="image/sitabung.png" type="image/x-icon">
+	<!-- Tambahkan ini di bagian head halaman HTML Anda -->
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Expires" content="0">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="icon" href="image/logosmp.png" type="image/x-icon">
@@ -49,34 +53,35 @@
 
 	        <ul class="list-unstyled components mb-5">
 			<li><span style="font-weight: bold;">Menu</span></li>
-	          <li class="{{ $title === 'Home' ? 'active' : '' }}">
-	            <a href="/home"><span class="fa fa-home mr-3"></span>Home</a>
-	          </li>
-			  <li id="datasiswa" class="{{ Request::is('data*') ? 'active' : '' }}">
-	            <a href="#datasiswa" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fa fa-user mr-3"></span>Data Siswa</a>
-	            <ul class="collapse list-unstyled" id="datasiswa">
-                <li class="{{ $title === 'Data Kelas 7' ? 'active' : '' }}">
-                    <a href="/data1">Kelas 7</a>
-                </li>
-                <li class="{{ $title === 'Data Kelas 8' ? 'active' : '' }}">
-                    <a href="/data2">Kelas 8</a>
-                </li>
-                <li class="{{ $title === 'Data Kelas 9' ? 'active' : '' }}">
-                    <a href="/data3">Kelas 9</a>
-                </li>
-	            </ul>
-	          </li>
-			  <li id="pemasukan" class="{{ Request::is('pemasukan*') ? 'active' : '' }}">
+            <li class="{{ request()->routeIs('home') ? 'active' : '' }}">
+                <a href="/home"><span class="fa fa-home mr-3"></span>Home</a>
+            </li>
+			<li class="nav-item {{ Request::is('data*') ? 'active' : '' }}">
+				<a href="#datasiswa" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fa fa-user mr-3"></span>Data Siswa</a>
+				<ul class="collapse list-unstyled {{ request()->routeIs('data1', 'data2', 'data3') ? 'show' : '' }}" id="datasiswa">
+					<li class="{{ request()->routeIs('data1') ? 'active' : '' }}">
+						<a href="{{ route('data1') }}">Kelas 7</a>
+					</li>
+					<li class="{{ request()->routeIs('data2') ? 'active' : '' }}">
+						<a href="{{ route('data2') }}">Kelas 8</a>
+					</li>
+					<li class="{{ request()->routeIs('data3') ? 'active' : '' }}">
+						<a href="{{ route('data3') }}">Kelas 9</a>
+					</li>
+				</ul>
+			</li>
+
+			<li class="nav-item {{ Request::is('pemasukan*') ? 'active' : '' }}">
 	            <a href="#pemasukan" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fa fa-briefcase mr-3"></span>Pemasukkan Saldo</a>
-	            <ul class="collapse list-unstyled" id="pemasukan">
-					<li class="{{ request()->is('/pemasukan1') ? 'active' : '' }}">
-						<a href="/pemasukan1">Kelas 7</a>
+	            <ul class="collapse list-unstyled {{ request()->routeIs('pemasukan1', 'pemasukan2', 'pemasukan3') ? 'show' : '' }}" id="pemasukan">
+					<li class="{{ request()->routeIs('pemasukan1') ? 'active' : '' }}">
+						<a href="{{ route('pemasukan1') }}">Kelas 7</a>
 					</li>
-					<li class="{{ request()->is('/pemasukan2') ? 'active' : '' }}">
-						<a href="/pemasukan2">Kelas 8</a>
+					<li class="{{ request()->routeIs('pemasukan2') ? 'active' : '' }}">
+						<a href="{{ route('pemasukan2') }}">Kelas 8</a>
 					</li>
-					<li class="{{ request()->is('/pemasukan3') ? 'active' : '' }}">
-						<a href="pemasukan3">Kelas 9</a>
+					<li class="{{ request()->routeIs('pemasukan3') ? 'active' : '' }}">
+						<a href="{{ route('pemasukan3') }}">Kelas 9</a>
 					</li>
 	            </ul>
 	          </li>
@@ -113,8 +118,9 @@
                 <a href="#"><span class="fa fa-paper-plane mr-3"></span> Data Arsip</a>
 	          </li>
 			  <li style="margin-top: 20px;"><span style="font-weight: bold;">Admin</span></li>
-			  <li class="{{ request()->routeIs('dataadmin') ? 'active' : '' }}">
-				<a href="/data_admin"><span class="fa fa-user mr-3"></span>Data Admin</a>
+			  <li class="{{ request()->routeIs('admin.data_admin.data_admin') ? 'active' : '' }}">
+				<a href="{{ route('admin.data_admin.data_admin') }}"><span class="fa fa-user mr-3"></span>Data Admin</a>
+			</li>
 				<li id="setting" class="{{ Request::is('update-profile*') ? 'active' : '' }}">
 					<a href="#setting" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fa fa-cogs mr-3"></span>Setting</a>
 					<ul class="collapse list-unstyled" id="setting">
@@ -124,10 +130,10 @@
 					</ul>
 				</li>	
 				<li class="{{ request()->routeIs('admin.logout') ? 'active' : '' }}">
-					<a href="/logoutadmin" data-bs-toggle="modal" data-bs-target="#logoutModal">
+					<a href="#" onclick="showLogoutConfirmation()">
 						<span class="fa fa-user mr-3"></span>Logout
 					</a>
-				</li>
+				</li>				
 	        </ul>
 
 	        <div class="footer">
@@ -143,12 +149,37 @@
         @yield("content")
     </div>
 
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.7.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Your existing scripts -->
     <script src="js/jquery.min.js"></script>
     <script src="js/popper.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
 
-	<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-	<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <!-- Added logout confirmation script -->
+	<script>
+		function showLogoutConfirmation() {
+			Swal.fire({
+				title: 'Konfirmasi Logout',
+				text: 'Apakah Anda yakin ingin logout?',
+				icon: 'question',
+				showCancelButton: true,
+				confirmButtonText: 'Ya',
+				cancelButtonText: 'Tidak'
+			}).then((result) => {
+				if (result.isConfirmed) {
+					// Lakukan logout atau aksi sesuai kebutuhan
+					// ...
+	
+					// Jika logout berhasil, redirect ke halaman login
+					window.location.href = "/loginadmin"; // Assuming the route is "/loginadmin"
+				}
+			});
+		}
+	</script>
+	
+
   </body>
 </html>
