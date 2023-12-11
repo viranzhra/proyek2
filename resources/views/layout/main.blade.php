@@ -29,7 +29,7 @@
                 <a class="nav-link {{ request()->is('kontak') ? 'active' : '' }}" href="#kontak" style="color: white;">KONTAK</a>
               </li>            
               <li class="nav-item">
-                <a href="{{ route('visi_misi') }}" class=" nav-link{{ request()->is('/visimisi') ? 'active' : '' }}" style="color: white;">Visi Misi</a>
+                <a href="{{ route('visi_misi') }}" class=" nav-link {{ request()->routeIs('visi_misi') ? 'active' : '' }}" style="color: white;">Visi Misi</a>
               </li>
             </ul>
               <a href="/loginsiswa" class="btn btn-outline-success" type="submit" style="background-color: #215382; color: white; font-weight: bold;">LOGIN</a>

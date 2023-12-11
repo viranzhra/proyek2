@@ -5,7 +5,8 @@ use App\Http\Controllers\SessionController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\AdminController;
-
+use App\Http\Controllers\DataSiswaController;
+use App\Http\Controllers\PemasukkanTabunganController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -86,24 +87,9 @@ Route::middleware('auth:admin')->group(function () {
         ]);
     })->name('aduan3');
 
-    Route::get('/data1', function () {
-        return view('admin/data_siswa/kelas7', [
-            "title" => "Data Kelas 7"
-        ]);
-    })->name('data1');
-    
-
-    Route::get('/data2', function () {
-        return view('admin/data_siswa/kelas8', [
-            "title" => "Data Kelas 8"
-        ]);
-    })->name('data2');
-
-    Route::get('/data3', function () {
-        return view('admin/data_siswa/kelas9', [
-            "title" => "Data Kelas 9"
-        ]);
-    })->name('data3');
+    Route::get('/pemasukkan-tabungan', [PemasukkanTabunganController::class, 'index'])->name('pemasukkan-tabungan.index');
+    Route::get('/pemasukkan-tabungan/create', [PemasukkanTabunganController::class, 'create'])->name('pemasukan.create');
+    Route::post('/pemasukkan-tabungan/store', [PemasukkanTabunganController::class, 'store'])->name('pemasukkan.store');
 
     Route::get('/pemasukan1', function () {
         return view('admin/pemasukkan/kelas7', [
@@ -123,14 +109,38 @@ Route::middleware('auth:admin')->group(function () {
         ]);
     })->name('pemasukan3');
 
-    Route::get('/data_admin', [AdminController::class, 'index'])->name('admin.data_admin.data_admin');;
-
-    Route::get('/profilguru', function () {
-        return view('profilguru', [
-            "title" => "Profil Guru"
+    Route::get('/editdata', function () {
+        return view('admin/data_siswa/edit', [
+            "title" => "Pemasukkan Kelas 9"
         ]);
-    })->name('profilguru');
+    })->name('pemasukan3');
+
+    // Menampilkan data siswa
+    Route::get('/datasiswa', [DataSiswaController::class, 'index'])->name('datasiswa');
+    Route::get('/data_admin', [AdminController::class, 'index'])->name('admin.data_admin.data_admin');
+
+// Menampilkan form tambah data siswa
+Route::get('/siswa/create', [DataSiswaController::class, 'create'])->name('siswa.create');
+
+// Menyimpan data siswa baru
+Route::post('/siswa', [DataSiswaController::class, 'store'])->name('siswa.store');
+
+// Menampilkan form edit data siswa
+Route::get('/siswa/{id}/edit', [DataSiswaController::class, 'edit'])->name('siswa.edit');
+
+// Mengupdate data siswa
+Route::put('/siswa/{id}', [DataSiswaController::class, 'update'])->name('siswa.update');
+
+// Menghapus data siswa
+Route::delete('/siswa/{nisn}', [DataSiswaController::class, 'destroy'])->name('siswa.destroy');
+
 });
+
+Route::get('/profilguru', function () {
+    return view('profilguru', [
+        "title" => "Profil Guru"
+    ]);
+})->name('profilguru');
 
 // Rute untuk menampilkan formulir login admin
 Route::get('/loginadmin', [AdminLoginController::class, 'showLoginForm'])->name('admin.login.form');
@@ -160,3 +170,9 @@ Route::get('/sampletable', function () {
         "title" => "sampletable"
     ]);
 })->name('sampletable');
+
+Route::get('/isisaldo', function () {
+    return view('admin/pemasukkan/isi_saldo', [
+        "title" => "isisaldo"
+    ]);
+})->name('isisaldo');

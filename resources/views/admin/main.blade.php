@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
   	<title>SMP NURUL HALIM</title>
+	  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.18.0/font/bootstrap-icons.css">
 	<link rel="icon" href="image/sitabung.png" type="image/x-icon">
 	<!-- Tambahkan ini di bagian head halaman HTML Anda -->
 	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -56,26 +57,15 @@
             <li class="{{ request()->routeIs('home') ? 'active' : '' }}">
                 <a href="/home"><span class="fa fa-home mr-3"></span>Home</a>
             </li>
-			<li class="nav-item {{ Request::is('data*') ? 'active' : '' }}">
-				<a href="#datasiswa" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fa fa-user mr-3"></span>Data Siswa</a>
-				<ul class="collapse list-unstyled {{ request()->routeIs('data1', 'data2', 'data3') ? 'show' : '' }}" id="datasiswa">
-					<li class="{{ request()->routeIs('data1') ? 'active' : '' }}">
-						<a href="{{ route('data1') }}">Kelas 7</a>
-					</li>
-					<li class="{{ request()->routeIs('data2') ? 'active' : '' }}">
-						<a href="{{ route('data2') }}">Kelas 8</a>
-					</li>
-					<li class="{{ request()->routeIs('data3') ? 'active' : '' }}">
-						<a href="{{ route('data3') }}">Kelas 9</a>
-					</li>
-				</ul>
-			</li>
+			<li class="{{ request()->routeIs('datasiswa') ? 'active' : '' }}">
+                <a href="/datasiswa"><span class="fa fa-user mr-3"></span>Data Siswa</a>
+            </li>
 
 			<li class="nav-item {{ Request::is('pemasukan*') ? 'active' : '' }}">
 	            <a href="#pemasukan" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fa fa-briefcase mr-3"></span>Pemasukkan Saldo</a>
 	            <ul class="collapse list-unstyled {{ request()->routeIs('pemasukan1', 'pemasukan2', 'pemasukan3') ? 'show' : '' }}" id="pemasukan">
-					<li class="{{ request()->routeIs('pemasukan1') ? 'active' : '' }}">
-						<a href="{{ route('pemasukan1') }}">Kelas 7</a>
+					<li class="{{ request()->routeIs('pemasukkan') ? 'active' : '' }}">
+						<a href="{{ route('pemasukkan-tabungan.index') }}">Kelas 7</a>
 					</li>
 					<li class="{{ request()->routeIs('pemasukan2') ? 'active' : '' }}">
 						<a href="{{ route('pemasukan2') }}">Kelas 8</a>
@@ -113,7 +103,6 @@
 					</li>
 	            </ul>
 	          </li>
-			  
 	          <li>
                 <a href="#"><span class="fa fa-paper-plane mr-3"></span> Data Arsip</a>
 	          </li>
