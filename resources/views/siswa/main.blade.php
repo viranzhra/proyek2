@@ -56,7 +56,7 @@
 	                <a href="/profilsiswa"><span class="fa fa-home mr-3"></span> Profil Siswa</a>
 	            </li>
                 <li>
-	                <a href="#"><span class="fa fa-home mr-3"></span> Riwayat Tabungan</a>
+	                <a href="/riwayat"><span class="fa fa-home mr-3"></span> Riwayat Tabungan</a>
 	            </li>
                 <li class="{{ request()->routeIs('aduansiswa') ? 'active' : '' }}">
 	                <a href="/aduansiswa"><span class="fa fa-home mr-3"></span> Ajukan Aduan</a>

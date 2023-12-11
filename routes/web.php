@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DataSiswaController;
 use App\Http\Controllers\PemasukkanTabunganController;
+use App\Http\Controllers\TransaksiTabunganController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -176,3 +177,6 @@ Route::get('/isisaldo', function () {
         "title" => "isisaldo"
     ]);
 })->name('isisaldo');
+
+
+Route::get('/riwayat', [TransaksiTabunganController::class, 'index'])->name('riwayat');
