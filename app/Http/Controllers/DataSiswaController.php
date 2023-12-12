@@ -26,6 +26,8 @@ class DataSiswaController extends Controller
         ->join('kelas', 'murid.id_kelas', '=', 'kelas.id')
         ->join('tahun_angkatan', 'murid.id_ta', '=', 'tahun_angkatan.id')
         ->select(
+            'murid.id_kelas',
+            'murid.id_ta',
             'murid.nisn_murid',
             'murid.nama_murid',
             'murid.jenis_kelamin',
@@ -39,7 +41,7 @@ class DataSiswaController extends Controller
         })
         ->paginate(10); // Menentukan jumlah data per halaman (misalnya, 10)
      
-        return view("admin/data_siswa/kelas", compact('murid', 'kelas', 'tahunAngkatan'));
+        return view("admin/data_siswa/kelas", compact('search','murid', 'kelas', 'tahunAngkatan'));
     }
 
     /**
@@ -95,6 +97,7 @@ class DataSiswaController extends Controller
     public function update(Request $request, $nisn)
     {
         $validatedData = $request->validate([
+            'nisn_murid' => 'required',
             'nama_murid' => 'required',
             'jenis_kelamin' => 'required',
             'tgl_lahir' => 'required|date',
@@ -105,7 +108,7 @@ class DataSiswaController extends Controller
         $murid = Murid::where('nisn_murid', $nisn)->first();
         $murid->update($validatedData);
     
-        return redirect()->route('data_siswa.index')->with('success', 'Data berhasil diperbarui');
+        return redirect()->route('datasiswa')->with('success', 'Data berhasil diperbarui');
     }
 
     /**

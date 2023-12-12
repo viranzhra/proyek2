@@ -127,10 +127,10 @@ Route::get('/siswa/create', [DataSiswaController::class, 'create'])->name('siswa
 Route::post('/siswa', [DataSiswaController::class, 'store'])->name('siswa.store');
 
 // Menampilkan form edit data siswa
-Route::get('/siswa/{id}/edit', [DataSiswaController::class, 'edit'])->name('siswa.edit');
+Route::get('/siswa/{nisn}/edit', [DataSiswaController::class, 'edit'])->name('siswa.edit');
 
 // Mengupdate data siswa
-Route::put('/siswa/{id}', [DataSiswaController::class, 'update'])->name('siswa.update');
+Route::put('/siswa/{nisn}/update', [DataSiswaController::class, 'update'])->name('siswa.update');
 
 // Menghapus data siswa
 Route::delete('/siswa/{nisn}', [DataSiswaController::class, 'destroy'])->name('siswa.destroy');

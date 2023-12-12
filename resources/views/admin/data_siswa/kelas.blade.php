@@ -8,7 +8,7 @@
             <div class="card-header">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="mb-3">
-                        <h4 id="kelasHeading" class="m-0">Data Siswa</h4>
+                        <h4 id="kelasHeading" class="m-0">Data Siswa @if ($search) Kelas {{ $search }} @endif</h4>
                     </div>
                     <div class="mb-">
                         <label for="kelas" class="mr-2" style="font-weight: bold">Pilih Kelas:</label>
@@ -75,18 +75,19 @@
 
                                     <!-- ... Existing table data ... -->
                                     <td>
-                                        <a href="#" class="btn btn-success btn-sm" title="Edit" data-toggle="modal" data-target="#editModal">
+                                        <button type="button" class="btn btn-success btn-sm" title="Edit" data-toggle="modal" data-target="#editModal" onclick="openEditModal('{{ $row->nisn_murid }}', '{{ $row->nama_murid }}', '{{ $row->jenis_kelamin }}', '{{ $row->id_kelas }}', '{{ $row->id_ta }}')">
                                             <i class="fas fa-edit"></i>
-                                        </a>
-                                        @foreach ($murid as $siswa)
-                                        <form action="{{ route('siswa.destroy', ['nisn' => $siswa->nisn_murid]) }}" method="post" style="display: inline-block;">
+                                        </button>
+                                        
+                                        <form action="{{ route('siswa.destroy', ['nisn' => $row->nisn_murid]) }}" method="post" style="display: inline-block;">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="button" class="btn btn-danger btn-sm delete-btn" data-id="{{ $siswa->nisn_murid }}" title="Delete">
+
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
                                                 <i class="fas fa-trash-alt"></i>
                                             </button>
                                         </form>
-                                    @endforeach
+                                    
                                     </td>
                                 </tr>
                             @empty
@@ -172,7 +173,7 @@
     </div>
 </div>
 
-
+@if ($murid->count() > 0)
 <!-- Modal Edit Data -->
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -185,46 +186,43 @@
             </div>
             <div class="modal-body">
                 <!-- Form edit data siswa -->
-                <form action="" method="post">
+                @foreach($murid as $siswa)
+                <form id="edit_action" action="" method="post">
+                    @endforeach
                     @csrf
-
+                    @method('PUT')
+            
                     <div class="form-group">
-                        @foreach ($murid as $siswa)
                         <label for="nisn">NISN</label>
-                        <input type="text" class="form-control" id="nisn" name="nisn" value="{{ $siswa->nisn_murid }}" required>
-                        @endforeach
+                        <input type="text" class="form-control" id="nisn_edit" name="nisn_murid" value="" required>
                     </div>
-
+            
                     <div class="form-group">
-                        @foreach ($murid as $siswa)
                         <label for="nama">Nama</label>
-                        <input type="text" class="form-control" id="nama" name="nama" value="{{ $siswa->nama_murid }}" required>
-                        @endforeach
-                    </div>
+                        <input type="text" class="form-control" id="nama_edit" name="nama_murid" value="" required>
+                    </div> 
 
                     <div class="form-group">
                         <label for="jenis_kelamin">Jenis Kelamin</label>
-                        @foreach ($murid as $siswa)
-                        <select name="jenis_kelamin" class="form-control">
+                        <select id="edit_jk" name="jenis_kelamin" class="form-control">
                             <option value="" disabled selected>Pilih jenis kelamin</option>
                             <option value="Laki-laki" {{ $siswa->jenis_kelamin == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
                             <option value="Perempuan" {{ $siswa->jenis_kelamin == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
                         </select>
-                        @endforeach
-                    </div>
+                    </div>                    
 
                     <div class="form-group">
-                        @foreach ($murid as $siswa)
+                        
                         <label for="tgl_lahir">Tanggal Lahir</label>
                         <input type="date" class="form-control" id="tgl_lahir" name="tgl_lahir" value="{{ $siswa->tgl_lahir }}" required>
-                        @endforeach
+                       
                     </div>
                     <div class="form-group">
-                        <label for="kelas">Kelas:</label>
-                        <select name="id_kelas" class="form-control">
+                        <label for="edit_kelas">Kelas:</label>
+                        <select id="edit_kelas" name="id_kelas" class="form-control">
                             <option value="" disabled selected>Pilih Kelas</option>
                             @foreach($kelas as $kelasItem)
-                                <option value="{{ $kelasItem->id }}" {{ ($murid->id_kelas) && $murid->id_kelas == $kelasItem->id ? 'selected' : '' }}>
+                                <option value="{{ $kelasItem->id }}"{{ isset($murid->id_kelas) && $murid->id_kelas == $kelasItem->id ? 'selected' : '' }}>
                                     {{ $kelasItem->ket_kelas }}
                                 </option>
                             @endforeach
@@ -232,8 +230,8 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="ta">Tahun Angkatan</label>
-                        <select class="form-control" id="ta" name="id_ta" required>
+                        <label for="edit_ta">Tahun Angkatan</label>
+                        <select class="form-control" id="edit_ta" name="id_ta" required>
                             <option value="" disabled selected>Pilih Tahun Angkatan</option>
                             @foreach($tahunAngkatan as $tahunItem)
                                 <option value="{{ $tahunItem->id }}" {{ isset($murid->id_ta) && $murid->id_ta == $tahunItem->id ? 'selected' : '' }}>
@@ -243,13 +241,46 @@
                         </select>
                     </div>
                     
-                    
 
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </form>
             </div>
         </div>
     </div>
+
+    <script>
+        function openEditModal(nisn,nama,jenis_kelamin,id_kelas,id_ta) {
+            var modal = document.getElementById('editModal');
+            var edit_action = document.getElementById('edit_action');
+            edit_action.action = "/siswa/" + nisn + "/update";
+            var nisnInput = document.getElementById('nisn_edit');
+            nisnInput.value = nisn;
+            var namaInput = document.getElementById('nama_edit');
+            namaInput.value = nama;
+    
+            var jenisKelaminSelect = document.getElementById('edit_jk');
+            for (var i = 0; i < jenisKelaminSelect.options.length; i++) {
+                if (jenisKelaminSelect.options[i].value === jenis_kelamin) {
+                    jenisKelaminSelect.options[i].selected = true;
+                }
+            }
+        
+        var pilihkelasSelect = document.getElementById('edit_kelas');
+            for (var i = 0; i < pilihkelasSelect.options.length; i++) {
+                if (pilihkelasSelect.options[i].value === id_kelas) {
+                    pilihkelasSelect.options[i].selected = true;
+                }
+            }
+            var tahunAngkatanSelect = document.getElementById('edit_ta');
+            for (var i = 0; i < tahunAngkatanSelect.options.length; i++) {
+                if (tahunAngkatanSelect.options[i].value === id_ta) {
+                    tahunAngkatanSelect.options[i].selected = true;
+                }
+            }
+        }
+    </script>
+
+@endif
 
     
     <!-- Bootstrap Icons -->

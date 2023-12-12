@@ -45,7 +45,7 @@
 			<div class="text-center mb-3 d-flex align-items-center">
                 <!-- Avatar dan Nama Admin -->
 				<a href="#">
-                	<img src="image/orang1.jpg" alt="Avatar" class="avatar"><b class="ml-2 mb-0" style="margin-top: 0; font-size: 15px; color: rgb(0, 204, 255);">viranzahra12@gmail.com</b>
+                	<img src="image/orang1.jpg" alt="Avatar" class="avatar"><b class="ml-2 mb-0" style="margin-top: 0; font-size: 15px; color: rgb(0, 204, 255);">{{ Auth::user()->email }}</b>
 				</a>
             </div>
 			<hr>
@@ -118,11 +118,17 @@
 						</li>
 					</ul>
 				</li>	
+				@if(auth()->guard('admin')->check())
 				<li class="{{ request()->routeIs('admin.logout') ? 'active' : '' }}">
+					<form id="logout-form" action="{{ route('admin.logout') }}" class="d-none" method="POST">
+						@csrf
+						<button type="submit">Logout</button>
+					</form>
 					<a href="#" onclick="showLogoutConfirmation()">
 						<span class="fa fa-user mr-3"></span>Logout
 					</a>
-				</li>				
+				</li>			
+				@endif	
 	        </ul>
 
 	        <div class="footer">
@@ -150,23 +156,25 @@
     <!-- Added logout confirmation script -->
 	<script>
 		function showLogoutConfirmation() {
-			Swal.fire({
-				title: 'Konfirmasi Logout',
-				text: 'Apakah Anda yakin ingin logout?',
-				icon: 'question',
-				showCancelButton: true,
-				confirmButtonText: 'Ya',
-				cancelButtonText: 'Tidak'
-			}).then((result) => {
-				if (result.isConfirmed) {
-					// Lakukan logout atau aksi sesuai kebutuhan
-					// ...
-	
-					// Jika logout berhasil, redirect ke halaman login
-					window.location.href = "/loginadmin"; // Assuming the route is "/loginadmin"
-				}
-			});
-		}
+    Swal.fire({
+        title: 'Konfirmasi Logout',
+        text: 'Apakah Anda yakin ingin logout?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Ya',
+        cancelButtonText: 'Tidak'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Mengambil form dengan ID logout-form
+            const logoutForm = document.getElementById('logout-form');
+
+            // Mengirim form jika ditemukan
+            if (logoutForm) {
+                logoutForm.submit(); // Mengirim form saat pengguna memilih "Ya"
+            }
+        }
+    });
+}
 	</script>
 	
 
