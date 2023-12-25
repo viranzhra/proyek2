@@ -39,7 +39,8 @@ class DataSiswaController extends Controller
             return $query->where('kelas.ket_kelas', 'like', '%' . $search . '%')
             ->orWhere('murid.nama_murid', 'like', '%' . $search . '%');
         })
-        ->paginate(10); // Menentukan jumlah data per halaman (misalnya, 10)
+        ->orderBy('kelas.ket_kelas')
+        ->paginate(5); // Menentukan jumlah data per halaman (misalnya, 10)
      
         return view("admin/data_siswa/kelas", compact('search','murid', 'kelas', 'tahunAngkatan'));
     }
@@ -118,6 +119,9 @@ class DataSiswaController extends Controller
     {
         // Menghapus data murid berdasarkan NISN
         Murid::where('nisn_murid', $nisn)->delete();
+
+         // Set pesan sukses
+        session()->flash('success', 'Data berhasil dihapus.');
 
         // Mengalihkan kembali ke halaman index dengan pesan sukses
         return redirect()->route('datasiswa')->with('success', 'Data berhasil dihapus');

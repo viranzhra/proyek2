@@ -60,36 +60,10 @@
 			<li class="{{ request()->routeIs('datasiswa') ? 'active' : '' }}">
                 <a href="/datasiswa"><span class="fa fa-user mr-3"></span>Data Siswa</a>
             </li>
-
-			<li class="nav-item {{ Request::is('pemasukan*') ? 'active' : '' }}">
-	            <a href="#pemasukan" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fa fa-briefcase mr-3"></span>Pemasukkan Saldo</a>
-	            <ul class="collapse list-unstyled {{ request()->routeIs('pemasukan1', 'pemasukan2', 'pemasukan3') ? 'show' : '' }}" id="pemasukan">
-					<li class="{{ request()->routeIs('pemasukkan') ? 'active' : '' }}">
-						<a href="{{ route('pemasukkan-tabungan.index') }}">Kelas 7</a>
-					</li>
-					<li class="{{ request()->routeIs('pemasukan2') ? 'active' : '' }}">
-						<a href="{{ route('pemasukan2') }}">Kelas 8</a>
-					</li>
-					<li class="{{ request()->routeIs('pemasukan3') ? 'active' : '' }}">
-						<a href="{{ route('pemasukan3') }}">Kelas 9</a>
-					</li>
-	            </ul>
-	          </li>
-			  <li id="pengeluaran" class="{{ Request::is('pengeluaran*') ? 'active' : '' }}">
-	            <a href="#pengeluaran" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fa fa-sticky-note mr-3"></span>Pengeluaran Saldo</a>
-	            <ul class="collapse list-unstyled" id="pengeluaran">
-					<li>
-						<a href="#">Kelas 7</a>
-					</li>
-					<li>
-						<a href="#">Kelas 8</a>
-					</li>
-					<li>
-						<a href="#">Kelas 9</a>
-					</li>
-	            </ul>
-	          </li>
-              <li id="aduan" class="{{ Request::is('aduan*') ? 'active' : '' }}">
+			<li class="{{ request()->routeIs('transaksi-tabungan.index') ? 'active' : '' }}">
+                <a href="{{ route('transaksi-tabungan.index') }}"><span class="fa fa-briefcase mr-3"></span>Transaksi Tabungan</a>
+            </li>
+              <li class="nav-item {{ Request::is('aduan*') ? 'active' : '' }}">
 	            <a href="#aduan" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fa fa-suitcase mr-3"></span>Data Aduan Siswa</a>
 	            <ul class="collapse list-unstyled" id="aduan">
 					<li class="{{ request()->is('/aduan1') ? 'active' : '' }}">
@@ -103,14 +77,14 @@
 					</li>
 	            </ul>
 	          </li>
-	          <li>
-                <a href="#"><span class="fa fa-paper-plane mr-3"></span> Data Arsip</a>
+	          <li class="{{ request()->routeIs('arsipan.index') ? 'active' : '' }}">
+                <a href="/arsipan"><span class="fa fa-paper-plane mr-3"></span> Data Arsip</a>
 	          </li>
 			  <li style="margin-top: 20px;"><span style="font-weight: bold;">Admin</span></li>
 			  <li class="{{ request()->routeIs('admin.data_admin.data_admin') ? 'active' : '' }}">
 				<a href="{{ route('admin.data_admin.data_admin') }}"><span class="fa fa-user mr-3"></span>Data Admin</a>
 			</li>
-				<li id="setting" class="{{ Request::is('update-profile*') ? 'active' : '' }}">
+				<li class="nav-item {{ Request::is('update-profile*') ? 'active' : '' }}">
 					<a href="#setting" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fa fa-cogs mr-3"></span>Setting</a>
 					<ul class="collapse list-unstyled" id="setting">
 						<li class="{{ request()->routeIs('admin.update.profile.form') ? 'active' : '' }}">

@@ -1,13 +1,17 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SessionController;
-use App\Http\Controllers\AdminLoginController;
-use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\SessionController;
 use App\Http\Controllers\DataSiswaController;
-use App\Http\Controllers\PemasukkanTabunganController;
+use App\Http\Controllers\AdminLoginController;
+use App\Http\Controllers\SiswaLoginController;
+use App\Http\Controllers\AdminProfileController;
+use App\Http\Controllers\PdfDatasiswaController;
+use App\Http\Controllers\PdfTransaksiController;
+use App\Http\Controllers\ArsipTabunganController;
 use App\Http\Controllers\TransaksiTabunganController;
+use App\Http\Controllers\PemasukkanTabunganController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -133,8 +137,17 @@ Route::get('/siswa/{nisn}/edit', [DataSiswaController::class, 'edit'])->name('si
 Route::put('/siswa/{nisn}/update', [DataSiswaController::class, 'update'])->name('siswa.update');
 
 // Menghapus data siswa
-Route::delete('/siswa/{nisn}', [DataSiswaController::class, 'destroy'])->name('siswa.destroy');
+Route::delete('/siswa/{nisn}/destroy', [DataSiswaController::class, 'destroy'])->name('siswa.destroy');
 
+Route::resource('transaksi-tabungan', TransaksiTabunganController::class);
+Route::get('/download-pdf', [PdfTransaksiController::class, 'downloadPDF'])->name('download-pdf');
+Route::get('/download-pdf-siswa', [PdfDatasiswaController::class, 'downloadPDF'])->name('download-pdf-siswa');
+Route::get('/get-murid-name/{id}', [TransaksiTabunganController::class, 'getMuridName']);
+Route::get('/get-class-by-student', [TransaksiTabunganController::class, 'getClassByStudent'])
+    ->name('transaksi-tabungan.getClassByStudent');
+    
+    Route::get('/arsipan', [ArsipTabunganController::class, 'index'])->name('arsipan.index');
+    Route::get('/arsipan/download-pdf', [ArsipTabunganController::class, 'downloadPdf'])->name('arsipan.downloadPdf');
 });
 
 Route::get('/profilguru', function () {
@@ -178,5 +191,7 @@ Route::get('/isisaldo', function () {
     ]);
 })->name('isisaldo');
 
-
+Route::get('/siswa-login', [SiswaLoginController::class, 'showLoginForm'])->name('siswa.login');
+Route::post('/siswa-login', [SiswaLoginController::class, 'login']);
+Route::post('/siswa-logout', [SiswaLoginController::class, 'logout'])->name('siswa.logout');
 Route::get('/riwayat', [TransaksiTabunganController::class, 'index'])->name('riwayat');

@@ -2,6 +2,9 @@
 
 @section('content')
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<!-- Include SweetAlert script -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
 <style>
   /* style untuk form login */
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
@@ -117,14 +120,10 @@
         <div class="text-center mt-4 name">
             Login Siswa
         </div>
-        <form class="p-3 mt-3">
+        <form action="/siswa-login" method="post" class="p-3 mt-3">
             <div class="form-field d-flex align-items-center">
                 <span class="far fa-user"></span>
                 <input type="text" name="userName" id="userName" placeholder="Username">
-            </div>
-            <div class="form-field d-flex align-items-center">
-                <span class="fas fa-key"></span>
-                <input type="email" name="email" id="email" placeholder="Email">
             </div>
             <div class="form-field d-flex align-items-center">
               <span class="fas fa-key"></span>
