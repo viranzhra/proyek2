@@ -167,6 +167,12 @@ Route::post('/logoutadmin', [AdminLoginController::class, 'logout'])->name('admi
 Route::get('/update-profile', [AdminProfileController::class, 'showUpdateForm'])->name('admin.update.profile.form');
 Route::post('/update-profile', [AdminProfileController::class, 'updateProfile'])->name('admin.update.profile');
 
+Route::get('/home_siswa', function () {
+    return view('siswa/home/home_siswa', [
+        "title" => "Home"
+    ]);
+})->name('home_siswa');
+
 Route::get('/profilsiswa', function () {
     return view('siswa/profil/profil', [
         "title" => "Profil Siswa"
@@ -190,6 +196,12 @@ Route::get('/isisaldo', function () {
         "title" => "isisaldo"
     ]);
 })->name('isisaldo');
+
+Route::get('/riwayat_siswa', function () {
+    return view('siswa/riwayat/riwayat_siswa', [
+        "title" => "riwayat"
+    ]);
+})->name('riwayat_siswa');
 
 Route::get('/siswa-login', [SiswaLoginController::class, 'showLoginForm'])->name('siswa.login');
 Route::post('/siswa-login', [SiswaLoginController::class, 'login']);

@@ -45,25 +45,36 @@
             </div>
 			<hr>
 			<h1><a href="#" class="logo">SiTabung <span>SMP NURUL HALIM WIDASARI</span></a></h1>
-			<hr>
+			<hr>  
 
 	        <ul class="list-unstyled components mb-5">
 			<li><span style="font-weight: bold;">Menu</span></li>
                 <li>
-                    <a href="#"><span class="fa fa-home mr-3"></span> Home</a>
+                    <li class="{{ request()->routeIs('home_siswa') ? 'active' : '' }}">
+						<a href="/home_siswa"><span class="fa fa-home mr-3"></span> Home</a>
                 </li>
                 <li class="{{ request()->routeIs('profilsiswa') ? 'active' : '' }}">
 	                <a href="/profilsiswa"><span class="fa fa-home mr-3"></span> Profil Siswa</a>
 	            </li>
                 <li>
-	                <a href="/riwayat"><span class="fa fa-home mr-3"></span> Riwayat Tabungan</a>
+					<li class="{{ request()->routeIs('riwayat_siswa') ? 'active' : '' }}">
+	                <a href="/riwayat_siswa"><span class="fa fa-home mr-3"></span> Riwayat Tabungan</a>
 	            </li>
                 <li class="{{ request()->routeIs('aduansiswa') ? 'active' : '' }}">
 	                <a href="/aduansiswa"><span class="fa fa-home mr-3"></span> Ajukan Aduan</a>
 	            </li>
+				<li class="{{ request()->routeIs('siswa.logout') ? 'active' : '' }}">
+					<form id="logout-form" action="{{ route('siswa.logout') }}" class="d-none" method="POST">
+						@csrf
+						<button type="submit">Logout</button>
+					</form>
+					<a href="#" onclick="showLogoutConfirmation()">
+						<span class="fa fa-user mr-3"></span>Logout
+					</a>
+				</li>		
 	        </ul>
 
-	        <div class="footer">
+	        <div class="footer"> 
 	        	<p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 						  Copyright &copy;<script>document.write(new Date().getFullYear());</script> | SiTabung
 						  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>

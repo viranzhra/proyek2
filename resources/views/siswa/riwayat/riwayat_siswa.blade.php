@@ -2,35 +2,47 @@
 
 @section('content')
 <div id="content" class="p-4 p-md-5 pt-5">
-    <h2 class="mb-4">Riwayat</h2>
+    <div class="card mt-4">
+        <div class="card-header">
+            <div class="mb-">
+                <h4 id="kelasHeading" class="m-0">Riwayat</h4>
+            </div>
+        <div class="card-body">
+            <div class="form-group col-md-3">
+                <form action="{{ route('transaksi-tabungan.index') }}" method="get">
+<!-- Tambahkan ini untuk melindungi formulir dari serangan Cross-Site Request Forgery (CSRF) -->
+                    <label for="search_date"><b>Cari berdasarkan tanggal: </b></label>
+                    <div class="input-group">
+                        <input type="date" class="form-control" id="search_date" name="search_date" value="{{ $searchDate ?? '' }}">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
 
-<div class="row">
-    <div class="col-lg-12">
-        <div class="box">
-            <div class="box-body table-responsive">
-                <table class="table table-stiped table-bordered">
+            <div class="table-responsive">
+                <table id="example" class="table table-striped" style="width:100%">
                     <thead>
-                        <th width="5%">No</th>
-                        <th>Nama</th>
-                        <th>Tanggal</th>
-                        <th>Deskripsi</th>
-                        <th>Nominal</th>
+                        <tr>
+                            <th>No</th>
+                            <th>Deskripsi</th>
+                            <th>Tanggal Transaksi</th>
+                            <th>Nominal</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        @foreach($murid as $row)
-                        <tr>
-                            <td>{{ $loop->iteration }}</td> 
-                                    <td>{{ $row->murid }}</td>
-                                    <td>{{ $row->tanggal }}</td>
-                                    <td>{{ $row->kategori_transaksi }}</td>
-                                    <td>{{ $row->nominal }}</td>
-                                    @endforeach
+                            <tr>
+                                <td>1</td>
+                                <td>pemasukkan</td>
+                                <td>12/09/2023</td>
+                                <td>Rp. 50000</td>
+                            </tr>
                     </tbody>
                 </table>
             </div>
-        </div>
-    </div>
-</div>
-</div>
 
 @endsection
