@@ -11,21 +11,21 @@
                         </div>
                         <div class="mb-">
                             <label for="kelas" class="mr-2" style="font-weight: bold">Pilih Kelas:</label>
-                            <select id="kelas" class="btn btn-primary" onchange="redirectToClass()">
+                            <select id="kelas" name="selectedClass" class="btn btn-primary" onchange="redirectToClass()">
                                 <option value="" disabled selected>Semua Kelas</option>
-                                <option value="7A" {{ request('search') == '7A' ? 'selected' : '' }}>Kelas 7A</option>
-                                <option value="7B" {{ request('search') == '7B' ? 'selected' : '' }}>Kelas 7B</option>
-                                <option value="7C" {{ request('search') == '7C' ? 'selected' : '' }}>Kelas 7C</option>
-                                <option value="7D" {{ request('search') == '7D' ? 'selected' : '' }}>Kelas 7D</option>
+                                <option value="7A" {{ request('kelas') == '7A' ? 'selected' : '' }}>Kelas 7A</option>
+                                <option value="7B" {{ request('kelas') == '7B' ? 'selected' : '' }}>Kelas 7B</option>
+                                <option value="7C" {{ request('kelas') == '7C' ? 'selected' : '' }}>Kelas 7C</option>
+                                <option value="7D" {{ request('kelas') == '7D' ? 'selected' : '' }}>Kelas 7D</option>
     
-                                <option value="8A" {{ request('search') == '8A' ? 'selected' : '' }}>Kelas 8A</option>
-                                <option value="8B" {{ request('search') == '8B' ? 'selected' : '' }}>Kelas 8B</option>
-                                <option value="8C" {{ request('search') == '8C' ? 'selected' : '' }}>Kelas 8C</option>
-                                <option value="8D" {{ request('search') == '8D' ? 'selected' : '' }}>Kelas 8D</option>
+                                <option value="8A" {{ request('kelas') == '8A' ? 'selected' : '' }}>Kelas 8A</option>
+                                <option value="8B" {{ request('kelas') == '8B' ? 'selected' : '' }}>Kelas 8B</option>
+                                <option value="8C" {{ request('kelas') == '8C' ? 'selected' : '' }}>Kelas 8C</option>
+                                <option value="8D" {{ request('kelas') == '8D' ? 'selected' : '' }}>Kelas 8D</option>
     
-                                <option value="9A" {{ request('search') == '9A' ? 'selected' : '' }}>Kelas 9A</option>
-                                <option value="9B" {{ request('search') == '9B' ? 'selected' : '' }}>Kelas 9B</option>
-                                <option value="9C" {{ request('search') == '9C' ? 'selected' : '' }}>Kelas 9C</option>
+                                <option value="9A" {{ request('kelas') == '9A' ? 'selected' : '' }}>Kelas 9A</option>
+                                <option value="9B" {{ request('kelas') == '9B' ? 'selected' : '' }}>Kelas 9B</option>
+                                <option value="9C" {{ request('kelas') == '9C' ? 'selected' : '' }}>Kelas 9C</option>
                             </select>
                         </div>
                     </div>                
@@ -72,7 +72,7 @@
                     <br>
 
                     <!-- Display Table -->
-                    @if(count($arsipTabungan) > 0)
+            
                     <div class="table-responsive">
                         <table id="example" class="table table-striped" style="width:100%">
                                 <thead>
@@ -85,7 +85,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($arsipTabungan as $index => $arsip)
+                                    @forelse ($arsipTabungan as $index => $arsip)
                                         <tr>
                                             <td>{{ $index + 1 }}</td>
                                             <td>{{ $arsip->murid }}</td>
@@ -93,16 +93,15 @@
                                             <td>{{ $arsip->tanggal_arsip }}</td>
                                             <td>Rp. {{ number_format($arsip->total, 0, ',', '.') }}</td>
                                         </tr>
-                                    @endforeach
+                                        @empty
+                                        <tr>
+                                            <td colspan="8" class="text-center">No data available</td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
-                    @else
-                        <div class="alert alert-info" role="alert">
-                            Tidak ada arsip tabungan.
-                        </div>
-                    @endif
-                </div>
+                    </div>
 
                 <div class="card-footer">
                     <div class="d-flex justify-content-between align-items-center">
@@ -118,8 +117,21 @@
         </div>
     </div>
 
-    <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.19.0/font/bootstrap-icons.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <script>
+        function redirectToClass() {
+            var selectedValue = document.getElementById('kelas').value;
+            var headingElement = document.getElementById("kelasHeading");
+            headingElement.innerText = "Data Siswa Kelas " + selectedValue;
+            var redirectURL = "?kelas=" + encodeURIComponent(selectedValue);
+            window.location.href = redirectURL;
+        }
+    </script>
+
+        <!-- Include Bootstrap Datepicker -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+        <!-- Bootstrap Icons -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.19.0/font/bootstrap-icons.css" rel="stylesheet">
+        <!-- Font Awesome -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 @endsection

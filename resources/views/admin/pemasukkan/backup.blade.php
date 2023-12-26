@@ -50,11 +50,11 @@
                     <h4 id="kelasHeading" class="m-0">Data Siswa</h4>
                 </div>
                 <a href="" data-toggle="modal" data-target="#tambahModal" style="float: right; margin-top: -30px;">
-                    <img src="{{ asset('image/topup-saldo.png') }}" alt="" width="25px"> <b>Tambah Saldo</b>
+                    <img src="{{ asset('image/topup-saldo.png') }}" alt="" width="25px"> Tambah Saldo
                 </a>
-                <a href="{{ route('download-pdf', ['selectedClass' => $selectedClass ?? '']) }}" style="float: right; margin-top: -30px; margin-right: 150px;">
-                    <img src="{{ asset('image/icon_pdf.png') }}" alt="" width="25px"> <b>Download</b>
-                </a> 
+                <a href="{{ route('download-pdf', ['selectedClass' => $selectedClass ?? '']) }}" style="float: right; margin-top: -30px; margin-right: 130px;">
+                    <img src="{{ asset('image/icon_pdf.png') }}" alt="" width="25px"> Download
+                </a>              
             </div>
             <div class="card-body">
                 <div class="form-group col-md-3">
@@ -100,10 +100,10 @@
                                     <td>{{ $pemasukkan->tanggal }}</td>
                                     <td>Rp. {{ number_format($pemasukkan->nominal, 0, ',', '.') }}</td>
                                     <td>
-                                        <a type="button" title="Saldo" data-toggle="modal" data-target="#tambahData" onclick="openTambahModal('{{ $pemasukkan->nisn_murid }}', '{{ $pemasukkan->nama_murid }}', '{{ $pemasukkan->id_kelas }}')">
-                                            <img src="{{ asset('image/topup-saldo.png') }}" alt="" width="30px">
+                                        <a type="button" data-toggle="modal" data-target="#deleteModal">
+                                            <img src="{{ asset('image/topup-saldo.png') }}" alt="" width="25px">
                                         </a>
-                                        <button type="button" class="btn btn-success btn-sm" title="Edit" data-toggle="modal" data-target="#editModal" onclick="openEditModal('{{ $pemasukkan->nisn_murid }}', '{{ $pemasukkan->nama_murid }}', '{{ $pemasukkan->id_kelas }}', '{{ $pemasukkan->kategori_transaksi }}', '{{ $pemasukkan->tanggal }}', '{{ $pemasukkan->nominal }}')">
+                                        <button type="button" class="btn btn-success btn-sm" title="Edit" data-toggle="modal" data-target="#editModal" onclick="openEditModal('{{ $pemasukkan->nisn_murid }}', '{{ $pemasukkan->nama_murid }}', '{{ $pemasukkan->kelas }}', '{{ $pemasukkan->kategori_transaksi }}', '{{ $pemasukkan->tanggal }}', '{{ $pemasukkan->nominal }}')">
                                             <i class="fas fa-edit"></i>
                                         </button>
                                     </td>
@@ -198,63 +198,6 @@
 </div>
 
 @if ($transaksis->count() > 0)
-<!-- Modal tambah Data pada icon -->
-<div class="modal fade" id="tambahData" tabindex="-1" aria-labelledby="tambahDataLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="tambahDataLabel">Transaksi Saldo Siswa</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Form tambah Data pada icon -->
-                <form id="tambah_action" class="edit-action-form" method="post">
-                    @csrf
-                    @method('PUT')
-
-                    <div class="form-group">
-                        <label for="nama_tambah">Nama</label>
-                        <input type="text" class="form-control" id="nama_tambah" name="id_siswa" readonly>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="tambah_kelas">Kelas:</label>
-                        <input type="text" id="tambah_kelas" name="id_kelas" class="form-control" value="{{ $pemasukkan->kelas }}" readonly>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="deskripsi">Deskripsi</label>
-                        <select class="form-select" id="deskripsi" name="id_kategori" required>
-                            <option value="" disabled selected>Pilih Kategori</option>
-                            @foreach($kategoriTransaksis as $kategori)
-                                <option value="{{ $kategori->id }}">{{ $kategori->deskripsi }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="transaksi_tgl">Tanggal Transaksi</label>
-                        <input type="date" class="form-control" id="transaksi_tgl" name="tanggal" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="nominal_tambah" class="form-label">Nominal</label>
-                        <div class="input-group">
-                            <span class="input-group-text">Rp</span>
-                            <input type="number" class="form-control" id="nominal_tambah" name="nominal" step="0.01" required>
-                        </div>
-                        <small id="nominalHelp" class="form-text text-muted">Contoh: 10000</small>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">Simpan</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
 {{-- <!-- Modal Delete -->
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -307,9 +250,9 @@
                         <select id="edit_kelas" name="id_kelas" class="form-control">
                             <option value="" disabled selected>Pilih Kelas</option>
                             @foreach($kelas as $kelasItem)
-                            <option value="{{ $kelasItem->id }}" {{ isset($pemasukkan->id_kelas) && $pemasukkan->id_kelas == $kelasItem->id ? 'selected' : '' }}>
-                                {{ $kelasItem->ket_kelas }}
-                            </option>
+                                <option value="{{ $kelasItem->id }}"{{ isset($pemasukkan->id_kelas) && $pemasukkan->id_kelas == $kelasItem->id ? 'selected' : '' }}>
+                                    {{ $kelasItem->ket_kelas }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
@@ -342,27 +285,10 @@
         </div>
     </div>
 </div>
+
 @endif
-
 <script>
-    function openTambahModal(nisn, nama_murid, id_kelas) {
-        var modal = document.getElementById('tambahData');
-        var tambah_action = document.getElementById('tambah_action');
-        tambah_action.action = "/transaksi-tabungan/" + nisn + "/store";
-        var muridInput = document.getElementById('nama_tambah');
-        muridInput.value = nama_murid;
-
-        var pilihkelasSelect = document.getElementById('tambah_kelas');
-        for (var i = 0; i < pilihkelasSelect.options.length; i++) {
-            if (pilihkelasSelect.options[i].value === id_kelas) {
-                pilihkelasSelect.options[i].selected = true;
-            }
-        }
-    }
-</script>
-
-<script>
-    function openEditModal(nisn, nama_murid, id_kelas, kategori_transaksi, tanggal, nominal) {
+    function openEditModal(nisn, nama_murid, kelas, kategori_transaksi, tanggal, nominal) {
         var modal = document.getElementById('editModal');
         var edit_action = document.getElementById('edit_action');
         edit_action.action = "/transaksi-tabungan/" + nisn + "/update";
@@ -371,12 +297,11 @@
         var transaksiInput = document.getElementById('tgl_transaksi');
         transaksiInput.value = tanggal;
         var nominalInput = document.getElementById('nominal_edit');
-
         nominalInput.value = nominal;
 
         var pilihkelasSelect = document.getElementById('edit_kelas');
         for (var i = 0; i < pilihkelasSelect.options.length; i++) {
-            if (pilihkelasSelect.options[i].value === id_kelas) {
+            if (pilihkelasSelect.options[i].value === kelas) {
                 pilihkelasSelect.options[i].selected = true;
             }
         }
@@ -428,13 +353,12 @@
         }
     </script>
 
-    <script>
-        // Auto-hide success alert after 3 seconds
-        $(document).ready(function () {
-            setTimeout(function () {
-                $("#success-alert").alert('close');
-            }, 3000);
-        });
-    </script>
+<script>
+    // Auto-hide success alert after 3 seconds
+    $(document).ready(function () {
+        setTimeout(function () {
+            $("#success-alert").alert('close');
+        }, 3000);
+    });
+</script>
 @endsection
-

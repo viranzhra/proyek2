@@ -39,9 +39,17 @@
 		<div class="p-4">
 			<div class="text-center mb-3 d-flex align-items-center">
                 <!-- Avatar dan Nama Admin -->
+				@if(Auth::user()->murid)
 				<a href="#">
-                	<img src="image/orang1.jpg" alt="Avatar" class="avatar"><b class="ml-2 mb-0" style="margin-top: 0; font-size: 15px; color: rgb(0, 204, 255);">viranzahra12@gmail.com</b>
+					<img src="image/orang1.jpg" alt="Avatar" class="avatar">
+					<b class="ml-2 mb-0" style="margin-top: 0; font-size: 15px; color: rgb(0, 204, 255);">
+						{{ Auth::user()->murid->nama_murid ?? 'Nama Tidak Tersedia' }}
+					</b>
 				</a>
+			@else
+				<!-- Handle jika murid null -->
+				<p>User tidak terkait dengan Murid.</p>
+			@endif
             </div>
 			<hr>
 			<h1><a href="#" class="logo">SiTabung <span>SMP NURUL HALIM WIDASARI</span></a></h1>

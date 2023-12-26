@@ -120,7 +120,8 @@
         <div class="text-center mt-4 name">
             Login Siswa
         </div>
-        <form action="/siswa-login" method="post" class="p-3 mt-3">
+        <form action="{{ url('/siswa-login') }}" method="post" class="p-3 mt-3">
+            @csrf
             <div class="form-field d-flex align-items-center">
                 <span class="far fa-user"></span>
                 <input type="text" name="userName" id="userName" placeholder="Username">
@@ -130,11 +131,26 @@
               <input type="password" name="password" id="pwd" placeholder="Password">
             </div>
             <div class="center-container">
-              <submit class="btn mt-3">Login</submit>
-          </div>
+                <button type="submit" class="btn mt-3">Login</button>
+            </div>
         </form>
         <div class="text-center fs-6">
             <a href="#">Forget password?</a>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if(session('error'))
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: '{{ session('error') }}',
+            customClass: {
+                popup: 'small-popup',
+            },
+            iconHtml: '<i class="fas fa-exclamation-circle" style="font-size: 18px;"></i>',
+        });
+    </script>
+@endif
 @endsection

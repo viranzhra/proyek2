@@ -50,6 +50,11 @@ return [
             'driver' => 'session', // Penggunaan driver session untuk autentikasi admin
             'provider' => 'admins', // Menggunakan provider 'admins' untuk menyediakan informasi admin
         ],
+        'siswa' => [  // Tambahkan guard untuk siswa
+            'driver' => 'session',
+            'provider' => 'murids',  // Gunakan provider 'murids' untuk menyediakan informasi siswa
+        ],
+        
     ],
 
     /*
@@ -78,6 +83,11 @@ return [
         'admins' => [
             'driver' => 'eloquent', // Penggunaan driver eloquent untuk menyediakan informasi admin
             'model' => App\Models\Admin::class, // Model yang terkait dengan provider 'admins'
+        ],
+
+        'murids' => [  // Tambahkan provider untuk siswa
+            'driver' => 'eloquent',
+            'model' => App\Models\Murid::class,
         ],
 
         // 'users' => [

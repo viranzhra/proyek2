@@ -26,8 +26,10 @@ class TransaksiTabunganController extends Controller
             ->join('kelas', 'transaksi_tabungan.id_kelas', '=', 'kelas.id')
             ->select(
                 'transaksi_tabungan.id',
-                'murid.nisn_murid as murid',
-                'murid.nama_murid as murid',
+                'transaksi_tabungan.id_kategori',
+                'transaksi_tabungan.id_kelas',
+                'murid.nisn_murid as nisn_murid',
+                'murid.nama_murid as nama_murid',
                 'kelas.ket_kelas as kelas',
                 'kategori_transaksi.deskripsi as kategori_transaksi',
                 'transaksi_tabungan.tanggal',
@@ -38,14 +40,15 @@ class TransaksiTabunganController extends Controller
             ->when($search, function ($query, $search) {
                 return $query->where('murid.nama_murid', 'like', '%' . $search . '%')
                     ->orWhere('kelas.ket_kelas', 'like', '%' . $search . '%');
-            })
-            ->paginate(5);
+            });
     
         // Filter data based on search date
         if ($request->has('search_date')) {
             $searchDate = $request->input('search_date');
             $transaksis->whereDate('transaksi_tabungan.tanggal', $searchDate);
         }
+
+        $transaksis = $transaksis->paginate(5); // Menentukan jumlah data per halaman
     
         return view("admin/pemasukkan/transaksi", compact('search', 'murids', 'kelas', 'kategoriTransaksis', 'transaksis'));
     }
@@ -126,17 +129,21 @@ class TransaksiTabunganController extends Controller
         }
 
     // Fungsi untuk menampilkan form edit transaksi
-    public function edit(TransaksiTabungan $transaksis)
+    public function edit($nisn)
     {
-        $transaksis = TransaksiTabungan::all();
+        // Temukan data transaksi berdasarkan NISN yang diberikan
+        $transaksi = TransaksiTabungan::where('nisn_murid', $nisn)->firstOrFail();
+
+        // Retrieve data for dropdowns or any other necessary data
         $kategoriTransaksis = KategoriTransaksi::all();
-        return view('admin/pemasukkan/transaksi', compact('transaksis','kategoriTransaksis'));
+
+        // Pass data to the view
+        return view('admin.pemasukkan.transaksi', compact('transaksi', 'kategoriTransaksis'));
     }
 
     // Fungsi untuk menyimpan perubahan pada transaksi
-    public function update(Request $request, TransaksiTabungan $transaksis)
+    public function update(Request $request, $nisn)
     {
-        
         // Validasi request di sini sesuai kebutuhan
         $request->validate([
             'id_siswa' => 'required',
@@ -146,24 +153,40 @@ class TransaksiTabunganController extends Controller
             'nominal' => 'required',
         ]);
 
+        // Temukan data transaksi berdasarkan NISN yang diberikan
+        $transaksi = TransaksiTabungan::where('nisn_murid', $nisn)->firstOrFail();
+
         // Update transaksi
-        $transaksis->update($request->all());
+        $transaksi->update($request->all());
 
         // Lakukan pemrosesan arsip tabungan, update saldo, dll. sesuai kebutuhan
-        $this->processTabungan($transaksis);
+        $this->processTabungan($transaksi);
 
         return redirect()->route('transaksi-tabungan.index')->with('success', 'Transaksi berhasil diperbarui');
     }
 
+
     // Fungsi untuk menghapus transaksi
-    public function destroy(TransaksiTabungan $transaksi)
+    public function destroy($nisn)
     {
-        $transaksi->delete();
-
-        // Lakukan pemrosesan arsip tabungan, update saldo, dll. sesuai kebutuhan
-
-        return redirect()->route('transaksi-tabungan.index')->with('success', 'Transaksi berhasil dihapus');
+        // Temukan data transaksi berdasarkan NISN yang diberikan
+        $transaksi = TransaksiTabungan::where('nisn_murid', $nisn)->first();
+    
+        if ($transaksi) {
+            // Hapus data transaksi
+            $transaksi->delete();
+    
+            // Atur pesan sukses
+            session()->flash('success', 'Transaksi berhasil dihapus.');
+        } else {
+            // Atur pesan error jika data transaksi tidak ditemukan
+            session()->flash('error', 'Transaksi tidak ditemukan.');
+        }
+    
+        // Redirect kembali ke halaman indeks dengan pesan sukses atau error
+        return redirect()->route('transaksi-tabungan.index');
     }
+    
 
     // Fungsi untuk mendapatkan nama murid berdasarkan ID
     public function getMuridName($id)

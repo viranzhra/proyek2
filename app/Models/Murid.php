@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Auth\Authenticatable as AuthenticatableTrait;
 use App\Models\Kelas;
 use App\Models\TahunAngkatan;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Murid extends Model
+class Murid extends Model implements Authenticatable
 {
+    use AuthenticatableTrait;
     use HasFactory;
     protected $table = 'murid';
 
