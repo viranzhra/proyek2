@@ -33,4 +33,9 @@ class Murid extends Model implements Authenticatable
     {
         return $this->belongsTo(TahunAngkatan::class, 'id_ta');
     }
+    
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id_siswa');
+    }
 }

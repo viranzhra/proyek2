@@ -164,9 +164,6 @@ Route::get('/profilguru', function () {
     ]);
 })->name('profilguru');
 
-    Route::get('/siswa-login', [SiswaLoginController::class, 'showLoginForm'])->name('siswa.login');
-    Route::post('/siswa-login', [SiswaLoginController::class, 'login']);
-
 // Rute untuk menampilkan formulir login admin
 Route::get('/loginadmin', [AdminLoginController::class, 'showLoginForm'])->name('admin.login.form');
 
@@ -178,32 +175,36 @@ Route::post('/logoutadmin', [AdminLoginController::class, 'logout'])->name('admi
 Route::get('/update-profile', [AdminProfileController::class, 'showUpdateForm'])->name('admin.update.profile.form');
 Route::post('/update-profile', [AdminProfileController::class, 'updateProfile'])->name('admin.update.profile');
 
-<<<<<<< HEAD
 Route::middleware(['auth:siswa'])->group(function () {
     Route::get('/profilsiswa', function () {
         return view('siswa/profil/profil', [
             "title" => "Profil Siswa"
         ]);
     })->name('profilsiswa');
-=======
-Route::get('/home_siswa', function () {
-    return view('siswa/home/home_siswa', [
-        "title" => "Home"
-    ]);
-})->name('home_siswa');
 
-Route::get('/profilsiswa', function () {
-    return view('siswa/profil/profil', [
-        "title" => "Profil Siswa"
-    ]);
-})->name('profilsiswa');
->>>>>>> 8cca011a540c8ecdb80e6373553559bf70b0a85f
+    Route::get('/home_siswa', function () {
+        return view('siswa/home/home_siswa', [
+            "title" => "Home"
+        ]);
+    })->name('home_siswa');
+
+    Route::get('/profilsiswa', function () {
+        return view('siswa/profil/profil', [
+            "title" => "Profil Siswa"
+        ]);
+    })->name('profilsiswa');
 
     Route::get('/aduansiswa', function () {
         return view('siswa/ajukan_aduan/ajukan', [
             "title" => "Ajukan Aduan Siswa"
         ]);
     })->name('aduansiswa');
+
+    Route::get('/riwayat_siswa', function () {
+        return view('siswa/riwayat/riwayat_siswa', [
+            "title" => "riwayat"
+        ]);
+    })->name('riwayat_siswa');
 
     // Tambahkan rute atau logika lainnya yang memerlukan otentikasi siswa
 });
@@ -220,16 +221,7 @@ Route::get('/isisaldo', function () {
     ]);
 })->name('isisaldo');
 
-<<<<<<< HEAD
-=======
-Route::get('/riwayat_siswa', function () {
-    return view('siswa/riwayat/riwayat_siswa', [
-        "title" => "riwayat"
-    ]);
-})->name('riwayat_siswa');
-
-Route::get('/siswa-login', [SiswaLoginController::class, 'showLoginForm'])->name('siswa.login');
+Route::get('/siswa/login', [SiswaLoginController::class, 'showLoginForm'])->name('siswa.login');
 Route::post('/siswa-login', [SiswaLoginController::class, 'login']);
->>>>>>> 8cca011a540c8ecdb80e6373553559bf70b0a85f
 Route::post('/siswa-logout', [SiswaLoginController::class, 'logout'])->name('siswa.logout');
 Route::get('/riwayat', [TransaksiTabunganController::class, 'index'])->name('riwayat');

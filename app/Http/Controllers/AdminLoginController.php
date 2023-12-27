@@ -21,7 +21,7 @@ class AdminLoginController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password'); // Hanya butuh email dan password
+        $credentials = $request->only('username', 'email', 'password'); // Hanya butuh email dan password
 
         if (Auth::guard('admin')->attempt($credentials)) {
             return redirect()->intended('/home');
@@ -29,8 +29,8 @@ class AdminLoginController extends Controller
 
         return redirect()
             ->route('admin.login.form')
-            ->withInput($request->only('email'))
-            ->with('error', 'Invalid email or password');
+            ->withInput($request->only('username','email','password'))
+            ->with('error', 'Maaf, Ada yang salah dari inputan anda!');
     }
 
     public function logout(Request $request)
