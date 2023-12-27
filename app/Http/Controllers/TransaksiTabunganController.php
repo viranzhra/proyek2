@@ -10,6 +10,7 @@ use App\Models\KategoriTransaksi;
 use App\Models\ArsipTabungan; 
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade as PDF;
+use Carbon\Carbon;
 
 class TransaksiTabunganController extends Controller
 {
@@ -20,6 +21,9 @@ class TransaksiTabunganController extends Controller
         $kategoriTransaksis = KategoriTransaksi::all();
         $search = $request->input('search');
     
+        // Inisialisasi $searchDate dengan tanggal sekarang jika tidak ada tanggal pencarian
+        $searchDate = $request->input('search_date', now()->format('l, d F Y'));
+
         $transaksis = DB::table('transaksi_tabungan')
             ->join('murid', 'transaksi_tabungan.id_siswa', '=', 'murid.id')
             ->join('kategori_transaksi', 'transaksi_tabungan.id_kategori', '=', 'kategori_transaksi.id')
@@ -42,16 +46,14 @@ class TransaksiTabunganController extends Controller
                     ->orWhere('kelas.ket_kelas', 'like', '%' . $search . '%');
             });
     
-        // Filter data based on search date
-        if ($request->has('search_date')) {
-            $searchDate = $request->input('search_date');
-            $transaksis->whereDate('transaksi_tabungan.tanggal', $searchDate);
-        }
-
+            // Filter data based on search date
+            $transaksis->whereDate('transaksi_tabungan.tanggal', Carbon::parse($searchDate)->toDateString());
+    
         $transaksis = $transaksis->paginate(5); // Menentukan jumlah data per halaman
     
-        return view("admin/pemasukkan/transaksi", compact('search', 'murids', 'kelas', 'kategoriTransaksis', 'transaksis'));
+        return view("admin/pemasukkan/transaksi", compact('search', 'murids', 'kelas', 'kategoriTransaksis', 'transaksis', 'searchDate'));
     }
+    
     
 
     // Fungsi untuk menampilkan form tambah transaksi
@@ -218,4 +220,48 @@ class TransaksiTabunganController extends Controller
         // Jika tidak ditemukan, kembalikan respons JSON kosong atau sesuaikan dengan kebutuhan
         return response()->json([]);
     }
+
+    public function tambahSaldo(Request $request)
+    {
+        // Validasi request sesuai kebutuhan
+        $request->validate([
+            'id_siswa' => 'required',
+            'id_kelas' => 'required',
+            'tanggal' => 'required',
+            'id_kategori' => 'required',
+            'nominal' => 'required',
+        ]);
+
+        // Dapatkan nama murid dari request
+        $namaMurid = $request->input('id_siswa'); // Sesuaikan dengan nama field pada form
+
+        // Temukan ID siswa berdasarkan nama murid
+        $murid = Murid::where('nama_murid', $namaMurid)->first();
+
+        // Cek apakah murid ditemukan
+        if (!$murid) {
+            // Tindakan yang sesuai jika murid tidak ditemukan (misalnya, tampilkan pesan kesalahan)
+            return redirect()->route('transaksi-tabungan.index')->with('error', 'Murid tidak ditemukan');
+        }
+
+        // Buat transaksi baru hanya dengan data yang diperlukan
+        $transaksi = TransaksiTabungan::create([
+            'id_siswa' => $murid->id, // Menggunakan ID siswa dari hasil pencarian
+            'id_kelas' => $murid->id_kelas,
+            'tanggal' => $request->tanggal,
+            'id_kategori' => $request->id_kategori,
+            'nominal' => $request->nominal,
+        ]);
+
+        // Perbarui nilai total berdasarkan kondisi
+        $nilaiTotal = $request->id_kategori == 1 ? $transaksi->nominal : abs($transaksi->nominal);
+        $transaksi->total = $nilaiTotal;
+        $transaksi->save();
+
+        // Proses tabungan (perbarui saldo, dll.) sesuai kebutuhan
+        $this->processTabungan($transaksi);
+        // Redirect ke halaman indeks dengan pesan sukses
+        return redirect()->route('transaksi-tabungan.index')->with('success', 'Saldo berhasil ditambahkan');
+    }
+
 }

@@ -57,12 +57,18 @@
                 </a> 
             </div>
             <div class="card-body">
+            <form action="{{ route('transaksi-tabungan.index') }}" method="get">
+                @csrf <!-- Tambahkan ini untuk melindungi formulir dari serangan Cross-Site Request Forgery (CSRF) -->
+                <center>
+                    @if (isset($searchDate))
+                        <b style="color: rgb(65, 65, 154)">{{ \Carbon\Carbon::parse($searchDate)->format('l, d F Y') }}</b>
+                    @endif
+                </center>
+
                 <div class="form-group col-md-3">
-                    <form action="{{ route('transaksi-tabungan.index') }}" method="get">
-                        @csrf <!-- Tambahkan ini untuk melindungi formulir dari serangan Cross-Site Request Forgery (CSRF) -->
                         <label for="search_date"><b>Cari berdasarkan tanggal: </b></label>
                         <div class="input-group">
-                            <input type="date" class="form-control" id="search_date" name="search_date" value="{{ $searchDate ?? '' }}">
+                            <input type="date" class="form-control" id="search_date" name="search_date">
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="submit">
                                     <i class="fas fa-search"></i>
@@ -73,11 +79,17 @@
                 </div>
     
                 <div class="table-responsive">
-                    @if (session('success'))
+                @if (session('success'))
                     <div id="success-alert" class="alert alert-success" role="alert">
                         {{ session('success') }}
                     </div>
                 @endif
+                @if(session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
                     <table id="example" class="table table-striped" style="width:100%">
                         <thead>
                             <tr>
@@ -100,7 +112,7 @@
                                     <td>{{ $pemasukkan->tanggal }}</td>
                                     <td>Rp. {{ number_format($pemasukkan->nominal, 0, ',', '.') }}</td>
                                     <td>
-                                        <a type="button" title="Saldo" data-toggle="modal" data-target="#tambahData" onclick="openTambahModal('{{ $pemasukkan->nisn_murid }}', '{{ $pemasukkan->nama_murid }}', '{{ $pemasukkan->id_kelas }}')">
+                                        <a type="button" title="Saldo" data-toggle="modal" data-target="#tambahData" onclick="openTambahModal('{{ $pemasukkan->nisn_murid }}', '{{ $pemasukkan->nama_murid }}', '{{ $pemasukkan->kelas }}')">
                                             <img src="{{ asset('image/topup-saldo.png') }}" alt="" width="30px">
                                         </a>
                                         <button type="button" class="btn btn-success btn-sm" title="Edit" data-toggle="modal" data-target="#editModal" onclick="openEditModal('{{ $pemasukkan->nisn_murid }}', '{{ $pemasukkan->nama_murid }}', '{{ $pemasukkan->id_kelas }}', '{{ $pemasukkan->kategori_transaksi }}', '{{ $pemasukkan->tanggal }}', '{{ $pemasukkan->nominal }}')">
@@ -212,7 +224,6 @@
                 <!-- Form tambah Data pada icon -->
                 <form id="tambah_action" class="edit-action-form" method="post">
                     @csrf
-                    @method('PUT')
 
                     <div class="form-group">
                         <label for="nama_tambah">Nama</label>
@@ -220,8 +231,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="tambah_kelas">Kelas:</label>
-                        <input type="text" id="tambah_kelas" name="id_kelas" class="form-control" value="{{ $pemasukkan->kelas }}" readonly>
+                        <label for="tambah_kelas">Kelas</label>
+                        <input type="text" class="form-control" id="tambah_kelas" name="id_kelas" readonly>
                     </div>
 
                     <div class="form-group">
@@ -348,18 +359,16 @@
     function openTambahModal(nisn, nama_murid, id_kelas) {
         var modal = document.getElementById('tambahData');
         var tambah_action = document.getElementById('tambah_action');
-        tambah_action.action = "/transaksi-tabungan/" + nisn + "/store";
+        tambah_action.action = "/transaksi-tabungan/" + nisn + "/tambah-saldo";
         var muridInput = document.getElementById('nama_tambah');
         muridInput.value = nama_murid;
 
-        var pilihkelasSelect = document.getElementById('tambah_kelas');
-        for (var i = 0; i < pilihkelasSelect.options.length; i++) {
-            if (pilihkelasSelect.options[i].value === id_kelas) {
-                pilihkelasSelect.options[i].selected = true;
-            }
-        }
+        var kelasInput = document.getElementById('tambah_kelas');
+        kelasInput.value = id_kelas;
+
     }
 </script>
+
 
 <script>
     function openEditModal(nisn, nama_murid, id_kelas, kategori_transaksi, tanggal, nominal) {
@@ -403,6 +412,9 @@
         $(modal).modal('show');
     }
 </script>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
         <!-- Include Bootstrap Datepicker -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">

@@ -142,6 +142,9 @@ Route::middleware('auth:admin')->group(function () {
     Route::resource('transaksi-tabungan', TransaksiTabunganController::class);
     Route::put('/transaksi-tabungan/{nisn}/update', [DataSiswaController::class, 'update'])->name('transaksi-tabungan.update');
     Route::delete('/transaksi-tabungan/{nisn}/destroy', [DataSiswaController::class, 'destroy'])->name('transaksi-tabungan.destroy');
+    // Rute untuk menambahkan saldo
+    Route::post('/transaksi-tabungan/{nisn}/tambah-saldo', [TransaksiTabunganController::class, 'tambahSaldo'])
+        ->name('transaksi-tabungan.tambah-saldo');
 
     Route::get('/download-pdf', [PdfTransaksiController::class, 'downloadPDF'])->name('download-pdf');
     Route::get('/download-pdf-siswa', [PdfDatasiswaController::class, 'downloadPDF'])->name('download-pdf-siswa');
@@ -151,11 +154,6 @@ Route::middleware('auth:admin')->group(function () {
     
     Route::get('/arsipan', [ArsipTabunganController::class, 'index'])->name('arsipan.index');
     Route::get('/arsipan/download-pdf', [ArsipTabunganController::class, 'downloadPdf'])->name('arsipan.downloadPdf');
-});
-
-// Grup route yang memerlukan otentikasi untuk users
-Route::middleware(['auth'])->group(function () {
-    
 });
 
 Route::get('/profilguru', function () {
@@ -175,7 +173,7 @@ Route::post('/logoutadmin', [AdminLoginController::class, 'logout'])->name('admi
 Route::get('/update-profile', [AdminProfileController::class, 'showUpdateForm'])->name('admin.update.profile.form');
 Route::post('/update-profile', [AdminProfileController::class, 'updateProfile'])->name('admin.update.profile');
 
-Route::middleware(['auth:siswa'])->group(function () {
+Route::middleware('auth:siswa')->group(function () {
     Route::get('/profilsiswa', function () {
         return view('siswa/profil/profil', [
             "title" => "Profil Siswa"
