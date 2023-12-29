@@ -144,7 +144,10 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/arsipan/download-pdf', [ArsipTabunganController::class, 'downloadPdf'])->name('arsipan.downloadPdf');
 
     Route::get('/aduansiswa', [AduanController::class, 'index'])->name('form.aduan.index');
-Route::post('/aduansiswa', [AduanController::class, 'store'])->name('form.aduan.store');
+    Route::post('/aduansiswa', [AduanController::class, 'store'])->name('form.aduan.store');
+
+    Route::get('/update-profile-form', [AdminProfileController::class, 'showUpdateForm'])->name('admin.update.profile.form');
+    Route::post('/update-profile', [AdminProfileController::class, 'updateProfile'])->name('admin.update.profile');
 });
 
 Route::get('/profilguru', function () {
@@ -160,9 +163,6 @@ Route::get('/loginadmin', [AdminLoginController::class, 'showLoginForm'])->name(
 Route::post('/loginadmin', [AdminLoginController::class, 'login'])->name('admin.login');
 
 Route::post('/logoutadmin', [AdminLoginController::class, 'logout'])->name('admin.logout');
-
-Route::get('/update-profile', [AdminProfileController::class, 'showUpdateForm'])->name('admin.update.profile.form');
-Route::post('/update-profile', [AdminProfileController::class, 'updateProfile'])->name('admin.update.profile');
 
 Route::middleware(['auth:web'])->group(function () {  
 

@@ -79,8 +79,8 @@
                 <a href="/arsipan"><span class="fa fa-paper-plane mr-3"></span> Data Arsip</a>
 	          </li>
 			  <li style="margin-top: 20px;"><span style="font-weight: bold;">Admin</span></li>
-			  <li class="{{ request()->routeIs('admin.data_admin.data_admin') ? 'active' : '' }}">
-				<a href="{{ route('admin.data_admin.data_admin') }}"><span class="fa fa-user mr-3"></span>Data Admin</a>
+			  <li class="{{ request()->routeIs('admin.update.profile.form') ? 'active' : '' }}">
+				<a href="{{ route('admin.update.profile.form') }}"><span class="fa fa-user mr-3"></span>Profile Admin</a>
 			</li>
 				<li class="nav-item {{ Request::is('identitas-sekolah*') ? 'active' : '' }}">
 					<a href="#setting" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fa fa-cogs mr-3"></span>Tentang Sekolah</a>

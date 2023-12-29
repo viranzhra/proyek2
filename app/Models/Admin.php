@@ -13,7 +13,7 @@ class Admin extends Model implements Authenticatable
     use AuthenticatableTrait; // Tambahkan ini untuk menggunakan trait Authenticatable
 
     protected $table = 'admins';
-    protected $fillable = ['username', 'email', 'password', 'jenis_kelamin', 'jabatan'];
+    protected $fillable = ['username', 'email', 'password', 'jenis_kelamin', 'profile_picture'];
 
     /**
      * Mendapatkan nama kolom yang digunakan sebagai identifier otentikasi.
