@@ -33,7 +33,7 @@
                 <div class="card-body">
                     <!-- Search Form -->
                         <div class="form-row">
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-5">
                                 <form action="{{ route('arsipan.index') }}" method="get">
                                     @csrf <!-- Tambahkan ini untuk melindungi formulir dari serangan Cross-Site Request Forgery (CSRF) -->
                                     <label for="search_date"><b>Cari berdasarkan tanggal: </b></label>
@@ -47,24 +47,9 @@
                                     </div>
                                 </form>
                             </div>
-                        
-                            <div class="form-group col-md-3">
-                                <label for="start_date"><b>Mulai Tanggal: </b></label>
-                                <div class="input-group">
-                                    <input type="date" class="form-control" id="start_date" name="start_date" value="{{ $startDate ?? '' }}">
-                                </div>
-                            </div>
-                    
-                            <!-- Add a date range input for end date -->
-                            <div class="form-group col-md-3">
-                                <label for="end_date"><b>Sampai Tanggal: </b></label>
-                                <div class="input-group">
-                                    <input type="date" class="form-control" id="end_date" name="end_date" value="{{ $endDate ?? '' }}">
-                                </div>
-                            </div>
-                            <div class="form-group col-md-3">
-                                <button type="submit" class="btn btn-success">Cari</button>
-                                <a href="{{ route('arsipan.downloadPdf', ['search_date' => $searchDate ?? '', 'weekly' => $weekly ?? '', 'monthly' => $monthly ?? '', 'kelas_filter' => $kelasFilter ?? '']) }}" class="btn btn-success">Download</a>
+
+                            <div class="form-group col-md-7">
+                                <a style="float: right;" href="{{ route('arsipan.downloadPdf', ['search_date' => $searchDate ?? '', 'weekly' => $weekly ?? '', 'monthly' => $monthly ?? '', 'kelas_filter' => $kelasFilter ?? '']) }}" class="btn btn-success">Download</a>
                             </div>
                         </div>
                     </form>

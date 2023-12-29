@@ -28,16 +28,15 @@
             
             <ul class="nav nav-underline me-auto mb-2 mb-lg-0" style="margin-left: 150px;">
               <li class="nav-item">
-                <a class="nav-link {{ $title === "Beranda" ? 'active' : "" }}" aria-current="page" href="/" style="color: white;">BERANDA </a>
+                <a class="nav-link {{ $title === "Beranda" ? 'active' : "" }}" aria-current="page" href="/" style="color: white;">Beranda </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link {{ $title === "Kontak" ? 'active' : "" }}" href="#" style="color: white;">KONTAK</a>
+                <a class="nav-link {{ request()->routeIs('form.aduan') ? 'active' : '' }}" href="/aduansiswa_form" style="color: white;">Aduan Siswa</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link {{ $title === "Visi Misi" ? 'active' : "" }}" href="/visimisi" style="color: white;">VISI MISI</a>
+                <a class="nav-link {{ $title === "Visi Misi" ? 'active' : "" }}" href="/visimisi" style="color: white;">Visi Misi</a>
               </li>
             </ul>
-              <a href="/loginsiswa" class="btn btn-outline-success" type="submit" style="background-color: #215382; color: white; font-weight: bold;">LOGIN</a>
           </div>
         </div>
       </nav>

@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AduanController;
+use App\Http\Controllers\SekolahController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\DataSiswaController;
 use App\Http\Controllers\AdminLoginController;
@@ -9,6 +11,7 @@ use App\Http\Controllers\SiswaLoginController;
 use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\PdfDatasiswaController;
 use App\Http\Controllers\PdfTransaksiController;
+use App\Http\Controllers\SiswaRiwayatController;
 use App\Http\Controllers\ArsipTabunganController;
 use App\Http\Controllers\TransaksiTabunganController;
 use App\Http\Controllers\PemasukkanTabunganController;
@@ -22,23 +25,14 @@ use App\Http\Controllers\PemasukkanTabunganController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/', function () {
-    return view('landingpage', [
-        "title" => "Beranda"
-    ]);
-})->name('landingpage');
+
+Route::get('/', [SekolahController::class, 'index'])->name('sekolah.index');
 
 Route::get('/visimisi', function () {
     return view('visi_misi', [
         "title" => "Visi Misi"
     ]);
 })->name('visi_misi');
-
-Route::get('/loginsiswa', function () {
-    return view('login_siswa', [
-        "title" => "Login Siswa"
-    ]);
-});
 
 Route::get('/prestasi', function () {
     return view('prestasi', [
@@ -74,23 +68,17 @@ Route::middleware('auth:admin')->group(function () {
         ]);
     })->name('home');
 
-    Route::get('/aduan1', function () {
-        return view('admin/aduan/kelas7', [
-            "title" => "Aduan Kelas 7"
-        ]);
-    })->name('aduan1');
+    Route::get('/identitas-sekolah', [SekolahController::class, 'showIdentitasSekolah'])->name('identitas-sekolah');
+    Route::get('/edit', [SekolahController::class, 'edit'])->name('sekolah.edit');
+    Route::put('/update', [SekolahController::class, 'update'])->name('sekolah.update');
 
-    Route::get('/aduan2', function () {
-        return view('admin/aduan/kelas8', [
-            "title" => "Aduan Kelas 8"
-        ]);
-    })->name('aduan2');
-
-    Route::get('/aduan3', function () {
-        return view('admin/aduan/kelas9', [
-            "title" => "Aduan Kelas 9"
-        ]);
-    })->name('aduan3');
+    Route::get('/siswa_ajukan_aduan', [AduanController::class, 'index'])->name('ajukan-aduan.index');
+    Route::get('/siswa/ajukan_aduan/create', [AduanController::class, 'create'])->name('ajukan-aduan.create');
+    Route::post('/siswa/ajukan_aduan', [AduanController::class, 'store'])->name('ajukan-aduan.store');
+    Route::get('/siswa/ajukan_aduan/{id}', [AduanController::class, 'show'])->name('ajukan-aduan.show');
+    Route::get('/siswa/ajukan_aduan/{id}/edit', [AduanController::class, 'edit'])->name('ajukan-aduan.edit');
+    Route::put('/siswa/ajukan_aduan/{id}', [AduanController::class, 'update'])->name('ajukan-aduan.update');
+    Route::delete('/siswa/ajukan_aduan/{id}', [AduanController::class, 'destroy'])->name('ajukan-aduan.destroy');
 
     Route::get('/pemasukkan-tabungan', [PemasukkanTabunganController::class, 'index'])->name('pemasukkan-tabungan.index');
     Route::get('/pemasukkan-tabungan/create', [PemasukkanTabunganController::class, 'create'])->name('pemasukan.create');
@@ -140,7 +128,7 @@ Route::middleware('auth:admin')->group(function () {
     Route::delete('/siswa/{nisn}/destroy', [DataSiswaController::class, 'destroy'])->name('siswa.destroy');
 
     Route::resource('transaksi-tabungan', TransaksiTabunganController::class);
-    Route::put('/transaksi-tabungan/{nisn}/update', [DataSiswaController::class, 'update'])->name('transaksi-tabungan.update');
+    Route::put('/transaksi-tabungan/{id}/update', [TransaksiTabunganController::class, 'update'])->name('transaksi-tabungan.update');
     Route::delete('/transaksi-tabungan/{nisn}/destroy', [DataSiswaController::class, 'destroy'])->name('transaksi-tabungan.destroy');
     // Rute untuk menambahkan saldo
     Route::post('/transaksi-tabungan/{nisn}/tambah-saldo', [TransaksiTabunganController::class, 'tambahSaldo'])
@@ -154,6 +142,9 @@ Route::middleware('auth:admin')->group(function () {
     
     Route::get('/arsipan', [ArsipTabunganController::class, 'index'])->name('arsipan.index');
     Route::get('/arsipan/download-pdf', [ArsipTabunganController::class, 'downloadPdf'])->name('arsipan.downloadPdf');
+
+    Route::get('/aduansiswa', [AduanController::class, 'index'])->name('form.aduan.index');
+Route::post('/aduansiswa', [AduanController::class, 'store'])->name('form.aduan.store');
 });
 
 Route::get('/profilguru', function () {
@@ -173,12 +164,7 @@ Route::post('/logoutadmin', [AdminLoginController::class, 'logout'])->name('admi
 Route::get('/update-profile', [AdminProfileController::class, 'showUpdateForm'])->name('admin.update.profile.form');
 Route::post('/update-profile', [AdminProfileController::class, 'updateProfile'])->name('admin.update.profile');
 
-Route::middleware('auth:siswa')->group(function () {
-    Route::get('/profilsiswa', function () {
-        return view('siswa/profil/profil', [
-            "title" => "Profil Siswa"
-        ]);
-    })->name('profilsiswa');
+Route::middleware(['auth:web'])->group(function () {  
 
     Route::get('/home_siswa', function () {
         return view('siswa/home/home_siswa', [
@@ -192,20 +178,13 @@ Route::middleware('auth:siswa')->group(function () {
         ]);
     })->name('profilsiswa');
 
-    Route::get('/aduansiswa', function () {
-        return view('siswa/ajukan_aduan/ajukan', [
-            "title" => "Ajukan Aduan Siswa"
-        ]);
-    })->name('aduansiswa');
-
-    Route::get('/riwayat_siswa', function () {
-        return view('siswa/riwayat/riwayat_siswa', [
-            "title" => "riwayat"
-        ]);
-    })->name('riwayat_siswa');
+    Route::get('/riwayat_siswa', [SiswaRiwayatController::class, 'index'])->name('riwayat_siswa');
 
     // Tambahkan rute atau logika lainnya yang memerlukan otentikasi siswa
 });
+
+Route::get('/aduansiswa_form', [AduanController::class, 'showForm'])->name('form.aduan');
+
 
 Route::get('/sampletable', function () {
     return view('admin/sampletable', [
@@ -219,7 +198,7 @@ Route::get('/isisaldo', function () {
     ]);
 })->name('isisaldo');
 
-Route::get('/siswa/login', [SiswaLoginController::class, 'showLoginForm'])->name('siswa.login');
+Route::get('/loginsiswa', [SiswaLoginController::class, 'showLoginForm'])->name('siswa.login');
 Route::post('/siswa-login', [SiswaLoginController::class, 'login']);
 Route::post('/siswa-logout', [SiswaLoginController::class, 'logout'])->name('siswa.logout');
 Route::get('/riwayat', [TransaksiTabunganController::class, 'index'])->name('riwayat');

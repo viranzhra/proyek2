@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Auth\Authenticatable as AuthenticatableTrait;
 use App\Models\Kelas;
@@ -11,6 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Murid extends Model implements Authenticatable
 {
+    use Notifiable;
     use AuthenticatableTrait;
     use HasFactory;
     protected $table = 'murid';
@@ -36,6 +38,7 @@ class Murid extends Model implements Authenticatable
     
     public function user()
     {
-        return $this->hasOne(User::class, 'id_siswa');
+        return $this->belongsTo(User::class, 'id', 'id_siswa');
     }
+    
 }

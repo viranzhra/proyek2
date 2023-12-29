@@ -6,7 +6,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
 <style>
-  /* style untuk form login */
+  /* Styles for the login form */
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
   * {
@@ -60,7 +60,6 @@
       font-size: 1.2rem;
       color: #fff;
       padding: 10px 15px 10px 10px;
-      /* border: 1px solid red; */
   }
 
   .wrapper .form-field {
@@ -104,6 +103,18 @@
       color: hsl(199, 70%, 71%);
   }
 
+  .wrapper .form-field .eye-icon {
+      cursor: pointer;
+  }
+
+  .wrapper .form-field label {
+      display: none; /* Hide labels visually but keep them for screen readers */
+  }
+
+  .wrapper .form-field input[type="email"] {
+      padding: 10px 15px 10px 10px;
+  }
+
   @media(max-width: 380px) {
       .wrapper {
           margin: 30px 20px;
@@ -113,44 +124,44 @@
 </style>
 
 <div class="overlay"></div>
-      <div class="wrapper">
-        <div class="logo">
-            <img src="../image/sitabung.png" alt="">
-        </div>
-        <div class="text-center mt-4 name">
-            Login Siswa
-        </div>
-        <form action="{{ url('/siswa-login') }}" method="post" class="p-3 mt-3">
-            @csrf
-            <div class="form-field d-flex align-items-center">
-                <span class="far fa-user"></span>
-                <input type="text" name="userName" id="userName" placeholder="Username">
-            </div>
-            <div class="form-field d-flex align-items-center">
-              <span class="fas fa-key"></span>
-              <input type="password" name="password" id="pwd" placeholder="Password">
-            </div>
-            <div class="center-container">
-                <button type="submit" class="btn mt-3">Login</button>
-            </div>
-        </form>
-        <div class="text-center fs-6">
-            <a href="#">Forget password?</a>
-        </div>
+<div class="wrapper">
+    <div class="logo">
+        <img src="../image/sitabung.png" alt="">
     </div>
+    <div class="text-center mt-4 name">
+        Login Siswa
+    </div>
+    <form action="{{ url('/siswa-login') }}" method="post" class="p-3 mt-3">
+        @csrf
+        <div class="form-field d-flex align-items-center">
+            <label for="email" class="fas fa-user"></label>
+            <input type="email" name="email" id="email" placeholder="Email">
+        </div>
+        <div class="form-field d-flex align-items-center">
+            <label for="pwd" class="fas fa-key"></label>
+            <input type="password" name="password" id="pwd" placeholder="Password">
+        </div>
+        <div class="center-container">
+            <button type="submit" class="btn mt-3">Login</button>
+        </div>
+    </form>
+    <div class="text-center fs-6">
+        <a href="#">Forget password?</a>
+    </div>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    @if(session('error'))
-    <script>
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: '{{ session('error') }}',
-            customClass: {
-                popup: 'small-popup',
-            },
-            iconHtml: '<i class="fas fa-exclamation-circle" style="font-size: 18px;"></i>',
-        });
-    </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if(session('error'))
+<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: '{{ session('error') }}',
+        customClass: {
+            popup: 'small-popup',
+        },
+        iconHtml: '<i class="fas fa-exclamation-circle" style="font-size: 18px;"></i>',
+    });
+</script>
 @endif
 @endsection

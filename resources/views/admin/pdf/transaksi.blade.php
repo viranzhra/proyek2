@@ -31,14 +31,13 @@
                 <th>Kelas</th>
                 <th>Kategori Transaksi</th>
                 <th>Tanggal</th>
-                <th>Nominal</th>
+                <th>Nominal Sekarang</th>
                 <th>Total</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($transaksis as $index => $transaksi)
-                <tr>
-                    <td>{{ $index + 1 }}</td>
+            <tr style="background-color: {{ $transaksi->kategori_transaksi === 'Pengeluaran' ? '#ed6b6b' : 'inherit' }}">                    <td>{{ $index + 1 }}</td>
                     <td>{{ $transaksi->murid }}</td>
                     <td>{{ $transaksi->kelas }}</td>
                     <td>{{ $transaksi->kategori_transaksi }}</td>

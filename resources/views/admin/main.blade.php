@@ -29,6 +29,13 @@
 			object-fit: cover;
 			border-radius: 50%;
     	}
+		.custom-hr {
+			border-top: 2px solid #fff;
+			width: 100%; 
+			margin: 0 auto; 
+			height: 10px;
+    	}
+
 	</style>
   </head>
   <body style="background-color: #e7f3ff;">
@@ -48,35 +55,26 @@
                 	<img src="image/orang1.jpg" alt="Avatar" class="avatar"><b class="ml-2 mb-0" style="margin-top: 0; font-size: 15px; color: rgb(0, 204, 255);">{{ Auth::user()->email }}</b>
 				</a>
             </div>
-			<hr>
-			<h1><a href="#" class="logo">SiTabung <span>SMP NURUL HALIM WIDASARI</span></a></h1>
-			<hr>
+			<hr class="custom-hr">
+			<center>			
+				<h1><a href="#" class="logo">SiTabung <span>{{ $sekolah->nama }}</span></a></h1>
+			</center>
+			<hr class="custom-hr">
 
 	        <ul class="list-unstyled components mb-5">
 			<li><span style="font-weight: bold;">Menu</span></li>
             <li class="{{ request()->routeIs('home') ? 'active' : '' }}">
-                <a href="/home"><span class="fa fa-home mr-3"></span>Home</a>
+                <a href="/home"><span class="fa fa-home mr-3"></span> Home</a>
             </li>
 			<li class="{{ request()->routeIs('datasiswa') ? 'active' : '' }}">
-                <a href="/datasiswa"><span class="fa fa-user mr-3"></span>Data Siswa</a>
+                <a href="/datasiswa"><span class="fa fa-user mr-3"></span> Data Siswa</a>
             </li>
 			<li class="{{ request()->routeIs('transaksi-tabungan.index') ? 'active' : '' }}">
                 <a href="{{ route('transaksi-tabungan.index') }}"><span class="fa fa-briefcase mr-3"></span>Transaksi Tabungan</a>
             </li>
-              <li class="nav-item {{ Request::is('aduan*') ? 'active' : '' }}">
-	            <a href="#aduan" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fa fa-suitcase mr-3"></span>Data Aduan Siswa</a>
-	            <ul class="collapse list-unstyled" id="aduan">
-					<li class="{{ request()->is('/aduan1') ? 'active' : '' }}">
-						<a href="/aduan1">Kelas 7</a>
-					</li>
-					<li class="{{ request()->is('/aduan2') ? 'active' : '' }}">
-						<a href="/aduan2">Kelas 8</a>
-					</li>
-					<li class="{{ request()->is('/aduan3') ? 'active' : '' }}">
-						<a href="/aduan3">Kelas 9</a>
-					</li>
-	            </ul>
-	          </li>
+			<li class="{{ request()->routeIs('ajukan-aduan.index') ? 'active' : '' }}">
+				<a href="/siswa_ajukan_aduan"><span class="fa fa-home mr-3"></span> Data Aduan</a>
+			</li>
 	          <li class="{{ request()->routeIs('arsipan.index') ? 'active' : '' }}">
                 <a href="/arsipan"><span class="fa fa-paper-plane mr-3"></span> Data Arsip</a>
 	          </li>
@@ -84,11 +82,11 @@
 			  <li class="{{ request()->routeIs('admin.data_admin.data_admin') ? 'active' : '' }}">
 				<a href="{{ route('admin.data_admin.data_admin') }}"><span class="fa fa-user mr-3"></span>Data Admin</a>
 			</li>
-				<li class="nav-item {{ Request::is('update-profile*') ? 'active' : '' }}">
-					<a href="#setting" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fa fa-cogs mr-3"></span>Setting</a>
+				<li class="nav-item {{ Request::is('identitas-sekolah*') ? 'active' : '' }}">
+					<a href="#setting" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fa fa-cogs mr-3"></span>Tentang Sekolah</a>
 					<ul class="collapse list-unstyled" id="setting">
-						<li class="{{ request()->routeIs('admin.update.profile.form') ? 'active' : '' }}">
-							<a href="{{ route('admin.update.profile.form') }}">Profile</a>
+						<li class="{{ request()->routeIs('identitas-sekolah') ? 'active' : '' }}">
+							<a href="{{ route('identitas-sekolah') }}">Identitas Sekolah</a>
 						</li>
 					</ul>
 				</li>	

@@ -30,6 +30,7 @@ class TransaksiTabunganController extends Controller
             ->join('kelas', 'transaksi_tabungan.id_kelas', '=', 'kelas.id')
             ->select(
                 'transaksi_tabungan.id',
+                'transaksi_tabungan.id_siswa',
                 'transaksi_tabungan.id_kategori',
                 'transaksi_tabungan.id_kelas',
                 'murid.nisn_murid as nisn_murid',
@@ -143,10 +144,9 @@ class TransaksiTabunganController extends Controller
         return view('admin.pemasukkan.transaksi', compact('transaksi', 'kategoriTransaksis'));
     }
 
-    // Fungsi untuk menyimpan perubahan pada transaksi
-    public function update(Request $request, $nisn)
+    public function update(Request $request, $id)
     {
-        // Validasi request di sini sesuai kebutuhan
+        // Validasi request sesuai kebutuhan
         $request->validate([
             'id_siswa' => 'required',
             'id_kelas' => 'required',
@@ -154,18 +154,30 @@ class TransaksiTabunganController extends Controller
             'id_kategori' => 'required',
             'nominal' => 'required',
         ]);
-
-        // Temukan data transaksi berdasarkan NISN yang diberikan
-        $transaksi = TransaksiTabungan::where('nisn_murid', $nisn)->firstOrFail();
-
-        // Update transaksi
-        $transaksi->update($request->all());
-
+    
+        // Temukan data transaksi berdasarkan ID yang diberikan
+        $transaksi = TransaksiTabungan::find($id);
+    
+        // Check if the transaction exists
+        if (!$transaksi) {
+            return redirect()->route('transaksi-tabungan.index')->with('error', 'Transaksi tidak ditemukan.');
+        }
+        
+        // Update specific fields instead of all fields
+        $transaksi->update([
+            'id_siswa' => $request->input('id_siswa'),
+            'id_kelas' => $request->input('id_kelas'),
+            'tanggal' => Carbon::parse($request->input('tanggal')),            'id_kategori' => $request->input('id_kategori'),
+            'nominal' => $request->input('nominal'),
+            // Add other fields as needed
+        ]);
+    
         // Lakukan pemrosesan arsip tabungan, update saldo, dll. sesuai kebutuhan
         $this->processTabungan($transaksi);
-
+    
         return redirect()->route('transaksi-tabungan.index')->with('success', 'Transaksi berhasil diperbarui');
     }
+    
 
 
     // Fungsi untuk menghapus transaksi
@@ -198,25 +210,24 @@ class TransaksiTabunganController extends Controller
         return response()->json(['nama_murid' => $murid->nama_murid]);
     }
 
-    // Fungsi untuk mendapatkan kelas berdasarkan nama murid
     public function getClassByStudent(Request $request)
     {
         // Dapatkan nama murid dari request
-        $studentName = $request->input('studentName');
-
+        $studentName = $request->input('id_siswa');
+    
         // Cari data murid berdasarkan nama
         $murid = Murid::where('nama_murid', $studentName)->first();
-
+    
         // Jika murid ditemukan, ambil kelasnya
         if ($murid) { 
             $classData = Kelas::find($murid->id_kelas);
-
+    
             // Jika kelas ditemukan, kembalikan data sebagai respons JSON
             if ($classData) {
                 return response()->json(['id_kelas' => $classData->id_kelas, 'ket_kelas' => $classData->ket_kelas]);
             }
         }
-
+    
         // Jika tidak ditemukan, kembalikan respons JSON kosong atau sesuaikan dengan kebutuhan
         return response()->json([]);
     }
@@ -262,6 +273,42 @@ class TransaksiTabunganController extends Controller
         $this->processTabungan($transaksi);
         // Redirect ke halaman indeks dengan pesan sukses
         return redirect()->route('transaksi-tabungan.index')->with('success', 'Saldo berhasil ditambahkan');
+    }
+
+    // Fungsi untuk mendapatkan total pemasukkan
+    public function getTotalPemasukkan()
+    {
+        $totalPemasukkan = DB::table('transaksi_tabungan')
+            ->where('id_kategori', 1) // Filter hanya transaksi dengan kategori 1 yaitu pemasukkan
+            ->sum('nominal');
+
+        return $totalPemasukkan;
+    }
+
+    // Fungsi untuk mendapatkan total pengeluaran
+    public function getTotalPengeluaran()
+    {
+        $totalPengeluaran = DB::table('transaksi_tabungan')
+            ->where('id_kategori', 2) // nilai kategori pengeluaran
+            ->sum('nominal');
+
+        return $totalPengeluaran;
+    }
+
+    // Fungsi untuk mendapatkan total saldo saat ini
+    public function getTotalSaldo()
+    {
+        $totalPemasukkan = DB::table('transaksi_tabungan')
+            ->where('id_kategori', 1) // nilai kategori pemasukkan
+            ->sum('nominal');
+
+        $totalPengeluaran = DB::table('transaksi_tabungan')
+            ->where('id_kategori', 2) //  nilai kategori pengeluaran
+            ->sum('nominal');
+
+        $totalSaldo = $totalPemasukkan - $totalPengeluaran;
+
+        return $totalSaldo;
     }
 
 }

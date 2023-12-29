@@ -18,21 +18,20 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <a class="navbar-brand" href="#"><img src="../image/logo.png" alt="logo sekolah" width="50px" height="50px"></a>
-          <h6 class="navbar-brand" href="#" style="color: white;">SMP NURUL HALIM WIDASARI</h6>
+          <h6 class="navbar-brand" href="#" style="color: white;">{{ $sekolah->nama }}</h6>
           <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
             
             <ul class="nav nav-underline me-auto mb-2 mb-lg-0" style="margin-left: 150px;">
               <li class="nav-item">
-                <a href="{{ route('landingpage') }}" class="nav-link {{ request()->is('/') ? 'active' : '' }}" style="color: white;">Beranda</a>
+                <a href="{{ route('sekolah.index') }}" class="nav-link {{ request()->is('/') ? 'active' : '' }}" style="color: white;">Beranda</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link {{ request()->is('kontak') ? 'active' : '' }}" href="#kontak" style="color: white;">KONTAK</a>
-              </li>            
+                <a class="nav-link {{ request()->routeIs('form.aduan') ? 'active' : '' }}" href="/aduansiswa_form" style="color: white;">Aduan Siswa</a>
+              </li>           
               <li class="nav-item">
                 <a href="{{ route('visi_misi') }}" class=" nav-link {{ request()->routeIs('visi_misi') ? 'active' : '' }}" style="color: white;">Visi Misi</a>
               </li>
             </ul>
-              <a href="/loginsiswa" class="btn btn-outline-success" type="submit" style="background-color: #215382; color: white; font-weight: bold;">LOGIN</a>
           </div>
         </div>
       </nav>
@@ -41,9 +40,9 @@
         @yield('content')
     </div>
 
-      <footer>
+    <footer>
         copyright&copy;2023 | Si Tabung
-      </footer>
+  </footer>
 
 </body>
 </html>

@@ -49,10 +49,10 @@
                 <div class="mb-">
                     <h4 id="kelasHeading" class="m-0">Data Siswa</h4>
                 </div>
-                <a href="" data-toggle="modal" data-target="#tambahModal" style="float: right; margin-top: -30px;">
-                    <img src="{{ asset('image/topup-saldo.png') }}" alt="" width="25px"> <b>Tambah Saldo</b>
+                <a href="" title="Tambah Saldo Baru" data-toggle="modal" data-target="#tambahModal" style="float: right; margin-top: -30px;">
+                    <img src="{{ asset('image/topup-saldo.png') }}" alt="" width="25px"> <b>Tambah Baru</b>
                 </a>
-                <a href="{{ route('download-pdf', ['selectedClass' => $selectedClass ?? '']) }}" style="float: right; margin-top: -30px; margin-right: 150px;">
+                <a href="{{ route('download-pdf', ['selectedClass' => $selectedClass ?? '']) }}" title="Download PDF" style="float: right; margin-top: -30px; margin-right: 150px;">
                     <img src="{{ asset('image/icon_pdf.png') }}" alt="" width="25px"> <b>Download</b>
                 </a> 
             </div>
@@ -61,7 +61,7 @@
                 @csrf <!-- Tambahkan ini untuk melindungi formulir dari serangan Cross-Site Request Forgery (CSRF) -->
                 <center>
                     @if (isset($searchDate))
-                        <b style="color: rgb(65, 65, 154)">{{ \Carbon\Carbon::parse($searchDate)->format('l, d F Y') }}</b>
+                        <b style="color: rgb(63, 63, 128)">{{ \Carbon\Carbon::parse($searchDate)->format('l, d F Y') }}</b>
                     @endif
                 </center>
 
@@ -115,7 +115,7 @@
                                         <a type="button" title="Saldo" data-toggle="modal" data-target="#tambahData" onclick="openTambahModal('{{ $pemasukkan->nisn_murid }}', '{{ $pemasukkan->nama_murid }}', '{{ $pemasukkan->kelas }}')">
                                             <img src="{{ asset('image/topup-saldo.png') }}" alt="" width="30px">
                                         </a>
-                                        <button type="button" class="btn btn-success btn-sm" title="Edit" data-toggle="modal" data-target="#editModal" onclick="openEditModal('{{ $pemasukkan->nisn_murid }}', '{{ $pemasukkan->nama_murid }}', '{{ $pemasukkan->id_kelas }}', '{{ $pemasukkan->kategori_transaksi }}', '{{ $pemasukkan->tanggal }}', '{{ $pemasukkan->nominal }}')">
+                                        <button type="button" class="btn btn-success btn-sm" title="Edit" data-toggle="modal" data-target="#editModal" onclick="openEditModal('{{ $pemasukkan->id }}', '{{ $pemasukkan->id_siswa }}', '{{ $pemasukkan->nama_murid }}', '{{ $pemasukkan->id_kelas }}', '{{ $pemasukkan->kategori_transaksi }}', '{{ $pemasukkan->tanggal }}', '{{ $pemasukkan->nominal }}')">
                                             <i class="fas fa-edit"></i>
                                         </button>
                                     </td>
@@ -143,18 +143,18 @@
         </div>
     </div>
 
-<!-- Modal Tambah Data -->
+<!-- Modal Tambah saldo Data -->
 <div class="modal fade" id="tambahModal" tabindex="-1" aria-labelledby="tambahModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="tambahModalLabel">Tambah Data Siswa</h5>
+                <h5 class="modal-title" id="tambahModalLabel">Tambah Saldo Siswa</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <!-- Form tambah data siswa -->
+                <!-- Form tambah saldo data siswa -->
                 <form action="{{ route('transaksi-tabungan.store') }}" method="post">
                     @csrf
 
@@ -291,7 +291,6 @@
     </div>
 </div>
 </div> --}}
-
 <!-- Modal Edit Data -->
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -307,15 +306,16 @@
                 <form id="edit_action" class="edit-action-form" method="post">
                     @csrf
                     @method('PUT')
-
+                    
+                    <input type="hidden" class="form-control" id="id_edit" name="id_siswa">                    
                     <div class="form-group">
                         <label for="nama_edit">Nama</label>
-                        <input type="text" class="form-control" id="nama_edit" name="id_siswa" required>
+                        <input type="text" class="form-control" id="nama_edit" readonly>
                     </div>
 
                     <div class="form-group">
                         <label for="edit_kelas">Kelas:</label>
-                        <select id="edit_kelas" name="id_kelas" class="form-control">
+                        <select id="edit_kelas" name="id_kelas" class="form-control" readonly>
                             <option value="" disabled selected>Pilih Kelas</option>
                             @foreach($kelas as $kelasItem)
                             <option value="{{ $kelasItem->id }}" {{ isset($pemasukkan->id_kelas) && $pemasukkan->id_kelas == $kelasItem->id ? 'selected' : '' }}>
@@ -356,29 +356,17 @@
 @endif
 
 <script>
-    function openTambahModal(nisn, nama_murid, id_kelas) {
-        var modal = document.getElementById('tambahData');
-        var tambah_action = document.getElementById('tambah_action');
-        tambah_action.action = "/transaksi-tabungan/" + nisn + "/tambah-saldo";
-        var muridInput = document.getElementById('nama_tambah');
-        muridInput.value = nama_murid;
-
-        var kelasInput = document.getElementById('tambah_kelas');
-        kelasInput.value = id_kelas;
-
-    }
-</script>
-
-
-<script>
-    function openEditModal(nisn, nama_murid, id_kelas, kategori_transaksi, tanggal, nominal) {
+    function openEditModal(id, id_siswa, nama_murid, id_kelas, kategori_transaksi, tanggal, nominal) {
         var modal = document.getElementById('editModal');
         var edit_action = document.getElementById('edit_action');
-        edit_action.action = "/transaksi-tabungan/" + nisn + "/update";
+        edit_action.action = "/transaksi-tabungan/" + id + "/update";
+        var idEdit = document.getElementById('id_edit');
+        idEdit.value = id_siswa;
         var muridInput = document.getElementById('nama_edit');
         muridInput.value = nama_murid;
         var transaksiInput = document.getElementById('tgl_transaksi');
-        transaksiInput.value = tanggal;
+        var formatTanggal = new Date(tanggal).toISOString().split('T')[0];
+        transaksiInput.value = formatTanggal;
         var nominalInput = document.getElementById('nominal_edit');
 
         nominalInput.value = nominal;
@@ -397,6 +385,22 @@
         }
     }
 </script>
+
+
+<script>
+    function openTambahModal(nisn, nama_murid, id_kelas) {
+        var modal = document.getElementById('tambahData');
+        var tambah_action = document.getElementById('tambah_action');
+        tambah_action.action = "/transaksi-tabungan/" + nisn + "/tambah-saldo";
+        var muridInput = document.getElementById('nama_tambah');
+        muridInput.value = nama_murid;
+
+        var kelasInput = document.getElementById('tambah_kelas');
+        kelasInput.value = id_kelas;
+
+    }
+</script>
+
 
 <script>
     function openDeleteModal(nisn, nama) {
@@ -448,5 +452,29 @@
             }, 3000);
         });
     </script>
+
+<script>
+    $(document).ready(function () {
+        // Dengarkan perubahan pada pilihan "Nama Murid"
+        $('#id_siswa').on('change', function () {
+            var selectedMuridId = $(this).val();
+
+            // Lakukan pemrosesan AJAX untuk mendapatkan kelas berdasarkan nama murid
+            $.ajax({
+                url: '/get-class-by-student',
+                type: 'POST',
+                data: {
+                    '_token': '{{ csrf_token() }}',
+                    'id_siswa': $(this).val()
+                },
+                success: function (data) {
+                    // Update nilai pada input "Kelas"
+                    $('#pilihkelas').val(data.ket_kelas);
+                }
+            });
+        });
+    });
+</script>
+
 @endsection
 

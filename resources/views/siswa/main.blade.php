@@ -39,17 +39,10 @@
 		<div class="p-4">
 			<div class="text-center mb-3 d-flex align-items-center">
                 <!-- Avatar dan Nama Admin -->
-				@if(Auth::user()->murid)
 				<a href="#">
 					<img src="image/orang1.jpg" alt="Avatar" class="avatar">
-					<b class="ml-2 mb-0" style="margin-top: 0; font-size: 15px; color: rgb(0, 204, 255);">
-						{{ Auth::user()->murid->nama_murid ?? 'Nama Tidak Tersedia' }}
-					</b>
+					<b class="ml-2 mb-0" style="margin-top: 0; font-size: 15px; color: rgb(0, 204, 255);">email@gmail.com</b>
 				</a>
-			@else
-				<!-- Handle jika murid null -->
-				<p>User tidak terkait dengan Murid.</p>
-			@endif
             </div>
 			<hr>
 			<h1><a href="#" class="logo">SiTabung <span>SMP NURUL HALIM WIDASARI</span></a></h1>
@@ -68,8 +61,8 @@
 					<li class="{{ request()->routeIs('riwayat_siswa') ? 'active' : '' }}">
 	                <a href="/riwayat_siswa"><span class="fa fa-home mr-3"></span> Riwayat Tabungan</a>
 	            </li>
-                <li class="{{ request()->routeIs('aduansiswa') ? 'active' : '' }}">
-	                <a href="/aduansiswa"><span class="fa fa-home mr-3"></span> Ajukan Aduan</a>
+                <li class="{{ request()->routeIs('ajukan.aduan.index') ? 'active' : '' }}">
+	                <a href="/siswa/ajukan_aduan"><span class="fa fa-home mr-3"></span> Ajukan Aduan</a>
 	            </li>
 				<li class="{{ request()->routeIs('siswa.logout') ? 'active' : '' }}">
 					<form id="logout-form" action="{{ route('siswa.logout') }}" class="d-none" method="POST">

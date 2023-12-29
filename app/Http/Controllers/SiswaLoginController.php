@@ -16,17 +16,16 @@ class SiswaLoginController extends Controller
     
     public function login(Request $request)
     {
-        $credentials = $request->only('userName', 'password');
-    
-        $murid = Murid::where('nama_murid', $credentials['userName'])->first();
-    
-        if ($murid) {
-            Auth::guard('siswa')->login($murid);
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::guard('web')->attempt($credentials)) {
             return redirect()->intended('/profilsiswa');
         }
     
-        // Jika otentikasi gagal
-        return redirect()->back()->withInput($request->only('userName','password'))->with('error', 'Invalid Username or password');
+        return redirect()
+            ->route('siswa.login') // Adjust the route name based on your setup
+            ->withInput($request->only('email', 'password'))
+            ->with('error', 'Maaf, Ada yang salah dari inputan anda!');
     }
 
     public function logout()

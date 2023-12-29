@@ -52,7 +52,7 @@ return [
         ],
         'siswa' => [  // Tambahkan guard untuk siswa
             'driver' => 'session',
-            'provider' => 'murids',  // Gunakan provider 'murids' untuk menyediakan informasi siswa
+            'provider' => 'siswa',  // Gunakan provider 'murids' untuk menyediakan informasi siswa
         ],
         
     ],
@@ -85,7 +85,7 @@ return [
             'model' => App\Models\Admin::class, // Model yang terkait dengan provider 'admins'
         ],
 
-        'murids' => [  // Tambahkan provider untuk siswa
+        'siswa' => [
             'driver' => 'eloquent',
             'model' => App\Models\Murid::class,
         ],

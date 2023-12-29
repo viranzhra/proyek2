@@ -48,8 +48,8 @@
               </div>
             </div>
           </div>
-          <div class="container text-center" style="position: relative;">
-            <div class="row gx-5">
+          <div class="container text-center" style="position: relative; margin: -50px;">
+            <div class="row gx-5" style="margin-left: 100px;">
               <div class="col">
                <div class="p-3">
                 <!--Google map-->
@@ -61,15 +61,15 @@
                <div class="col">
                 <div class="p-3" style="background-color: rgb(238 238 238 / 70%); border-radius: 8px; width: 500px; position: relative; text-align: left; margin-bottom: 30px;">
                   <h6 style="color: rgb(8 110 145);">IDENTITAS SEKOLAH</h6>
-                  <span style="color: black; font-size: 15px;"><b>SMP NURUL HALIM WIDASARI</b> <br>
-                    <b>NPSN &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :</b> 20216093 <br>
-                    <b>Status Sekolah &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :</b> Swasta <br>
-                    <b>SK Pendirian Sekolah &nbsp;&nbsp; :</b> 402/102/KEP/E/94 <br>
-                    <b>Tanggal SK Pendirian	&nbsp;&nbsp; :</b> 1994-06-15 <br>
-                    <b>Status Kepemilikan	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b> Yayasan <br>
-                    <b>SK Izin Operasional	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b>	402/102/KEP/E/94 <br>
-                    <b>Tgl SK Izin Operasional	:</b>	1994-06-15 <br>
-                    <b>NPWP	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b>	027258441437000 <br>
+                  <span style="color: black; font-size: 15px;"><b>{{ $sekolah->nama }}</b> <br>
+                    <b>NPSN &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :</b> {{ $sekolah->npsn }} <br>
+                    <b>Status Sekolah &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :</b> {{ $sekolah->status_sekolah }} <br>
+                    <b>SK Pendirian Sekolah &nbsp;&nbsp; :</b> {{ $sekolah->sk_pendirian }} <br>
+                    <b>Tanggal SK Pendirian	&nbsp;&nbsp; :</b> {{ $sekolah->tgl_sk_pendirian }} <br>
+                    <b>Status Kepemilikan	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b> {{ $sekolah->status_kepemilikan }} <br>
+                    <b>SK Izin Operasional	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b>	{{ $sekolah->sk_izin_operasional }} <br>
+                    <b>Tgl SK Izin Operasional	:</b>	{{ $sekolah->tgl_sk_izin_operasional }} <br>
+                    <b>NPWP	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b>	{{ $sekolah->npwp }} <br>
                   </span>
                  </div>
                 <div id="kontak" class="p-3" style="background-color: rgb(0 140 172 / 70%); border-radius: 8px; width: 300px; position: relative; text-align: left;">

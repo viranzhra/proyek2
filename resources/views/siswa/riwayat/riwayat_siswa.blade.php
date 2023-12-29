@@ -36,12 +36,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>pemasukkan</td>
-                                <td>12/09/2023</td>
-                                <td>Rp. 50000</td>
-                            </tr>
+                        @foreach($transaksiTabungan as $index => $transaksi)
+                        <tr>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $transaksi->deskripsi }}</td>
+                            <td>{{ $transaksi->tanggal_transaksi }}</td>
+                            <td>Rp. {{ number_format($transaksi->nominal, 0, ',', '.') }}</td>
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>
