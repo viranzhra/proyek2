@@ -172,11 +172,7 @@ Route::middleware(['auth:web'])->group(function () {
         ]);
     })->name('home_siswa');
 
-    Route::get('/profilsiswa', function () {
-        return view('siswa/profil/profil', [
-            "title" => "Profil Siswa"
-        ]);
-    })->name('profilsiswa');
+
 
     Route::get('/riwayat_siswa', [SiswaRiwayatController::class, 'index'])->name('riwayat_siswa');
 
@@ -184,7 +180,11 @@ Route::middleware(['auth:web'])->group(function () {
 });
 
 Route::get('/aduansiswa_form', [AduanController::class, 'showForm'])->name('form.aduan');
-
+Route::get('/profilsiswa', function () {
+    return view('siswa/profil/profil', [
+        "title" => "Profil Siswa"
+    ]);
+})->name('profilsiswa');
 
 Route::get('/sampletable', function () {
     return view('admin/sampletable', [

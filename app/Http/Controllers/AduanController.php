@@ -65,13 +65,11 @@ class AduanController extends Controller
             'bukti_aduan' => 'file|mimes:jpeg,png,pdf|max:2048',
         ]);
 
-            // Handle file upload
-            if ($request->hasFile('bukti_aduan')) {
-                $file = $request->file('bukti_aduan');
-                $fileName = time() . '_' . $file->getClientOriginalName();
-                $file->storeAs('public/bukti_aduan', $fileName);
 
-                // Save the file name to the database
+            if ($request->hasFile('bukti_aduan')) {
+                $fileName = time() . '_' . $request->file('bukti_aduan')->getClientOriginalName();
+                $request->file('bukti_aduan')->storeAs('public/bukti_aduan', $fileName);
+
                 $request['bukti_aduan'] = $fileName;
             }
     
