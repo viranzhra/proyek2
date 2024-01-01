@@ -5,9 +5,12 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AduanController;
 use App\Http\Controllers\SekolahController;
 use App\Http\Controllers\SessionController;
+use App\Http\Controllers\PrestasiController;
+use App\Http\Controllers\VisiMisiController;
 use App\Http\Controllers\DataSiswaController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\SiswaLoginController;
+use App\Http\Controllers\AllPrestasiController;
 use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\PdfDatasiswaController;
 use App\Http\Controllers\PdfTransaksiController;
@@ -27,18 +30,20 @@ use App\Http\Controllers\PemasukkanTabunganController;
 */
 
 Route::get('/', [SekolahController::class, 'index'])->name('sekolah.index');
+Route::get('/prestasi', [PrestasiController::class, 'showPrestasi']);
+Route::get('/prestasi-siswa-{allPrestasi}', [AllPrestasiController::class, 'showAllPrestasi'])->name('showAllPrestasi');
+Route::get('/visimisi', [VisiMisiController::class, 'index'])->name('visi_misi');
+// Route::get('/visimisi', function () {
+//     return view('visi_misi', [
+//         "title" => "Visi Misi"
+//     ]);
+// })->name('visi_misi');
 
-Route::get('/visimisi', function () {
-    return view('visi_misi', [
-        "title" => "Visi Misi"
-    ]);
-})->name('visi_misi');
-
-Route::get('/prestasi', function () {
-    return view('prestasi', [
-        "title" => "Prestasi"
-    ]);
-});
+// Route::get('/prestasi', function () {
+//     return view('prestasi', [
+//         "title" => "Prestasi"
+//     ]);
+// });
 
 Route::get('/isiprestasi', function () {
     return view('isiprestasi', [
@@ -144,10 +149,39 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/arsipan/download-pdf', [ArsipTabunganController::class, 'downloadPdf'])->name('arsipan.downloadPdf');
 
     Route::get('/aduansiswa', [AduanController::class, 'index'])->name('form.aduan.index');
-    Route::post('/aduansiswa', [AduanController::class, 'store'])->name('form.aduan.store');
+    Route::get('/aduansiswa/{id}/view', [AduanController::class, 'getAduanById'])->name('get-aduan');
+    Route::delete('/aduansiswa/{id}/destroy', 'AduanController@destroy')->name('aduan.destroy');
 
     Route::get('/update-profile-form', [AdminProfileController::class, 'showUpdateForm'])->name('admin.update.profile.form');
     Route::post('/update-profile', [AdminProfileController::class, 'updateProfile'])->name('admin.update.profile');
+    Route::post('/update-profile-foto', [AdminProfileController::class, 'updateProfilePicture'])->name('admin.update.foto');
+
+    // Menampilkan semua prestasi
+    Route::get('/prestasis', [PrestasiController::class, 'index'])->name('prestasis.index');
+    // Menampilkan formulir untuk menambah prestasi
+    Route::get('/prestasis-create', [PrestasiController::class, 'create'])->name('prestasis.create');
+    // Menyimpan prestasi baru
+    Route::post('/prestasis', [PrestasiController::class, 'store'])->name('prestasis.store');
+    // Menampilkan formulir untuk mengedit prestasi
+    Route::get('/prestasis-{prestasi}-edit', [PrestasiController::class, 'edit'])->name('prestasis.edit');
+    // Menyimpan perubahan pada prestasi yang telah diedit
+    Route::put('/prestasis/{prestasi}', [PrestasiController::class, 'update'])->name('prestasis.update');
+    // Menghapus prestasi
+    Route::delete('/prestasis/{prestasi}', [PrestasiController::class, 'destroy'])->name('prestasis.destroy');
+
+    // Route untuk menampilkan semua data All Prestasi
+    Route::get('/all-prestasis', [AllPrestasiController::class, 'index'])->name('all-prestasis.index');
+    // Route untuk menampilkan formulir tambah All Prestasi
+    Route::get('/all-prestasis-create', [AllPrestasiController::class, 'create'])->name('all-prestasis.create');
+    // Route untuk menyimpan data All Prestasi yang baru ditambahkan
+    Route::post('/all-prestasis', [AllPrestasiController::class, 'store'])->name('all-prestasis.store');
+    // Route untuk menampilkan formulir edit All Prestasi
+    Route::get('/all-prestasis-{allPrestasi}-edit', [AllPrestasiController::class, 'edit'])->name('all-prestasis.edit');
+    // Route untuk menyimpan perubahan pada data All Prestasi yang telah diubah
+    Route::put('/all-prestasis-{allPrestasi}', [AllPrestasiController::class, 'update'])->name('all-prestasis.update');
+    // Route untuk menghapus data All Prestasi
+    Route::delete('/all-prestasis-{allPrestasi}', [AllPrestasiController::class, 'destroy'])->name('all-prestasis.destroy');
+
 });
 
 Route::get('/profilguru', function () {
@@ -180,6 +214,8 @@ Route::middleware(['auth:web'])->group(function () {
 });
 
 Route::get('/aduansiswa_form', [AduanController::class, 'showForm'])->name('form.aduan');
+Route::post('/aduansiswa', [AduanController::class, 'store'])->name('form.aduan.store');
+
 Route::get('/profilsiswa', function () {
     return view('siswa/profil/profil', [
         "title" => "Profil Siswa"

@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-  	<title>SMP NURUL HALIM</title>
+  	<title>{{ $sekolah->nama }}</title>
 	  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.18.0/font/bootstrap-icons.css">
 	<link rel="icon" href="image/sitabung.png" type="image/x-icon">
 	<!-- Tambahkan ini di bagian head halaman HTML Anda -->
@@ -51,8 +51,8 @@
 		<div class="p-4">
 			<div class="text-center mb-3 d-flex align-items-center">
                 <!-- Avatar dan Nama Admin -->
-				<a href="#">
-                	<img src="image/orang1.jpg" alt="Avatar" class="avatar"><b class="ml-2 mb-0" style="margin-top: 0; font-size: 15px; color: rgb(0, 204, 255);">{{ Auth::user()->email }}</b>
+				<a href="{{ route('admin.update.profile.form') }}">
+                	<img src="{{ $url }}" alt="Avatar" class="avatar"><b class="ml-2 mb-0" style="margin-top: 0; font-size: 15px; color: rgb(0, 204, 255);">{{ Auth::user()->email }}</b>
 				</a>
             </div>
 			<hr class="custom-hr">
@@ -73,23 +73,27 @@
                 <a href="{{ route('transaksi-tabungan.index') }}"><span class="fa fa-briefcase mr-3"></span>Transaksi Tabungan</a>
             </li>
 			<li class="{{ request()->routeIs('ajukan-aduan.index') ? 'active' : '' }}">
-				<a href="/siswa_ajukan_aduan"><span class="fa fa-home mr-3"></span> Data Aduan</a>
+				<a href="/siswa_ajukan_aduan"><span class="fa fa-home mr-3"></span> Data Aduan Siswa</a>
 			</li>
 	          <li class="{{ request()->routeIs('arsipan.index') ? 'active' : '' }}">
-                <a href="/arsipan"><span class="fa fa-paper-plane mr-3"></span> Data Arsip</a>
+                <a href="/arsipan"><span class="fa fa-paper-plane mr-3"></span> Data Arsip Tabungan</a>
 	          </li>
 			  <li style="margin-top: 20px;"><span style="font-weight: bold;">Admin</span></li>
 			  <li class="{{ request()->routeIs('admin.update.profile.form') ? 'active' : '' }}">
 				<a href="{{ route('admin.update.profile.form') }}"><span class="fa fa-user mr-3"></span>Profile Admin</a>
 			</li>
-				<li class="nav-item {{ Request::is('identitas-sekolah*') ? 'active' : '' }}">
-					<a href="#setting" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fa fa-cogs mr-3"></span>Tentang Sekolah</a>
-					<ul class="collapse list-unstyled" id="setting">
-						<li class="{{ request()->routeIs('identitas-sekolah') ? 'active' : '' }}">
-							<a href="{{ route('identitas-sekolah') }}">Identitas Sekolah</a>
-						</li>
-					</ul>
-				</li>	
+			<li class="nav-item {{ Request::is('identitas-sekolah*', 'prestasis*') ? 'active' : '' }}">
+				<a href="#setting" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fa fa-cogs mr-3"></span>Tentang Sekolah</a>
+				<ul class="collapse list-unstyled" id="setting">
+					<li class="{{ request()->routeIs('identitas-sekolah') ? 'active' : '' }}">
+						<a href="{{ route('identitas-sekolah') }}">Identitas Sekolah</a>
+					</li>                        
+					<li class="{{ request()->routeIs('prestasis.index') ? 'active' : '' }}">
+						<a href="{{ route('prestasis.index') }}">Tampilan Prestasi</a>
+					</li>
+				</ul>
+			</li>
+				
 				@if(auth()->guard('admin')->check())
 				<li class="{{ request()->routeIs('admin.logout') ? 'active' : '' }}">
 					<form id="logout-form" action="{{ route('admin.logout') }}" class="d-none" method="POST">

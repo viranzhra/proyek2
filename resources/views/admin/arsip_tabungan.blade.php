@@ -65,7 +65,8 @@
                                         <th>No.</th>
                                         <th>Nama Siswa</th>
                                         <th>Kelas</th>
-                                        <th>Tanggal</th>
+                                        <th>Tanggal Arsip</th>
+                                        <th>Tanggal Update</th>
                                         <th>Total</th>
                                     </tr>
                                 </thead>
@@ -76,6 +77,7 @@
                                             <td>{{ $arsip->murid }}</td>
                                             <td>{{ $arsip->kelas }}</td>
                                             <td>{{ $arsip->tanggal_arsip }}</td>
+                                            <td>{{ $arsip->updated_at }}</td>
                                             <td>Rp. {{ number_format($arsip->total, 0, ',', '.') }}</td>
                                         </tr>
                                         @empty

@@ -6,7 +6,7 @@
     <link href="css/prestasi.css" rel="stylesheet">
     <link rel="icon" href="image/logosmp.png" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <title>SMP NURUL HALIM WIDASARI</title>
+    <title>{{ $sekolah->nama }}</title>
     <style>
         body {
             background-color: #E3F2FD;
@@ -28,13 +28,13 @@
             
             <ul class="nav nav-underline me-auto mb-2 mb-lg-0" style="margin-left: 150px;">
               <li class="nav-item">
-                <a class="nav-link {{ $title === "Beranda" ? 'active' : "" }}" aria-current="page" href="/" style="color: white;">Beranda </a>
+                <a class="nav-link {{ request()->routeIs('sekolah.index') ? 'active' : '' }}" aria-current="page" href="/" style="color: white;">Beranda </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('form.aduan') ? 'active' : '' }}" href="/aduansiswa_form" style="color: white;">Aduan Siswa</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link {{ $title === "Visi Misi" ? 'active' : "" }}" href="/visimisi" style="color: white;">Visi Misi</a>
+                <a class="nav-link {{ request()->routeIs('visi_misi') ? 'active' : '' }}" href="/visimisi" style="color: white;">Visi Misi</a>
               </li>
             </ul>
           </div>

@@ -33,6 +33,7 @@ class AduanController extends Controller
             ->join('kategori_aduan', 'aduan_siswa.id_aduan', '=', 'kategori_aduan.id')
             ->join('kelas', 'aduan_siswa.id_kelas', '=', 'kelas.id')
             ->select(
+                'aduan_siswa.id',
                 'aduan_siswa.id_siswa',
                 'aduan_siswa.id_aduan',
                 'aduan_siswa.id_kelas',
@@ -65,7 +66,6 @@ class AduanController extends Controller
             'bukti_aduan' => 'file|mimes:jpeg,png,pdf|max:2048',
         ]);
 
-
             if ($request->hasFile('bukti_aduan')) {
                 $fileName = time() . '_' . $request->file('bukti_aduan')->getClientOriginalName();
                 $request->file('bukti_aduan')->storeAs('public/bukti_aduan', $fileName);
@@ -79,9 +79,31 @@ class AduanController extends Controller
             'id_kelas' => $request->id_kelas,
             'id_aduan' => $request->kategori_aduan, // Sesuaikan dengan nama kolom yang sesuai
             'aduan' => $request->aduan,
-            'bukti_aduan' => $request->bukti_aduan,
+            'bukti_aduan' => $fileName,
         ]);
     
         return redirect()->back()->with('success', 'Aduan berhasil disimpan!');
     }
+
+    public function destroy($id)
+    {
+        $aduan = AduanSiswa::find($id);
+
+        if (!$aduan) {
+            return redirect()->back()->with('error', 'Aduan not found.');
+        }
+
+        // Hapus berkas bukti aduan dari storage
+        if ($aduan->bukti_aduan) {
+            Storage::delete('public/bukti_aduan/' . $aduan->bukti_aduan);
+        }
+
+        // Hapus record aduan dari database
+        $aduan->delete();
+
+        return redirect()->back()->with('success', 'Aduan berhasil dihapus.');
+    }
+    
 }
+
+

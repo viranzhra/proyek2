@@ -139,9 +139,9 @@
               <button type="submit" class="btn mt-3">Login</button>
           </div>
         </form>
-        <div class="text-center fs-6">
+        {{-- <div class="text-center fs-6">
             <a href="#">Forget password?</a>
-        </div>
+        </div> --}}
     </div>
 
     @if(session('error'))

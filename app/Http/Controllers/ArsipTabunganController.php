@@ -25,7 +25,8 @@ class ArsipTabunganController extends Controller
                 'kelas.ket_kelas as kelas',
                 'arsip_tabungan_bulanan.tanggal_arsip',
                 'arsip_tabungan_bulanan.saldo',
-                'arsip_tabungan_bulanan.total'
+                'arsip_tabungan_bulanan.total',
+                DB::raw('DATE(arsip_tabungan_bulanan.updated_at) as updated_at')
             )
             ->orderBy('kelas.ket_kelas');
 
@@ -87,7 +88,8 @@ class ArsipTabunganController extends Controller
             'kelas.ket_kelas as kelas',
             'arsip_tabungan_bulanan.tanggal_arsip',
             'arsip_tabungan_bulanan.saldo',
-            'arsip_tabungan_bulanan.total'
+            'arsip_tabungan_bulanan.total',
+            DB::raw('DATE(arsip_tabungan_bulanan.updated_at) as updated_at')
         )
         ->orderBy('kelas.ket_kelas')
         ->get();

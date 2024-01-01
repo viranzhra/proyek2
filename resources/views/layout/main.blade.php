@@ -6,7 +6,7 @@
     <link href="css/landingpage.css" rel="stylesheet">
     <link rel="icon" href="image/logosmp.png" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <title>SMP NURUL HALIM WIDASARI</title>
+    <title>{{ $sekolah->nama }}</title>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary" style="z-index: 2;">

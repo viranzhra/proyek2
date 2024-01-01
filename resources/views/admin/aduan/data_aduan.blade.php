@@ -95,10 +95,14 @@
                                     @else
                                         No Image
                                     @endif
-                                    </td>                                    <td>
-                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal" >
-                                            <i class="fas fa-trash-alt"></i>
+                                    </td>                                    
+                                    <td>
+                                        <button type="button" class="btn btn-info btn-sm view-btn" data-toggle="modal" data-target="#viewModal" onclick="openViewModal('{{ $aduan->nama_murid }}', '{{ $aduan->kelas }}', '{{ $aduan->kategori_aduan }}', '{{ $aduan->aduan }}', '{{ $aduan->bukti_aduan }}')">
+                                            <i class="fas fa-eye"></i>
                                         </button>
+                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal" data-id="{{ $aduan->id }}">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>                                    
                                     </td>
                                 </tr>
                                 @empty
@@ -124,7 +128,89 @@
         </div>
 
 
+{{-- <!-- Modal Hapus -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel{{ $aduan->id }}" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel{{ $aduan->id }}">Hapus Aduan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Apakah Anda yakin ingin menghapus aduan ini?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                <form action="{{ route('aduan.destroy', $aduan->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Hapus</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> --}}
+
+<!-- Modal View Data -->
+<div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewModalLabel">Detail Aduan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th scope="row">Nama Murid</th>
+                            <td><span id="nama_murid_view"></span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Kelas</th>
+                            <td><span id="kelas_view"></span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Kategori Aduan</th>
+                            <td><span id="kategori_aduan_view"></span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Aduan</th>
+                            <td><span id="aduan_view"></span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Bukti Aduan</th>
+                            <td><span id="bukti_aduan_image"></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openViewModal(nama, kelas, kategori, aduan, bukti) {
+        document.getElementById('nama_murid_view').innerHTML = nama;
+        document.getElementById('kelas_view').innerHTML = kelas;
+        document.getElementById('kategori_aduan_view').innerHTML = kategori;
+        document.getElementById('aduan_view').innerHTML = aduan;
+
+        /*var buktiAduanImage = document.getElementById('bukti_aduan_image');
+        if (buktiAduan) {
+            buktiAduanImage.src = "path/to/bukti_aduan/" + buktiAduan;
+        } else {
+            buktiAduanImage.src = "path/to/default/image.jpg";
+        }*/
+    }
+</script>
+
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.7.0/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
         <!-- Include Bootstrap Datepicker -->
