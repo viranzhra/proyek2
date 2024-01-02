@@ -33,6 +33,7 @@ Route::get('/', [SekolahController::class, 'index'])->name('sekolah.index');
 Route::get('/prestasi', [PrestasiController::class, 'showPrestasi']);
 Route::get('/prestasi-siswa-{allPrestasi}', [AllPrestasiController::class, 'showAllPrestasi'])->name('showAllPrestasi');
 Route::get('/visi_misi', [VisiMisiController::class, 'showVisiMisi'])->name('visi_misi');
+Route::get('/getAduanDataById/{id}', [AduanController::class, 'getAduanDataById']);
 
 // Route::get('/visimisi', function () {
 //     return view('visi_misi', [
@@ -90,30 +91,6 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/pemasukkan-tabungan/create', [PemasukkanTabunganController::class, 'create'])->name('pemasukan.create');
     Route::post('/pemasukkan-tabungan/store', [PemasukkanTabunganController::class, 'store'])->name('pemasukkan.store');
 
-    Route::get('/pemasukan1', function () {
-        return view('admin/pemasukkan/kelas7', [
-            "title" => "Pemasukkan Kelas 7"
-        ]);
-    })->name('pemasukan1');
-
-    Route::get('/pemasukan2', function () {
-        return view('admin/pemasukkan/kelas8', [
-            "title" => "Pemasukkan Kelas 8"
-        ]);
-    })->name('pemasukan2');
-
-    Route::get('/pemasukan3', function () {
-        return view('admin/pemasukkan/kelas9', [
-            "title" => "Pemasukkan Kelas 9"
-        ]);
-    })->name('pemasukan3');
-
-    Route::get('/editdata', function () {
-        return view('admin/data_siswa/edit', [
-            "title" => "Pemasukkan Kelas 9"
-        ]);
-    })->name('pemasukan3');
-
     // Menampilkan data siswa
     Route::get('/datasiswa', [DataSiswaController::class, 'index'])->name('datasiswa');
     Route::get('/data_admin', [AdminController::class, 'index'])->name('admin.data_admin.data_admin');
@@ -152,7 +129,7 @@ Route::middleware('auth:admin')->group(function () {
 
     Route::get('/aduansiswa', [AduanController::class, 'index'])->name('form.aduan.index');
     Route::get('/aduansiswa/{id}/view', [AduanController::class, 'getAduanById'])->name('get-aduan');
-    Route::delete('/aduansiswa/{id}/destroy', 'AduanController@destroy')->name('aduan.destroy');
+    Route::delete('/aduansiswa/{id}/destroy', [AduanController::class, 'destroy'])->name('aduan.destroy');
 
     Route::get('/update-profile-form', [AdminProfileController::class, 'showUpdateForm'])->name('admin.update.profile.form');
     Route::post('/update-profile', [AdminProfileController::class, 'updateProfile'])->name('admin.update.profile');

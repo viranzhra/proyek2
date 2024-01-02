@@ -113,6 +113,33 @@ class AduanController extends Controller
 
     return redirect()->back()->with('success', 'Aduan berhasil dihapus.');
 }
+
+public function getAduanDataById($id)
+{
+    $userData = DB::table('aduan_siswa')
+        ->join('murid', 'aduan_siswa.id_siswa', '=', 'murid.id')
+        ->join('kategori_aduan', 'aduan_siswa.id_aduan', '=', 'kategori_aduan.id')
+        ->join('kelas', 'aduan_siswa.id_kelas', '=', 'kelas.id')
+        ->select(
+            'aduan_siswa.id',
+            'aduan_siswa.id_siswa',
+            'aduan_siswa.id_aduan',
+            'aduan_siswa.id_kelas',
+            'murid.nisn_murid as nisn_murid',
+            'murid.nama_murid as nama_murid',
+            'kelas.ket_kelas as kelas',
+            'kategori_aduan.ket_aduan as kategori_aduan',
+            'aduan_siswa.aduan',
+            'aduan_siswa.bukti_aduan',
+            'kelas.id as kelas_id',
+            'aduan_siswa.updated_at'
+        )
+        ->where('aduan_siswa.id_siswa', $id)
+        ->first();
+
+    return response()->json($userData);
+}
+
 }
 
 

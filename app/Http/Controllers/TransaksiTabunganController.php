@@ -22,6 +22,7 @@ class TransaksiTabunganController extends Controller
         $kategoriTransaksis = KategoriTransaksi::all();
         $search = $request->input('search');
         $searchDate = $request->input('search_date');
+        $searchDate = $request->input('search_date') ?? Carbon::now()->toDateString();
 
         // Exclude the specific date filtering
         $transaksis = DB::table('transaksi_tabungan')

@@ -109,9 +109,9 @@
                                         <button type="button" class="btn btn-info btn-sm view-btn" data-toggle="modal" data-target="#viewModal" onclick="openViewModal('{{ $aduan->nama_murid }}', '{{ $aduan->kelas }}', '{{ $aduan->kategori_aduan }}', '{{ $aduan->aduan }}', '{{ $aduan->bukti_aduan }}')">
                                             <i class="fas fa-eye"></i>
                                         </button>
-                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal" onclick="openDeleteModal('{{ $aduan->id }}', '{{ $aduan->nama_murid }}')">
+                                        {{-- <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal" onclick="openDeleteModal('{{ $aduan->id }}', '{{ $aduan->nama_murid }}')">
                                             <i class="fas fa-trash-alt"></i>
-                                        </button>                               
+                                        </button>                                --}}
                                     </td>
                                 </tr>
                                 @empty

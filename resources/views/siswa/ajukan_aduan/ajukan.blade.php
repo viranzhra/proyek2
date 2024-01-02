@@ -38,11 +38,11 @@
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label style="font-weight: bold" for="edit_kelas">Kelas:</label>
-                                <select id="edit_kelas" name="id_kelas" class="form-select" style="border-radius: 25px;">
+                                <label style="font-weight: bold" for="pilihkelas">Kelas:</label>
+                                <select id="pilihkelas" name="id_kelas" class="form-select" style="border-radius: 25px;" readonly>
                                     <option value="" disabled selected>Pilih Kelas</option>
                                     @foreach($kelas as $kelasItem)
-                                    <option value="{{ $kelasItem->id }}" {{ isset($pemasukkan->id_kelas) && $pemasukkan->id_kelas == $kelasItem->id ? 'selected' : '' }}>
+                                    <option value="{{ $kelasItem->id }}">
                                         {{ $kelasItem->ket_kelas }}
                                     </option>
                                     @endforeach
@@ -85,6 +85,16 @@
         });
     @endif
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script>
+	document.getElementById('id_siswa').addEventListener('input', async function () {
+		const id = document.getElementById('id_siswa').value;
+		const response = await axios.get(`/getAduanDataById/${id}`);
+		const userData = response.data;
+		document.getElementById('pilihkelas').value = userData ? userData.kelas_id : '';
+	});
+	</script>
     
 </body>
 </html>
