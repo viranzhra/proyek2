@@ -6,7 +6,7 @@
         <div class="container">
             <div class="card">
                 <div class="card-header">
-                    <h2 class="h5">Judul Utama</h2>
+                    <h2 class="h5">Judul Halaman Prestasi</h2>
                 </div>
                 <div class="card-body">
                     <a href="{{ route('prestasis.create') }}" class="btn btn-primary">Tambah</a><br><br>

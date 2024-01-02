@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Murid;
 use App\Models\Kelas;
+use App\Models\TransaksiTabungan;
 use App\Models\TahunAngkatan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -69,7 +70,18 @@ class DataSiswaController extends Controller
             'id_ta' => 'required',
         ]);
     
-        Murid::create($validatedData);
+            // Tambahkan siswa baru
+    $murid = Murid::create($validatedData);
+
+    // Buat transaksi_tabungan baru
+    TransaksiTabungan::create([
+        'id_siswa' => $murid->id,
+        'id_kelas' => $murid->id_kelas,
+        'tanggal' => null,
+        'id_kategori' => null,
+        'nominal' => null,
+    ]);
+    
     
         return redirect()->route('datasiswa')->with('success', 'Data berhasil ditambahkan');
     }
@@ -108,6 +120,16 @@ class DataSiswaController extends Controller
     
         $murid = Murid::where('nisn_murid', $nisn)->first();
         $murid->update($validatedData);
+
+        // Perbarui juga data di transaksi_tabungan jika perlu
+    $transaksi = TransaksiTabungan::where('id_siswa', $murid->id)->first();
+    if ($transaksi) {
+        $transaksi->update([
+            'id_kelas' => $murid->id_kelas,
+            'id_siswa' => $murid->id,
+            // Perbarui field lain sesuai kebutuhan
+        ]);
+    }
     
         return redirect()->route('datasiswa')->with('success', 'Data berhasil diperbarui');
     }

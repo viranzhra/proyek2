@@ -17,7 +17,7 @@
       @if ($prestasis && $prestasis->count() > 0)
         <img src="{{ asset('images/' . $prestasis->first()->gambar_utama) }}" class="img-fluid" alt="..." style="border-radius: 25px; height: 300px; width: 100%" />
       @else
-        <img src="{{ asset('images/placeholder.jpg') }}" class="img-fluid" alt="Placeholder" style="border-radius: 25px; height: 300px; width: 100%" />
+        <img src="{{ asset('image/piala.jpg') }}" class="img-fluid" alt="Gambar Tidak Tersedia" style="border-radius: 25px; height: 300px; width: 100%" />
       @endif
     </div>
   </div>

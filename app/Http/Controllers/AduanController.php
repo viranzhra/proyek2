@@ -8,6 +8,7 @@ use App\Models\Kelas;
 use App\Models\KategoriAduan;
 use App\Models\AduanSiswa;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class AduanController extends Controller
 {
@@ -26,8 +27,8 @@ class AduanController extends Controller
         $kelas = Kelas::all();
         $kategoriAduan = KategoriAduan::all(); 
         $search = $request->input('search');
-        $searchDate = $request->input('search_date', now()->format('l, d F Y'));
-
+        $searchDate = $request->input('search_date');
+    
         $aduanSiswa = DB::table('aduan_siswa')
             ->join('murid', 'aduan_siswa.id_siswa', '=', 'murid.id')
             ->join('kategori_aduan', 'aduan_siswa.id_aduan', '=', 'kategori_aduan.id')
@@ -41,18 +42,23 @@ class AduanController extends Controller
                 'kelas.ket_kelas as kelas',
                 'kategori_aduan.ket_aduan as kategori_aduan',
                 'aduan_siswa.aduan',
-                'aduan_siswa.bukti_aduan'
+                'aduan_siswa.bukti_aduan',
+                'aduan_siswa.updated_at'
             )
             ->orderBy('kelas.ket_kelas')
             ->when($search, function ($query, $search) {
                 return $query->where('murid.nama_murid', 'like', '%' . $search . '%')
                     ->orWhere('kelas.ket_kelas', 'like', '%' . $search . '%');
+            })
+            ->when($searchDate, function ($query, $searchDate) {
+                return $query->whereDate('aduan_siswa.updated_at', $searchDate);
             });
-
-            $aduanSiswa = $aduanSiswa->paginate(5);
-
-        return view('/admin/aduan/data_aduan', compact('murids', 'kelas', 'kategoriAduan', 'aduanSiswa'));
+    
+        $aduanSiswa = $aduanSiswa->paginate(5);
+    
+        return view('/admin/aduan/data_aduan', compact('murids', 'kelas', 'kategoriAduan', 'aduanSiswa', 'searchDate'));
     }
+    
 
 
     public function store(Request $request)
@@ -86,24 +92,27 @@ class AduanController extends Controller
     }
 
     public function destroy($id)
-    {
-        $aduan = AduanSiswa::find($id);
+{
+    $aduan = AduanSiswa::find($id);
 
-        if (!$aduan) {
-            return redirect()->back()->with('error', 'Aduan not found.');
-        }
-
-        // Hapus berkas bukti aduan dari storage
-        if ($aduan->bukti_aduan) {
-            Storage::delete('public/bukti_aduan/' . $aduan->bukti_aduan);
-        }
-
-        // Hapus record aduan dari database
-        $aduan->delete();
-
-        return redirect()->back()->with('success', 'Aduan berhasil dihapus.');
+    if (!$aduan) {
+        return redirect()->back()->with('error', 'Aduan not found.');
     }
-    
+
+    // Hapus berkas bukti aduan dari storage
+    if ($aduan->bukti_aduan) {
+        $deleted = Storage::delete('public/bukti_aduan/' . $aduan->bukti_aduan);
+
+        if (!$deleted) {
+            return redirect()->back()->with('error', 'Failed to delete file.');
+        }
+    }
+
+    // Hapus record aduan dari database
+    $aduan->delete();
+
+    return redirect()->back()->with('success', 'Aduan berhasil dihapus.');
+}
 }
 
 

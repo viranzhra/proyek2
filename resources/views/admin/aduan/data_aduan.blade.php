@@ -49,14 +49,21 @@
                 <div class="mb-">
                     <h4 id="kelasHeading" class="m-0">Data Aduan Siswa</h4>
                 </div>
-                <a href="{{ route('download-pdf', ['selectedClass' => $selectedClass ?? '']) }}" style="float: right; margin-top: -30px;">
-                    <img src="{{ asset('image/icon_pdf.png') }}" alt="" width="25px"> <b>Download</b>
-                </a> 
             </div>
             <div class="card-body">
             <form action="{{ route('ajukan-aduan.index') }}" method="get">
                 @csrf <!-- Tambahkan ini untuk melindungi formulir dari serangan Cross-Site Request Forgery (CSRF) -->
-    
+                <div class="form-group col-md-3">
+                <label for="search_date"><b>Cari berdasarkan tanggal: </b></label>
+                <div class="input-group">
+                    <input type="date" class="form-control" id="search_date" name="search_date">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
                 <div class="table-responsive">
                 @if (session('success'))
                     <div id="success-alert" class="alert alert-success" role="alert">
@@ -77,6 +84,7 @@
                                 <th>Kelas</th>
                                 <th>Kategori Aduan</th>
                                 <th>Aduan</th>
+                                <th>Tanggal Pengisian</th>
                                 <th>Bukti Aduan</th>
                                 <th>Aksi</th>
                             </tr>
@@ -89,6 +97,7 @@
                                     <td>{{ $aduan->kelas }}</td>
                                     <td>{{ $aduan->kategori_aduan }}</td>
                                     <td>{{ $aduan->aduan }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($aduan->updated_at)->format('d-m-Y') }}</td>
                                     <td>
                                     @if ($aduan->bukti_aduan)
                                         <img src="{{ asset('storage/bukti_aduan/'.$aduan->bukti_aduan) }}" alt="Bukti Aduan" width="50">
@@ -100,9 +109,9 @@
                                         <button type="button" class="btn btn-info btn-sm view-btn" data-toggle="modal" data-target="#viewModal" onclick="openViewModal('{{ $aduan->nama_murid }}', '{{ $aduan->kelas }}', '{{ $aduan->kategori_aduan }}', '{{ $aduan->aduan }}', '{{ $aduan->bukti_aduan }}')">
                                             <i class="fas fa-eye"></i>
                                         </button>
-                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal" data-id="{{ $aduan->id }}">
+                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal" onclick="openDeleteModal('{{ $aduan->id }}', '{{ $aduan->nama_murid }}')">
                                             <i class="fas fa-trash-alt"></i>
-                                        </button>                                    
+                                        </button>                               
                                     </td>
                                 </tr>
                                 @empty
@@ -128,30 +137,31 @@
         </div>
 
 
-{{-- <!-- Modal Hapus -->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel{{ $aduan->id }}" aria-hidden="true">
+<!-- Modal Delete -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel{{ $aduan->id }}">Hapus Aduan</h5>
+                <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Penghapusan</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                Apakah Anda yakin ingin menghapus aduan ini?
+                <!-- Pesan konfirmasi akan ditampilkan di sini -->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                <form action="{{ route('aduan.destroy', $aduan->id) }}" method="POST">
+                <form id="deleteActionForm" method="post" style="display: inline-block;">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-danger">Hapus</button>
+                    <button type="submit" class="btn btn-danger">Ya, Hapus</button>
                 </form>
             </div>
         </div>
     </div>
-</div> --}}
+</div>
+
 
 <!-- Modal View Data -->
 <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
@@ -184,14 +194,15 @@
                         </tr>
                         <tr>
                             <th scope="row">Bukti Aduan</th>
-                            <td><span id="bukti_aduan_image"></span></td>
-                        </tr>
+                            <td><img id="bukti_aduan_image" class="img-fluid" alt="Bukti Aduan"></td>
+                        </tr>                        
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
+
 
 <script>
     function openViewModal(nama, kelas, kategori, aduan, bukti) {
@@ -200,14 +211,31 @@
         document.getElementById('kategori_aduan_view').innerHTML = kategori;
         document.getElementById('aduan_view').innerHTML = aduan;
 
-        /*var buktiAduanImage = document.getElementById('bukti_aduan_image');
-        if (buktiAduan) {
-            buktiAduanImage.src = "path/to/bukti_aduan/" + buktiAduan;
+        var buktiAduanImage = document.getElementById('bukti_aduan_image');
+        if (bukti) {
+            buktiAduanImage.src = "storage/bukti_aduan/" + bukti;
         } else {
             buktiAduanImage.src = "path/to/default/image.jpg";
-        }*/
+        }
     }
 </script>
+
+<script>
+    function openDeleteModal(id, nama) {
+        var modal = $('#deleteModal');
+        var deleteActionForm = $('#deleteActionForm');
+
+        deleteActionForm.attr('action', "/aduansiswa/" + id + "/destroy");
+
+        // Set pesan konfirmasi di dalam modal
+        var modalBody = modal.find('.modal-body');
+        modalBody.html("Apakah Anda yakin ingin menghapus data " + nama + "?");
+
+        // Tampilkan modal
+        modal.modal('show');
+    }
+</script>
+
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.7.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -231,7 +259,6 @@
         function redirectToClass() {
             var selectedValue = document.getElementById('kelas').value;
             var headingElement = document.getElementById("kelasHeading");
-            var redirectURL = "{{ route('download-pdf') }}?selectedClass=" + encodeURIComponent(selectedValue);        
             var redirectURL = "?search=" + encodeURIComponent(selectedValue);
             window.location.href = redirectURL;
         }

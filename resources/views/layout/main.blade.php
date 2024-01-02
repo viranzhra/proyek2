@@ -25,9 +25,12 @@
               <li class="nav-item">
                 <a href="{{ route('sekolah.index') }}" class="nav-link {{ request()->is('/') ? 'active' : '' }}" style="color: white;">Beranda</a>
               </li>
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('form.aduan') ? 'active' : '' }}" href="/aduansiswa_form" style="color: white;">Aduan Siswa</a>
-              </li>           
+              </li>  --}}
+              <li class="nav-item">
+                <a class="nav-link {{ request()->is('#kontak') ? 'active' : '' }}" href="#kontak" style="color: white;">Kontak</a>
+              </li>
               <li class="nav-item">
                 <a href="{{ route('visi_misi') }}" class=" nav-link {{ request()->routeIs('visi_misi') ? 'active' : '' }}" style="color: white;">Visi Misi</a>
               </li>
@@ -41,8 +44,8 @@
     </div>
 
     <footer>
-        copyright&copy;2023 | Si Tabung
-  </footer>
+      Copyright &copy;<script>document.write(new Date().getFullYear());</script> | SiTabung
+    </footer>
 
 </body>
 </html>

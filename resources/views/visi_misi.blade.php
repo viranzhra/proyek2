@@ -3,65 +3,101 @@
 @section('content')
 
 <style>
-  body{
-      background-color: #E3F2FD;
-      background-image: none;
-  }
+    body {
+        background-color: #E3F2FD;
+        background-image: none;
+    }
+
+    .container-text-center {
+        text-align: center;
+    }
+
+    .content {
+        margin-top: 0px;
+        margin-bottom: -30px;
+        color: #69699c;
+        font-weight: bold;
+    }
+
+    .judul-halaman {
+        margin-top: 50px;
+        margin-bottom: 50px;
+        color: #69699c;
+        font-weight: bold;
+    }
+
+    .hr-y {
+        border: none;
+        border-top: 4px solid #080a24;
+        margin-top: -50px;
+        border-radius: 3px;
+    }
+
+    .container-card {
+        background-color: #4ea0e11f;
+        border-radius: 8px;
+        width: 100%;
+        max-width: 1180px;
+        margin: 0 auto;
+        position: relative;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .col-content {
+        color: black;
+        font-size: 20px;
+        margin: 50px;
+    }
+
+    .visi-misi-item {
+        text-align: center;
+        margin-top: -10px;
+        font-weight: 900;
+        color: green;
+    }
+
+    .hr-style {
+        border: none;
+        border-top: 3px solid #0c5417;
+        margin-top: 30px;
+        border-radius: 5px;
+    }
 </style>
+
 <main>
-  <div class="container text-center">
-      <div class="content">
-        <h4 style="margin-top: 50px; margin-bottom: 50px; color: #69699c; font-weight: bold;">VISI & MISI SERTA TUJUAN <br> SMP NURUL HALIM WIDASARI</h4>
-        <hr style="border: none;
-        border-top: 5px solid #1623a9;
-        margin-top: -30px;
-        border-radius: 5px;">
-      </div>
-  </div>
-
-  <div class="container text-center" style="background-color: #4ea0e11f; border-radius: 8px; width: 1180px; position: relative;">
-      <div class="row align-items-center" style="margin-bottom: 100px;">
-        <div class="col" style="color: black; font-size: 20px; margin: 50px;">
-          <h5 style="text-align: center; margin-top: -10px; font-weight: 900; color: green;">VISI</h5>
-          <p>
-              Visi Sekolah adalah terwujudnya warga sekolah yang <span class="tulisan">“ROHMATAN”</span>.
-              <span class="tulisan">R</span> = eligius; <span class="tulisan">O</span> = byektif; <span  class="tulisan">H</span> = umanis; <span class="tulisan">M</span> = andiri; <span class="tulisan">A</span> = manah; <span class="tulisan">T</span> = oleransi; 
-              <span class="tulisan">A</span> = khlakul karimah; <span class="tulisan">N</span> = asionalis
-              Indikator Pencapaian Visi <br><br>
-          </p>
-          <hr style="border: none;
-          border-top: 3px solid #0c5417;
-          margin-top: 30px;
-          border-radius: 5px;">
-          <h5 style="text-align: center; font-weight: 900; color: green;">MISI</h5>
-          <p style="text-align: left;">
-              a.	Melaksanakan kegiatan keagamaan untuk membentuk peserta didik yang Religius <br>
-              b.	Melaksanakan proses penilaian terhadap peserta didik secara Obyektif <br>
-              c.	Menyelesaikan permasalahan dengan menggunakan pendekatan Humanis <br>
-              d.	Membina ke Mandirian peserta didik melalui pembiasaan program sekolah <br>
-              e.	Melaksanakan pegelolaan dan pembiayaan dengan Amanah <br>
-              f.	Membangun kehidupan warga sekolah yang toleran terhadap perbedaan-perbedaan yang ada <br>
-              g.	Melaksanakan kegiatan 3M (Menyapa Guru, Menyapa teman dan Menjaga sopan santun) untuk membentuk generasi yang berAkhlakul karimah <br>
-              h.	Menumbuh kembangkan jiwa Nasional pada peserta didik <br><br>
-          </p>
-          <hr style="border: none;
-          border-top: 3px solid #0c5417;
-          margin-top: 30px;
-          border-radius: 5px;">
-          <h5 style="text-align: center; font-weight: 900; color: green;">TUJUAN</h5>
-          <p style="text-align: left;">
-              a)	Menjadikan peserta didik yang religius <br>
-              b)	Mewujudkan proses penilaian yang obyektif<br>
-              c)	Membiasakan dengan pendekatan humanis dalam menyelesaikan semua permasalahan<br>
-              d)	Mejadikan lulusan yang mandiri<br>
-              e)	Terwujudnya sikap amanah dalam kehidupan sehari-hari<br>
-              f)	Tumbuhnya budaya toleransi antar warga sekolah<br>
-              g)	Terbentuknya karakter peserta didik yang berAkhlakul karimah<br>
-              h)	Terwujudnya jiwa nasionalis pada warga sekolah<br>
-
-          </p>
+    <div class="container container-text-center">
+        <div class="content">
+            <h5 class="judul-halaman">VISI & MISI SERTA TUJUAN <br> {{ $sekolah->nama }}</h5>
+            <h4 style="margin-top: -30px; margin-bottom: 50px; color: #69699c; font-weight: bold;">{{ $data->judul_halaman ?? '' }}
+            </h4>            
         </div>
-      </div>
+        <hr class="hr-y">
+    </div>
+
+    <div class="container container-card">
+        <div class="row align-items-center" style="margin-bottom: 100px;">
+            <div class="col col-content">
+                @if($data)
+                    <h5 class="visi-misi-item">VISI</h5>
+                    <p>
+                        {{ $data->visi ?? '' }}
+                    </p>
+                    <hr class="hr-style">
+                    <h5 class="visi-misi-item">MISI</h5>
+                    <p>
+                        {{ $data->misi ?? '' }}
+                    </p>
+                    <hr class="hr-style">
+                    <h5 class="visi-misi-item">TUJUAN</h5>
+                    <p>
+                        {{ $data->tujuan ?? '' }}
+                    </p>
+                @else
+                    <p>Tidak Ada Data Visi Misi.</p>
+                @endif
+            </div>
+        </div>
     </div>
 </main>
 @endsection

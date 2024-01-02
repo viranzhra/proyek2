@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
   	<title>{{ $sekolah->nama }}</title>
-	  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.18.0/font/bootstrap-icons.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.18.0/font/bootstrap-icons.css">
 	<link rel="icon" href="image/sitabung.png" type="image/x-icon">
 	<!-- Tambahkan ini di bagian head halaman HTML Anda -->
 	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -52,7 +52,8 @@
 			<div class="text-center mb-3 d-flex align-items-center">
                 <!-- Avatar dan Nama Admin -->
 				<a href="{{ route('admin.update.profile.form') }}">
-                	<img src="{{ $url }}" alt="Avatar" class="avatar"><b class="ml-2 mb-0" style="margin-top: 0; font-size: 15px; color: rgb(0, 204, 255);">{{ Auth::user()->email }}</b>
+					<img src="{{ $url ?? asset('image/orang1.jpg') }}" alt="Avatar" class="avatar">
+					<b class="ml-2 mb-0" style="margin-top: 0; font-size: 15px; color: rgb(0, 204, 255);">{{ Auth::user()->email }}</b>
 				</a>
             </div>
 			<hr class="custom-hr">
@@ -82,7 +83,7 @@
 			  <li class="{{ request()->routeIs('admin.update.profile.form') ? 'active' : '' }}">
 				<a href="{{ route('admin.update.profile.form') }}"><span class="fa fa-user mr-3"></span>Profile Admin</a>
 			</li>
-			<li class="nav-item {{ Request::is('identitas-sekolah*', 'prestasis*') ? 'active' : '' }}">
+			<li class="nav-item {{ Request::is('identitas-sekolah*', 'prestasis*', 'visi_misi*') ? 'active' : '' }}">
 				<a href="#setting" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fa fa-cogs mr-3"></span>Tentang Sekolah</a>
 				<ul class="collapse list-unstyled" id="setting">
 					<li class="{{ request()->routeIs('identitas-sekolah') ? 'active' : '' }}">
@@ -90,6 +91,9 @@
 					</li>                        
 					<li class="{{ request()->routeIs('prestasis.index') ? 'active' : '' }}">
 						<a href="{{ route('prestasis.index') }}">Tampilan Prestasi</a>
+					</li>
+					<li class="{{ request()->routeIs('visi_misi.index') ? 'active' : '' }}">
+						<a href="{{ route('visi_misi.index') }}">Tampilan Visi Misi</a>
 					</li>
 				</ul>
 			</li>

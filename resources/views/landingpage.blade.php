@@ -41,10 +41,7 @@
           <div class="container text-center" style="background-color: rgba(0, 0, 0, 0.7); border-radius: 8px; width: 1000px; position: relative;">
             <div class="row align-items-center" style="margin-bottom: 100px;">
               <div class="col" style="color: white; font-size: 20px;">
-                <p class="slide-in-from-bottom">"SMP Nurul Halim Widasari adalah sekolah yang sangat
-                  terkenal di wilayah ini karena reputasinya yang kuat
-                  dalam memberikan pendidikan berkualitas kepada 
-                  para siswa-siswinya."</p>
+                <p class="slide-in-from-bottom">"{{ $sekolah->deskripsi_sekolah }}"</p>
               </div>
             </div>
           </div>
@@ -75,10 +72,10 @@
                 <div id="kontak" class="p-3" style="background-color: rgb(0 140 172 / 70%); border-radius: 8px; width: 300px; position: relative; text-align: left;">
                   <h6 style="color: rgb(0 0 0);">KONTAK SEKOLAH</h6>
                  <a href="#" style="color: #ebf4fb;">
-                  <img src="../image/telpon.png" alt="telp" width="30px" height="30px"> 351669
+                  <img src="../image/telpon.png" alt="telp" width="30px" height="30px"> {{ $sekolah->no_telp }}
                  </a><br>
                  <a href="#" style="color: #ebf4fb;">
-                  <img src="../image/email.png" alt="email" width="30px" height="30px"> smpnurulhalim93@gmail.com
+                  <img src="../image/email.png" alt="email" width="30px" height="30px"> {{ $sekolah->email_sekolah }}
                  </a>
                 </div>
               </div>

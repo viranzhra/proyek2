@@ -33,7 +33,7 @@ class ArsipTabunganController extends Controller
         // Filter data based on search date
         if ($request->has('search_date')) {
             $searchDate = $request->input('search_date');
-            $arsipTabungan->whereDate('arsip_tabungan_bulanan.tanggal_arsip', $searchDate);
+            $arsipTabungan->whereDate('arsip_tabungan_bulanan.updated_at', $searchDate);
         }
 
         // Filter data for each week

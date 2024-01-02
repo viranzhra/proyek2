@@ -11,6 +11,7 @@ use App\Models\ArsipTabungan;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Session;
 
 class TransaksiTabunganController extends Controller
 {
@@ -20,10 +21,9 @@ class TransaksiTabunganController extends Controller
         $kelas = Kelas::all();
         $kategoriTransaksis = KategoriTransaksi::all();
         $search = $request->input('search');
-    
-        // Inisialisasi $searchDate dengan tanggal sekarang jika tidak ada tanggal pencarian
-        $searchDate = $request->input('search_date', now()->format('l, d F Y'));
+        $searchDate = $request->input('search_date');
 
+        // Exclude the specific date filtering
         $transaksis = DB::table('transaksi_tabungan')
             ->join('murid', 'transaksi_tabungan.id_siswa', '=', 'murid.id')
             ->join('kategori_transaksi', 'transaksi_tabungan.id_kategori', '=', 'kategori_transaksi.id')
@@ -45,16 +45,16 @@ class TransaksiTabunganController extends Controller
             ->when($search, function ($query, $search) {
                 return $query->where('murid.nama_murid', 'like', '%' . $search . '%')
                     ->orWhere('kelas.ket_kelas', 'like', '%' . $search . '%');
+            })
+            ->when($searchDate, function ($query, $searchDate) {
+                // Add condition to filter by transaction date
+                return $query->whereDate('transaksi_tabungan.tanggal', 'like', '%' . $searchDate . '%');
             });
-    
-            // Filter data based on search date
-            $transaksis->whereDate('transaksi_tabungan.tanggal', Carbon::parse($searchDate)->toDateString());
-    
-        $transaksis = $transaksis->paginate(5); // Menentukan jumlah data per halaman
-    
-        return view("admin/pemasukkan/transaksi", compact('search', 'murids', 'kelas', 'kategoriTransaksis', 'transaksis', 'searchDate'));
+
+        $transaksis = $transaksis->paginate(5);
+
+        return view("admin/pemasukkan/transaksi", compact('search', 'murids', 'kelas', 'kategoriTransaksis', 'transaksis'));
     }
-    
     
 
     // Fungsi untuk menampilkan form tambah transaksi
@@ -72,6 +72,7 @@ class TransaksiTabunganController extends Controller
         // Validasi request di sini sesuai kebutuhan
         $request->validate([
             'id_siswa' => 'required',
+            'id_kelas' => 'required',
             'tanggal' => 'required',
             'id_kategori' => 'required',
             'nominal' => 'required',
@@ -255,6 +256,21 @@ class TransaksiTabunganController extends Controller
             return redirect()->route('transaksi-tabungan.index')->with('error', 'Murid tidak ditemukan');
         }
 
+        // Check jika kategori transaksi adalah pengeluaran (id_kategori = 2)
+        if ($request->id_kategori == 2) {
+            // Hitung total saldo siswa sekarang
+            $saldoSiswa = $this->getTotalSaldoForStudent($murid->id);
+
+            // Cek apakah saldo mencukupi untuk pengeluaran
+            if ($saldoSiswa < $request->nominal) {
+                // Tampilkan notifikasi bahwa saldo siswa tidak mencukupi
+                Session::flash('saldo_kurang', 'Maaf, Saldo Siswa Kurang');
+
+                // Redirect kembali ke halaman indeks dengan pesan kesalahan
+                return redirect()->route('transaksi-tabungan.index');
+            }
+        }
+
         // Buat transaksi baru hanya dengan data yang diperlukan
         $transaksi = TransaksiTabungan::create([
             'id_siswa' => $murid->id, // Menggunakan ID siswa dari hasil pencarian
@@ -271,9 +287,28 @@ class TransaksiTabunganController extends Controller
 
         // Proses tabungan (perbarui saldo, dll.) sesuai kebutuhan
         $this->processTabungan($transaksi);
+
         // Redirect ke halaman indeks dengan pesan sukses
         return redirect()->route('transaksi-tabungan.index')->with('success', 'Saldo berhasil ditambahkan');
     }
+
+// Fungsi untuk mendapatkan total saldo siswa
+private function getTotalSaldoForStudent($studentId)
+{
+    $totalPemasukkan = DB::table('transaksi_tabungan')
+        ->where('id_kategori', 1) // nilai kategori pemasukkan
+        ->where('id_siswa', $studentId)
+        ->sum('nominal');
+
+    $totalPengeluaran = DB::table('transaksi_tabungan')
+        ->where('id_kategori', 2) // nilai kategori pengeluaran
+        ->where('id_siswa', $studentId)
+        ->sum('nominal');
+
+    $totalSaldo = $totalPemasukkan - $totalPengeluaran;
+
+    return $totalSaldo;
+}
 
     // Fungsi untuk mendapatkan total pemasukkan
     public function getTotalPemasukkan()
@@ -310,5 +345,25 @@ class TransaksiTabunganController extends Controller
 
         return $totalSaldo;
     }
+
+    public function getUserDataById($id)
+	{
+		$userData = DB::table('transaksi_tabungan')
+		->join('murid', 'transaksi_tabungan.id_siswa', '=', 'murid.id')
+		->join('kelas', 'transaksi_tabungan.id_kelas', '=', 'kelas.id')
+		->select(
+			'transaksi_tabungan.id',
+			'transaksi_tabungan.id_siswa',
+			'transaksi_tabungan.id_kelas',
+			'murid.nisn_murid as nisn_murid',
+			'murid.nama_murid as nama_murid',
+			'kelas.ket_kelas as kelas',
+			'kelas.id as kelas_id',
+		)
+		->where('transaksi_tabungan.id_siswa', $id)
+		->first();
+
+		return response()->json($userData);
+	}
 
 }

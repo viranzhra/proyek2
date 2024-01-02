@@ -16,6 +16,16 @@
                 <div class="card-body">
                     <table class="table table-bordered">
                         <tbody>
+                            {{-- <tr>
+                                <th>Logo</th>
+                                <td>
+                                    @if ($sekolah->logo_path)
+                                        <img src="{{ asset('storage/images' . $sekolah->logo_path) }}" alt="Logo" style="max-width: 100px; max-height: 100px;">
+                                    @else
+                                        No Logo Available
+                                    @endif
+                                </td>
+                            </tr> --}}
                             <tr>
                                 <th>Nama Sekolah</th>
                                 <td>{{ $sekolah->nama }}</td>
@@ -51,6 +61,18 @@
                                 <th>NPWP</th>
                                 <td>{{ $sekolah->npwp }}</td>
                             </tr>
+                            <tr>
+                                <th>Deskripsi Sekolah</th>
+                                <td>{{ $sekolah->deskripsi_sekolah }}</td>
+                            </tr>
+                            <tr>
+                                <th>No. Telepon</th>
+                                <td>{{ $sekolah->no_telp }}</td>
+                            </tr>
+                            <tr>
+                                <th>Email Sekolah</th>
+                                <td>{{ $sekolah->email_sekolah }}</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -70,10 +92,14 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('sekolah.update') }}" method="POST">
+            <form action="{{ route('sekolah.update') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="modal-body">
+                    {{-- <div class="form-group">
+                        <label for="logo">Nama Sekolah</label>
+                        <input type="file" class="form-control" id="logo" name="logo_path" value="{{ $sekolah->logo_path }}">
+                    </div> --}}
                     <div class="form-group">
                         <label for="nama">Nama Sekolah</label>
                         <input type="text" class="form-control" id="nama" name="nama" value="{{ $sekolah->nama }}">
@@ -109,7 +135,19 @@
                     <div class="form-group">
                         <label for="nama">NPWP</label>
                         <input type="text" class="form-control" id="nama" name="npwp" value="{{ $sekolah->npwp }}">
-                    </div>            
+                    </div>
+                    <div class="form-group">
+                        <label for="deskripsi_sekolah">Deskripsi Sekolah</label>
+                        <textarea class="form-control" id="deskripsi_sekolah" name="deskripsi_sekolah">{{ $sekolah->deskripsi_sekolah }}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="no_telp">No. Telepon</label>
+                        <input type="text" class="form-control" id="no_telp" name="no_telp" value="{{ $sekolah->no_telp }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="email_sekolah">Email Sekolah</label>
+                        <input type="email" class="form-control" id="email_sekolah" name="email_sekolah" value="{{ $sekolah->email_sekolah }}">
+                    </div>          
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" onclick="showSuccessPopup()">Simpan Perubahan</button>                </div>

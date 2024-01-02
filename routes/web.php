@@ -32,7 +32,8 @@ use App\Http\Controllers\PemasukkanTabunganController;
 Route::get('/', [SekolahController::class, 'index'])->name('sekolah.index');
 Route::get('/prestasi', [PrestasiController::class, 'showPrestasi']);
 Route::get('/prestasi-siswa-{allPrestasi}', [AllPrestasiController::class, 'showAllPrestasi'])->name('showAllPrestasi');
-Route::get('/visimisi', [VisiMisiController::class, 'index'])->name('visi_misi');
+Route::get('/visi_misi', [VisiMisiController::class, 'showVisiMisi'])->name('visi_misi');
+
 // Route::get('/visimisi', function () {
 //     return view('visi_misi', [
 //         "title" => "Visi Misi"
@@ -132,6 +133,7 @@ Route::middleware('auth:admin')->group(function () {
     // Menghapus data siswa
     Route::delete('/siswa/{nisn}/destroy', [DataSiswaController::class, 'destroy'])->name('siswa.destroy');
 
+    Route::get('/getUserDataById/{id}', [TransaksiTabunganController::class, 'getUserDataById']);
     Route::resource('transaksi-tabungan', TransaksiTabunganController::class);
     Route::put('/transaksi-tabungan/{id}/update', [TransaksiTabunganController::class, 'update'])->name('transaksi-tabungan.update');
     Route::delete('/transaksi-tabungan/{nisn}/destroy', [DataSiswaController::class, 'destroy'])->name('transaksi-tabungan.destroy');
@@ -182,6 +184,12 @@ Route::middleware('auth:admin')->group(function () {
     // Route untuk menghapus data All Prestasi
     Route::delete('/all-prestasis-{allPrestasi}', [AllPrestasiController::class, 'destroy'])->name('all-prestasis.destroy');
 
+    Route::get('/visi_misi-create', [VisiMisiController::class, 'create'])->name('visi_misi.create');
+    Route::post('/visi_misi', [VisiMisiController::class, 'store'])->name('visi_misi.store');
+    Route::get('/visi_misi-{id}-edit', [VisiMisiController::class, 'edit'])->name('visi_misi.edit');
+    Route::put('/visi_misi/{id}', [VisiMisiController::class, 'update'])->name('visi_misi.update');
+    Route::delete('/visi_misi/{id}', [VisiMisiController::class, 'destroy'])->name('visi_misi.destroy');
+    Route::get('/visi_misi-index', [VisiMisiController::class, 'index'])->name('visi_misi.index');
 });
 
 Route::get('/profilguru', function () {

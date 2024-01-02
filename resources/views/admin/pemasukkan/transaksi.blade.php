@@ -60,9 +60,7 @@
             <form action="{{ route('transaksi-tabungan.index') }}" method="get">
                 @csrf <!-- Tambahkan ini untuk melindungi formulir dari serangan Cross-Site Request Forgery (CSRF) -->
                 <center>
-                    @if (isset($searchDate))
-                        <b style="color: rgb(63, 63, 128)">{{ \Carbon\Carbon::parse($searchDate)->format('l, d F Y') }}</b>
-                    @endif
+                    <b style="color: rgb(63, 63, 128)">{{ \Carbon\Carbon::now()->format('l, d F Y') }}</b>                    
                 </center>
 
                 <div class="form-group col-md-3">
@@ -89,7 +87,11 @@
                         {{ session('error') }}
                     </div>
                 @endif
-
+                @if(session('saldo_kurang'))
+                <div class="alert alert-danger" role="alert">
+                    {{ session('saldo_kurang') }}
+                </div>
+            @endif
                     <table id="example" class="table table-striped" style="width:100%">
                         <thead>
                             <tr>
@@ -178,6 +180,7 @@
                         </select>
                     </div>
 
+                    
                     <div class="form-group">
                         <label for="id_kategori" class="form-label">Deskripsi</label>
                         <select class="form-select" id="id_kategori" name="id_kategori" required>
@@ -452,8 +455,18 @@
             }, 3000);
         });
     </script>
+    <script>
+        // Auto-hide saldo kurang alert after 3 seconds
+        $(document).ready(function () {
+            setTimeout(function () {
+                $("#saldoKurangAlert").fadeOut(500, function () {
+                    $(this).remove();
+                });
+            }, 3000);
+        });
+    </script>
 
-<script>
+{{-- <script>
     $(document).ready(function () {
         // Dengarkan perubahan pada pilihan "Nama Murid"
         $('#id_siswa').on('change', function () {
@@ -474,7 +487,17 @@
             });
         });
     });
-</script>
+</script> --}}
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script>
+	document.getElementById('id_siswa').addEventListener('input', async function () {
+		const id = document.getElementById('id_siswa').value;
+		const response = await axios.get(`/getUserDataById/${id}`);
+		const userData = response.data;
+		document.getElementById('pilihkelas').value = userData ? userData.kelas_id : '';
+	});
+	</script>
 
 @endsection
 

@@ -20,5 +20,9 @@ class Sekolah extends Model
         'sk_izin_operasional',
         'tgl_sk_izin_operasional',
         'npwp',
+        'deskripsi_sekolah',
+        'no_telp',
+        'email_sekolah',
+        'logo_path',
     ];
 }

@@ -8,7 +8,7 @@
             <div class="card-header">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="mb-3">
-                        <h4 id="kelasHeading" class="m-0">Data Siswa @if ($search) Kelas {{ $search }} @endif</h4>
+                        <h4 id="kelasHeading" class="m-0">Data Siswa @if ($search) Dari {{ $search }} @endif</h4>
                     </div>
                     <div class="mb-">
                         <label for="kelas" class="mr-2" style="font-weight: bold">Pilih Kelas:</label>
@@ -138,12 +138,12 @@
 
                     <div class="form-group">
                         <label for="nisn">NISN</label>
-                        <input type="text" class="form-control" id="nisn" name="nisn_murid" required>
+                        <input type="text" class="form-control" id="nisn" name="nisn_murid" placeholder="Masukkan Nisn Siswa" required>
                     </div>
 
                     <div class="form-group">
                         <label for="nama">Nama</label>
-                        <input type="text" class="form-control" id="nama" name="nama_murid" required>
+                        <input type="text" class="form-control" id="nama" name="nama_murid" placeholder="Masukkan Nama Siswa" required>
                     </div>
 
                     <div class="form-group">
