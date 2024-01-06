@@ -160,26 +160,26 @@
                 <form action="{{ route('transaksi-tabungan.store') }}" method="post">
                     @csrf
 
-                    <div class="form-group">
-                        <label for="id_siswa" class="form-label">Nama Murid</label>
-                        <select class="form-select" id="id_siswa" name="id_siswa" required>
-                            <option value="" disabled selected>Pilih Nama Siswa</option>
-                            @foreach($murids as $murid)
-                                <option value="{{ $murid->id }}">{{ $murid->nama_murid }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+
 
                     <div class="form-group">
                         <label for="pilihkelas">Kelas</label>
-                        <select class="form-control" id="pilihkelas" name="id_kelas" required readonly>
+                        <select class="form-select" id="pilihkelas" name="id_kelas" required>
                             <option value="" disabled selected>Pilih Kelas</option>
                             @foreach ($kelas as $kelasItem)
                                 <option value="{{ $kelasItem->id }}">{{ $kelasItem->ket_kelas }}</option>
                             @endforeach
                         </select>
                     </div>
-
+                    <div class="form-group">
+                        <label for="idsiswa" class="form-label">Nama Murid</label>
+                        <select class="form-select" id="idsiswa" name="id_siswa" required>
+                            <option value="" disabled selected>Nama Siswa</option>
+                            @foreach($murids as $murid)
+                                <option value="{{ $murid->id }}">{{ $murid->nama_murid }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     
                     <div class="form-group">
                         <label for="id_kategori" class="form-label">Deskripsi</label>
@@ -490,14 +490,51 @@
 </script> --}}
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-	<script>
-	document.getElementById('id_siswa').addEventListener('input', async function () {
-		const id = document.getElementById('id_siswa').value;
-		const response = await axios.get(`/getUserDataById/${id}`);
-		const userData = response.data;
-		document.getElementById('pilihkelas').value = userData ? userData.kelas_id : '';
-	});
-	</script>
+<script>
+    document.getElementById('pilihkelas').addEventListener('change', async function () {
+        // Mendapatkan nilai kelas yang dipilih
+        const selectedClass = document.getElementById('pilihkelas').value;
+
+        // Mengambil data siswa berdasarkan kelas yang dipilih
+        axios.get(`/getUserDataById/${selectedClass}`)
+            .then(response => {
+                // Mendapatkan data siswa dari respons
+                const userData = response.data;
+                console.log(userData);  // Log data ke konsol
+
+                // Menghapus opsi yang sudah ada
+                const idsiswaDropdown = document.getElementById('idsiswa');
+                idsiswaDropdown.innerHTML = '';
+
+                // Membuat Set untuk melacak ID siswa yang sudah ditambahkan dan menghindari duplikasi
+                const addedStudentIDs = new Set();
+
+                // Jika data siswa ditemukan
+                if (userData.length > 0) {
+                    userData.forEach(student => {
+                        // Memeriksa apakah ID siswa sudah ditambahkan untuk menghindari duplikasi
+                        if (!addedStudentIDs.has(student.id_siswa)) {
+                            const option = document.createElement('option');
+                            option.value = student.id_siswa;
+                            option.text = student.nama_murid;
+                            idsiswaDropdown.appendChild(option);
+
+                            // Menambahkan ID siswa ke dalam Set
+                            addedStudentIDs.add(student.id_siswa);
+                        }
+                    });
+                } else {
+                    // Jika tidak ada data yang ditemukan, tampilkan opsi default
+                    const defaultOption = document.createElement('option');
+                    defaultOption.text = 'Nama siswa tidak tersedia';
+                    idsiswaDropdown.appendChild(defaultOption);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    });
+</script>
 
 @endsection
 

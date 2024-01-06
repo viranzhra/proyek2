@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Sekolah;
+use Illuminate\Support\Facades\Storage;
 
 class SekolahController extends Controller
 {
@@ -29,8 +30,22 @@ class SekolahController extends Controller
     public function update(Request $request)
     {
         $sekolah = Sekolah::first();
-        $sekolah->update($request->all());
-
+    
+        // Update other fields
+        $sekolah->update($request->except('logo'));
+    
+        // Handle logo update
+        if ($request->hasFile('logo')) {
+            // Delete existing logo if it exists
+            if ($sekolah->logo_path) {
+                Storage::delete($sekolah->logo_path);
+            }
+    
+            // Store new logo
+            $logoPath = $request->file('logo')->store('images', 'public');
+            $sekolah->update(['logo_path' => $logoPath]);
+        }
+    
         return redirect()->route('identitas-sekolah')
             ->with('success', 'Data sekolah berhasil diupdate.');
     }

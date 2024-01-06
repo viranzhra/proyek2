@@ -348,23 +348,24 @@ private function getTotalSaldoForStudent($studentId)
     }
 
     public function getUserDataById($id)
-	{
-		$userData = DB::table('transaksi_tabungan')
-		->join('murid', 'transaksi_tabungan.id_siswa', '=', 'murid.id')
-		->join('kelas', 'transaksi_tabungan.id_kelas', '=', 'kelas.id')
-		->select(
-			'transaksi_tabungan.id',
-			'transaksi_tabungan.id_siswa',
-			'transaksi_tabungan.id_kelas',
-			'murid.nisn_murid as nisn_murid',
-			'murid.nama_murid as nama_murid',
-			'kelas.ket_kelas as kelas',
-			'kelas.id as kelas_id',
-		)
-		->where('transaksi_tabungan.id_siswa', $id)
-		->first();
-
-		return response()->json($userData);
-	}
+    {
+        $userData = DB::table('transaksi_tabungan')
+            ->join('murid', 'transaksi_tabungan.id_siswa', '=', 'murid.id')
+            ->join('kelas', 'transaksi_tabungan.id_kelas', '=', 'kelas.id')
+            ->select(
+                'transaksi_tabungan.id',
+                'transaksi_tabungan.id_siswa',
+                'transaksi_tabungan.id_kelas',
+                'murid.nisn_murid as nisn_murid',
+                'murid.nama_murid as nama_murid',
+                'kelas.ket_kelas as kelas',
+                'kelas.id as kelas_id'
+            )
+            ->where('transaksi_tabungan.id_kelas', $id) // Ganti 'transaksi_tabungan.id_siswa' menjadi 'transaksi_tabungan.id_kelas'
+            ->get(); // Gunakan get() untuk mendapatkan seluruh data yang sesuai
+    
+        return response()->json($userData);
+    }
+    
 
 }

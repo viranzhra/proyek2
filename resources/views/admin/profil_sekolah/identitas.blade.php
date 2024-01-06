@@ -16,16 +16,16 @@
                 <div class="card-body">
                     <table class="table table-bordered">
                         <tbody>
-                            {{-- <tr>
+                            <tr>
                                 <th>Logo</th>
                                 <td>
                                     @if ($sekolah->logo_path)
-                                        <img src="{{ asset('storage/images' . $sekolah->logo_path) }}" alt="Logo" style="max-width: 100px; max-height: 100px;">
+                                        <img src="{{ asset('storage/' . $sekolah->logo_path) }}" alt="Logo" style="max-width: 100px; max-height: 100px;">
                                     @else
                                         No Logo Available
                                     @endif
                                 </td>
-                            </tr> --}}
+                            </tr>
                             <tr>
                                 <th>Nama Sekolah</th>
                                 <td>{{ $sekolah->nama }}</td>
@@ -96,10 +96,10 @@
                 @csrf
                 @method('PUT')
                 <div class="modal-body">
-                    {{-- <div class="form-group">
-                        <label for="logo">Nama Sekolah</label>
-                        <input type="file" class="form-control" id="logo" name="logo_path" value="{{ $sekolah->logo_path }}">
-                    </div> --}}
+                    <div class="form-group">
+                        <label for="logo">Logo</label>
+                        <input type="file" name="logo" id="logo">
+                    </div>
                     <div class="form-group">
                         <label for="nama">Nama Sekolah</label>
                         <input type="text" class="form-control" id="nama" name="nama" value="{{ $sekolah->nama }}">

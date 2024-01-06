@@ -1,8 +1,10 @@
 <?php
 
+use App\Models\Eskul;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AduanController;
+use App\Http\Controllers\EskulController;
 use App\Http\Controllers\SekolahController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\PrestasiController;
@@ -31,6 +33,8 @@ use App\Http\Controllers\PemasukkanTabunganController;
 
 Route::get('/', [SekolahController::class, 'index'])->name('sekolah.index');
 Route::get('/prestasi', [PrestasiController::class, 'showPrestasi']);
+Route::get('/eskul', [EskulController::class, 'showEskul'])->name('eskuls.show.eskul');
+Route::get('/eskul-{allEskul}', [EskulController::class, 'showAllEskul'])->name('showAllEskul');
 Route::get('/prestasi-siswa-{allPrestasi}', [AllPrestasiController::class, 'showAllPrestasi'])->name('showAllPrestasi');
 Route::get('/visi_misi', [VisiMisiController::class, 'showVisiMisi'])->name('visi_misi');
 Route::get('/getAduanDataById/{id}', [AduanController::class, 'getAduanDataById']);
@@ -53,11 +57,11 @@ Route::get('/isiprestasi', function () {
     ]);
 });
 
-Route::get('/eskul', function () {
-    return view('eskul', [
-        "title" => "Eskul"
-    ]);
-});
+// Route::get('/eskul', function () {
+//     return view('eskul', [
+//         "title" => "Eskul"
+//     ]);
+// });
 
 Route::get('/isieskul', function () {
     return view('isieskul', [
@@ -76,8 +80,8 @@ Route::middleware('auth:admin')->group(function () {
     })->name('home');
 
     Route::get('/identitas-sekolah', [SekolahController::class, 'showIdentitasSekolah'])->name('identitas-sekolah');
-    Route::get('/edit', [SekolahController::class, 'edit'])->name('sekolah.edit');
-    Route::put('/update', [SekolahController::class, 'update'])->name('sekolah.update');
+    Route::get('/sekolah-edit', [SekolahController::class, 'edit'])->name('sekolah.edit');
+    Route::put('/sekolah-update', [SekolahController::class, 'update'])->name('sekolah.update');
 
     Route::get('/siswa_ajukan_aduan', [AduanController::class, 'index'])->name('ajukan-aduan.index');
     Route::get('/siswa/ajukan_aduan/create', [AduanController::class, 'create'])->name('ajukan-aduan.create');
@@ -167,6 +171,21 @@ Route::middleware('auth:admin')->group(function () {
     Route::put('/visi_misi/{id}', [VisiMisiController::class, 'update'])->name('visi_misi.update');
     Route::delete('/visi_misi/{id}', [VisiMisiController::class, 'destroy'])->name('visi_misi.destroy');
     Route::get('/visi_misi-index', [VisiMisiController::class, 'index'])->name('visi_misi.index');
+
+    // Index page showing all Eskuls
+Route::get('/eskuls', [EskulController::class, 'index'])->name('eskuls.index');
+// Create Eskul form
+Route::get('/eskuls-create', [EskulController::class, 'create'])->name('eskuls.create');
+// Store new Eskul
+Route::post('/eskuls', [EskulController::class, 'store'])->name('eskuls.store');
+
+// Edit Eskul form
+Route::get('/eskuls-{id}-edit', [EskulController::class, 'edit'])->name('eskuls.edit.eskul');
+// Update Eskul
+Route::put('/eskuls-{id}', [EskulController::class, 'update'])->name('eskuls.update');
+
+// Delete Eskul form
+Route::get('/eskuls-{id}-delete', [EskulController::class, 'destroy'])->name('eskuls.delete');
 });
 
 Route::get('/profilguru', function () {

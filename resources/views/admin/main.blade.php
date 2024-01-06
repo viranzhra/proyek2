@@ -3,14 +3,14 @@
   <head>
   	<title>{{ $sekolah->nama }}</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.18.0/font/bootstrap-icons.css">
-	<link rel="icon" href="image/sitabung.png" type="image/x-icon">
+	
 	<!-- Tambahkan ini di bagian head halaman HTML Anda -->
 	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 	<meta http-equiv="Pragma" content="no-cache">
 	<meta http-equiv="Expires" content="0">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link rel="icon" href="image/logosmp.png" type="image/x-icon">
+	<link rel="icon" href="{{ asset('storage/' . $sekolah->logo_path) }}" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/dashboard/style.css">

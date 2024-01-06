@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="{{ asset('storage/' . $sekolah->logo_path) }}" type="image/x-icon">
     <link href="css/landingpage.css" rel="stylesheet">
-    <title>Document</title>
+    <title>FORM ADUAN</title>
     <style>
         body{
             background-color: #cacaca;
@@ -28,26 +29,26 @@
                     <div class="card-body">
                         <form action="{{ route('form.aduan.store') }}" method="post" enctype="multipart/form-data">
                             @csrf
+
                             <div class="mb-3">
-                                <label style="font-weight: bold" for="id_siswa" class="form-label">Nama Murid</label>
-                                <select class="form-select" id="id_siswa" name="id_siswa" required style="border-radius: 25px;">
+                                <label style="font-weight: bold" for="pilihkelas">Kelas:</label>
+                                <select class="form-select" id="pilihkelas" name="id_kelas" required style="border-radius: 25px;">
+                                    <option value="" disabled selected>Pilih Kelas</option>
+                                    @foreach ($kelas as $kelasItem)
+                                        <option value="{{ $kelasItem->id }}">{{ $kelasItem->ket_kelas }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label style="font-weight: bold" for="idsiswa">Nama Siswa:</label>
+                                <select class="form-select" id="idsiswa" name="id_siswa" required style="border-radius: 25px;">
                                     <option value="" disabled selected>Pilih Nama Siswa</option>
                                     @foreach($murids as $murid)
                                         <option value="{{ $murid->id }}">{{ $murid->nama_murid }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="mb-3">
-                                <label style="font-weight: bold" for="pilihkelas">Kelas:</label>
-                                <select id="pilihkelas" name="id_kelas" class="form-select" style="border-radius: 25px;" readonly>
-                                    <option value="" disabled selected>Pilih Kelas</option>
-                                    @foreach($kelas as $kelasItem)
-                                    <option value="{{ $kelasItem->id }}">
-                                        {{ $kelasItem->ket_kelas }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                            </div>
+
                             <div class="mb-3">
                                 <label style="font-weight: bold" for="kategori_aduan" class="form-label">Kategori Aduan :</label>
                                 <select class="form-select" id="kategori_aduan" name="kategori_aduan" required style="border-radius: 25px;">
@@ -87,14 +88,49 @@
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-	<script>
-	document.getElementById('id_siswa').addEventListener('input', async function () {
-		const id = document.getElementById('id_siswa').value;
-		const response = await axios.get(`/getAduanDataById/${id}`);
-		const userData = response.data;
-		document.getElementById('pilihkelas').value = userData ? userData.kelas_id : '';
-	});
-	</script>
+<script>
+    document.getElementById('pilihkelas').addEventListener('change', async function () {
+        const selectedClass = document.getElementById('pilihkelas').value;
+
+        // Fetch student data based on the selected class
+        axios.get(`/getUserDataById/${selectedClass}`)
+            .then(response => {
+                const userData = response.data;
+                console.log(userData);  // Log data ke konsol
+
+                // Clear existing options
+                const idsiswaDropdown = document.getElementById('idsiswa');
+                idsiswaDropdown.innerHTML = '';
+
+                // Create a Set to keep track of added student IDs and avoid duplicates
+                const addedStudentIDs = new Set();
+
+                if (userData.length > 0) {
+                    userData.forEach(student => {
+                        // Check if student ID is already added to avoid duplicates
+                        if (!addedStudentIDs.has(student.id_siswa)) {
+                            const option = document.createElement('option');
+                            option.value = student.id_siswa;
+                            option.text = student.nama_murid;
+                            idsiswaDropdown.appendChild(option);
+
+                            // Add the student ID to the Set
+                            addedStudentIDs.add(student.id_siswa);
+                        }
+                    });
+                } else {
+                    // If no data is found, display a default option
+                    const defaultOption = document.createElement('option');
+                    defaultOption.text = 'Nama siswa tidak tersedia';
+                    idsiswaDropdown.appendChild(defaultOption);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    });
+</script>
+
     
 </body>
 </html>

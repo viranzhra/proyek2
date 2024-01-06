@@ -16,7 +16,7 @@
 
                         <div class="mb-3">
                             <label for="judul_utama" class="form-label">Judul Utama:</label>
-                            <input type="text" class="form-control" id="judul_utama" name="judul_utama" required>
+                            <input type="text" class="form-control" id="judul_utama" name="judul_utama">
                         </div>
 
                         <div class="mb-3">
