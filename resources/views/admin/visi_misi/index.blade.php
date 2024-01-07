@@ -28,22 +28,26 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($data as $item)
-                                <tr>
-                                    <td>{{ $item->judul_halaman }}</td>
-                                    <td>{{ $item->visi }}</td>
-                                    <td>{{ $item->misi }}</td>
-                                    <td>{{ $item->tujuan }}</td>
-                                    <td>
-                                        <a href="{{ route('visi_misi.edit', $item->id) }}" class="btn btn-success btn-sm"><i class="fas fa-edit"></i></a>
-                                        <form action="{{ route('visi_misi.destroy', $item->id) }}" method="POST" class="d-inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')"><i class="fas fa-trash-alt"></i></button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
+                            @forelse($data as $item)
+                            <tr>
+                                <td>{{ $item->judul_halaman }}</td>
+                                <td>{!! $item->visi !!}</td>
+                                <td>{!! $item->misi !!}</td>
+                                <td>{!! $item->tujuan !!}</td>
+                                <td>
+                                    <a href="{{ route('visi_misi.edit', $item->id) }}" class="btn btn-success btn-sm"><i class="fas fa-edit"></i></a>
+                                    <form action="{{ route('visi_misi.destroy', $item->id) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')"><i class="fas fa-trash-alt"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5">Tidak ada data visi misi.</td>
+                            </tr>
+                        @endforelse
                         </tbody>
                     </table>
                 </div>

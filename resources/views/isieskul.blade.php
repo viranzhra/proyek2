@@ -23,7 +23,7 @@
                     </div>
                     <div class="col-md-5">
                         <p class="pt-3" style="text-align: justify;">
-                            {{ $firstEskul->deskripsi }}
+                            {!! $firstEskul->deskripsi !!}
                         </p>
                     </div>                                      
                 </div>

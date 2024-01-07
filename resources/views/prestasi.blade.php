@@ -4,9 +4,10 @@
 <main>
   <div class="container text-center">
     <div class="content">
+      <h4 style="margin-top: 100px; margin-bottom: -90px; color: #69699c; font-weight: bold;">{{ $prestasis->first()->judul_utama ?? 'Judul Default' }}</h4>
       <h4 style="margin-top: 100px; margin-bottom: 50px; color: #69699c; font-weight: bold;">
         {{-- Tampilkan judul utama dari data prestasi pertama --}}
-        {{ $prestasis->first()->judul_utama ?? 'Judul Default' }}
+        {{ $sekolah->nama }}
       </h4>
       <hr style="border: none; border-top: 5px solid #1623a9; margin-top: -30px; border-radius: 5px;">
     </div>
@@ -39,8 +40,8 @@
                 <div class="col-md-9">
                     <div class="card border-0" style="background-color: #9dc0df; border-radius: 25px; width: 100%;">
                         <div class="card-body">
-                            <h5 class="card-title mb-3">{{ $allPrestasi->subjudul }}</h5>
-                            <p class="card-text mb-3">{{ \Illuminate\Support\Str::limit($allPrestasi->deskripsi, 250) }}</p>
+                            <h5 class="card-title mb-3" style="color: #044d8d;">{{ $allPrestasi->subjudul }}</h5>
+                            <p class="card-text mb-3">{!! \Illuminate\Support\Str::limit($allPrestasi->deskripsi, 250) !!}</p>
                             <a href="{{ route('showAllPrestasi', $allPrestasi->id) }}" class="btn btn-primary" style="background-color: #215382; font-weight: bold; border-radius: 20px;">Selengkapnya</a>                          </div>
                     </div>
                 </div>

@@ -11,11 +11,13 @@ use App\Http\Controllers\PrestasiController;
 use App\Http\Controllers\VisiMisiController;
 use App\Http\Controllers\DataSiswaController;
 use App\Http\Controllers\AdminLoginController;
+use App\Http\Controllers\ProfilGuruController;
 use App\Http\Controllers\SiswaLoginController;
 use App\Http\Controllers\AllPrestasiController;
 use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\PdfDatasiswaController;
 use App\Http\Controllers\PdfTransaksiController;
+use App\Http\Controllers\ProfilKepsekController;
 use App\Http\Controllers\SiswaRiwayatController;
 use App\Http\Controllers\ArsipTabunganController;
 use App\Http\Controllers\TransaksiTabunganController;
@@ -38,6 +40,10 @@ Route::get('/eskul-{allEskul}', [EskulController::class, 'showAllEskul'])->name(
 Route::get('/prestasi-siswa-{allPrestasi}', [AllPrestasiController::class, 'showAllPrestasi'])->name('showAllPrestasi');
 Route::get('/visi_misi', [VisiMisiController::class, 'showVisiMisi'])->name('visi_misi');
 Route::get('/getAduanDataById/{id}', [AduanController::class, 'getAduanDataById']);
+// Menampilkan detail guru
+Route::get('/profilguru', [ProfilGuruController::class, 'showGuru'])->name('profil_guru.show');
+Route::get('/profil_kepsek', [ProfilKepsekController::class, 'show'])->name('profil_kepsek.show');
+
 
 // Route::get('/visimisi', function () {
 //     return view('visi_misi', [
@@ -172,27 +178,53 @@ Route::middleware('auth:admin')->group(function () {
     Route::delete('/visi_misi/{id}', [VisiMisiController::class, 'destroy'])->name('visi_misi.destroy');
     Route::get('/visi_misi-index', [VisiMisiController::class, 'index'])->name('visi_misi.index');
 
-    // Index page showing all Eskuls
+// Index page showing all Eskuls
 Route::get('/eskuls', [EskulController::class, 'index'])->name('eskuls.index');
 // Create Eskul form
 Route::get('/eskuls-create', [EskulController::class, 'create'])->name('eskuls.create');
 // Store new Eskul
 Route::post('/eskuls', [EskulController::class, 'store'])->name('eskuls.store');
-
 // Edit Eskul form
 Route::get('/eskuls-{id}-edit', [EskulController::class, 'edit'])->name('eskuls.edit.eskul');
 // Update Eskul
 Route::put('/eskuls-{id}', [EskulController::class, 'update'])->name('eskuls.update');
-
 // Delete Eskul form
-Route::get('/eskuls-{id}-delete', [EskulController::class, 'destroy'])->name('eskuls.delete');
+Route::get('/eskuls/{id}/delete', [EskulController::class, 'destroy'])->name('eskuls.delete');
+
+
+// Menampilkan semua guru
+Route::get('/profil_guru', [ProfilGuruController::class, 'index'])->name('profil_guru.index');
+
+// Menampilkan form tambah guru
+Route::get('/profil_guru-create', [ProfilGuruController::class, 'create'])->name('profil_guru.create');
+
+// Menyimpan data guru baru
+Route::post('/profil_guru-store', [ProfilGuruController::class, 'store'])->name('profil_guru.store');
+
+// Menampilkan form edit guru
+Route::get('/profil_guru-{id}-edit', [ProfilGuruController::class, 'edit'])->name('profil_guru.edit');
+
+// Menyimpan perubahan pada data guru
+Route::put('/profil_guru-{id}-update', [ProfilGuruController::class, 'update'])->name('profil_guru.update');
+
+// Menghapus data guru
+Route::delete('/profil_guru-{id}-destroy', [ProfilGuruController::class, 'destroy'])->name('profil_guru.destroy');
+
+
+Route::get('/profilkepsek', [ProfilKepsekController::class, 'index'])->name('profil_kepsek.index');
+Route::get('/profil_kepsek', [ProfilKepsekController::class, 'create'])->name('profil_kepsek.create');
+Route::post('/profil_kepsek', [ProfilKepsekController::class, 'store'])->name('profil_kepsek.store');
+Route::get('/profil_kepsek-{id}-edit', [ProfilKepsekController::class, 'edit'])->name('profil_kepsek.edit');
+Route::put('/profil_kepsek-{id}', [ProfilKepsekController::class, 'update'])->name('profil_kepsek.update');
+Route::delete('/profil_kepsek-{id}', [ProfilKepsekController::class, 'destroy'])->name('profil_kepsek.destroy');
+
 });
 
-Route::get('/profilguru', function () {
-    return view('profilguru', [
-        "title" => "Profil Guru"
-    ]);
-})->name('profilguru');
+// Route::get('/profilguru', function () {
+//     return view('profilguru', [
+//         "title" => "Profil Guru"
+//     ]);
+// })->name('profilguru');
 
 // Rute untuk menampilkan formulir login admin
 Route::get('/loginadmin', [AdminLoginController::class, 'showLoginForm'])->name('admin.login.form');

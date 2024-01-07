@@ -13,6 +13,8 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(KelasSeeder::class);
+        // Panggil seeder yang baru dibuat
+        $this->call(ProfilKepsekSeeder::class);
 
         // \App\Models\User::factory(10)->create();
 

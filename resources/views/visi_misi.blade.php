@@ -1,4 +1,4 @@
-@extends('layout.main')
+@extends('layout.tampilan')
 
 @section('content')
 
@@ -20,7 +20,7 @@
     }
 
     .judul-halaman {
-        margin-top: 50px;
+        margin-top: 70px;
         margin-bottom: 50px;
         color: #69699c;
         font-weight: bold;
@@ -80,19 +80,15 @@
             <div class="col col-content">
                 @if($data)
                     <h5 class="visi-misi-item">VISI</h5>
-                    <p>
-                        {{ $data->visi ?? '' }}
-                    </p>
+                    <div style="text-align: center;">
+                        {!! $data->visi ?? '' !!}
+                    </div>
                     <hr class="hr-style">
                     <h5 class="visi-misi-item">MISI</h5>
-                    <p>
-                        {{ $data->misi ?? '' }}
-                    </p>
+                    {!! $data->misi ?? '' !!}
                     <hr class="hr-style">
                     <h5 class="visi-misi-item">TUJUAN</h5>
-                    <p>
-                        {{ $data->tujuan ?? '' }}
-                    </p>
+                    {!! $data->tujuan ?? '' !!}
                 @else
                     <p>Tidak Ada Data Visi Misi.</p>
                 @endif

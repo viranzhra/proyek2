@@ -83,21 +83,29 @@
 			  <li class="{{ request()->routeIs('admin.update.profile.form') ? 'active' : '' }}">
 				<a href="{{ route('admin.update.profile.form') }}"><span class="fa fa-user mr-3"></span>Profile Admin</a>
 			</li>
-			<li class="nav-item {{ Request::is('identitas-sekolah*', 'prestasis*', 'visi_misi*') ? 'active' : '' }}">
-				<a href="#setting" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fa fa-cogs mr-3"></span>Tentang Sekolah</a>
-				<ul class="collapse list-unstyled" id="setting">
+			<li class="nav-item {{ Request::is('identitas-sekolah*', 'prestasis*', 'visi_misi*', 'profil_guru*', 'eskuls*') ? 'active' : '' }}">
+				<a href="#setting" data-toggle="collapse" aria-expanded="{{ request()->routeIs('identitas-sekolah', 'prestasis.index', 'visi_misi.index', 'profil_guru.index', 'eskuls.index') ? 'true' : 'false' }}" class="dropdown-toggle">
+					<span class="fa fa-cogs mr-3"></span>Tentang Sekolah
+				</a>
+				<ul class="collapse list-unstyled {{ Request::is('identitas-sekolah*', 'prestasis*', 'visi_misi*', 'profil_guru*', 'eskuls*') ? 'show' : '' }}" id="setting">
+					<li class="{{ request()->routeIs('profil_guru.index') ? 'active' : '' }}">
+						<a href="{{ route('profil_guru.index') }}">Profil Guru & Kepala Sekolah</a>
+					</li>  
 					<li class="{{ request()->routeIs('identitas-sekolah') ? 'active' : '' }}">
 						<a href="{{ route('identitas-sekolah') }}">Identitas Sekolah</a>
-					</li>                        
+					</li>                      
 					<li class="{{ request()->routeIs('prestasis.index') ? 'active' : '' }}">
-						<a href="{{ route('prestasis.index') }}">Tampilan Prestasi</a>
+						<a href="{{ route('prestasis.index') }}">Data Prestasi</a>
 					</li>
 					<li class="{{ request()->routeIs('visi_misi.index') ? 'active' : '' }}">
-						<a href="{{ route('visi_misi.index') }}">Tampilan Visi Misi</a>
+						<a href="{{ route('visi_misi.index') }}">Data Visi Misi</a>
+					</li>
+					<li class="{{ request()->routeIs('eskuls.index') ? 'active' : '' }}">
+						<a href="{{ route('eskuls.index') }}">Data Ekstrakurikuler</a>
 					</li>
 				</ul>
 			</li>
-				
+							
 				@if(auth()->guard('admin')->check())
 				<li class="{{ request()->routeIs('admin.logout') ? 'active' : '' }}">
 					<form id="logout-form" action="{{ route('admin.logout') }}" class="d-none" method="POST">

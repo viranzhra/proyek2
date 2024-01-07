@@ -11,7 +11,7 @@ class AllPrestasiController extends Controller
 {
     public function index()
     {
-        $allPrestasis = AllPrestasi::all();
+        $allPrestasis = AllPrestasi::paginate(2);
         $prestasis = Prestasi::all();
         return view('admin.prestasi.index', compact('prestasis','allPrestasis'));
     }

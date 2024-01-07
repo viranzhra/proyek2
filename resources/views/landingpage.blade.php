@@ -1,6 +1,11 @@
 @extends('layout.main')
 
 @section('content')
+{{-- <style>
+  body{
+    background-image: url(../../image/orang1.jpg);
+  }
+</style> --}}
     <main>
       <div class="container text-center">
         <div class="overlay">

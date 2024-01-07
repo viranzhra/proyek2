@@ -18,19 +18,20 @@
                 {{-- Foto tampilan eskul --}}
                 <img src="{{ asset('uploads/' . $eskul->foto_tampilan) }}" class="flex-shrink-0 me-3 mb-3 mb-md-0" alt="#" style="max-width: 300px; border-radius: 25px" />
 
-                <div>
-                  <h4 class="card-title mt-3 mt-md-0 mb-2" style="padding: 20px 20px 0px; color: #0f2e60;">
-                    {{-- Subjudul eskul --}}
-                    {{ $eskul->subjudul }}
+                <div style="display: flex; flex-direction: column; padding: 20px;">
+                    <h4 class="card-title mt-3 mt-md-0 mb-2" style="color: #0f2e60;">
+                        {{-- Subjudul eskul --}}
+                        {{ $eskul->subjudul }}
+                    </h4>
                     <hr style="border-bottom: 3px solid #0f2e60; margin-top: 5px;">
-
-                </h4>
-                <p class="card-text mb-3" style="padding: 0 20px 20px;">
-                    {{-- Deskripsi eskul (limited to 300 characters) --}}
-                    {{ \Illuminate\Support\Str::limit($eskul->deskripsi, 300) }}
-                </p>
-                    <a href="{{ route('showAllEskul', $eskul->id) }}" class="btn btn-primary" style="position: absolute; bottom: 15px; right: 20px; background-color: #215382; font-weight: bold; border-radius: 20px;">Selengkapnya</a>
-                </div>
+                        {!! \Illuminate\Support\Str::limit($eskul->deskripsi, 300) !!}
+                </div>          
+                <a href="{{ route('showAllEskul', $eskul->id) }}" class="btn btn-primary" style="background-color: #215382;
+                    font-weight: bold;
+                    border-radius: 20px;
+                    margin-left: auto;
+                    height: 40px;
+                    margin-top: auto;">Selengkapnya</a>            
             </div>
         </div>
         @empty

@@ -21,7 +21,7 @@
                 </h4>
                 <hr class="border-top-5 border-primary" />
                 <p class="pt-4">
-                    {{ $firstPrestasi->deskripsi }}
+                    {!! $firstPrestasi->deskripsi !!}
                 </p>
             </div>
         </div>

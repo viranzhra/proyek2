@@ -9,7 +9,7 @@ class EskulController extends Controller
 {
     public function index()
     {
-        $eskuls = Eskul::all();
+        $eskuls = Eskul::paginate(1);
         return view('admin.eskuls.index', compact('eskuls'));
     }
 
@@ -58,7 +58,7 @@ class EskulController extends Controller
 
         Eskul::create($input);
 
-        return redirect()->route('eskuls.index')->with('success', 'Eskul created successfully');
+        return redirect()->route('eskuls.index')->with('success', 'Eskstrakurikuler berhasil ditambahkan.');
     }
 
     public function edit($id)
@@ -94,7 +94,7 @@ class EskulController extends Controller
 
         $eskul->update($input);
 
-        return redirect()->route('eskuls.index')->with('success', 'Eskul updated successfully');
+        return redirect()->route('eskuls.index')->with('success', 'Eskstrakurikuler berhasil diperbarui.');
     }
 
     public function destroy($id)
@@ -108,7 +108,7 @@ class EskulController extends Controller
     
         $eskul->delete();
     
-        return redirect()->route('eskuls.index')->with('success', 'Eskul deleted successfully');
+        return redirect()->route('eskuls.index')->with('success', 'Eskstrakurikuler berhasil dihapus.');
     }
     
 }
