@@ -24,7 +24,7 @@
                         {{ $eskul->subjudul }}
                     </h4>
                     <hr style="border-bottom: 3px solid #0f2e60; margin-top: 5px;">
-                        {!! \Illuminate\Support\Str::limit($eskul->deskripsi, 300) !!}
+                        {!! \Illuminate\Support\Str::limit($eskul->deskripsi, 200) !!}
                 </div>          
                 <a href="{{ route('showAllEskul', $eskul->id) }}" class="btn btn-primary" style="background-color: #215382;
                     font-weight: bold;

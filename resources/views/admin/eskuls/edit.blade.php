@@ -30,17 +30,42 @@
                     <div class="form-group">
                         <label for="foto_tampilan">Foto Tampilan:</label>
                         <input type="file" name="foto_tampilan" class="form-control-file" accept="image/*">
+                        
+                        <!-- Tampilkan foto yang sebelumnya diupload jika ada -->
+                        @if($eskul->foto_tampilan)
+                            <p>Foto Tampilan Sebelumnya:</p>
+                            <img src="{{ asset('uploads/' . $eskul->foto_tampilan) }}" alt="Foto Tampilan Sebelumnya" style="max-width: 200px;">
+                        @else
+                            <p>Tidak ada foto tampilan sebelumnya.</p>
+                        @endif
                     </div>
 
                     <div class="form-group">
                         <label for="foto_dokumentasi1">Foto Dokumentasi 1:</label>
                         <input type="file" name="foto_dokumentasi1" class="form-control-file" accept="image/*">
+                        
+                        <!-- Tampilkan foto yang sebelumnya diupload jika ada -->
+                        @if($eskul->foto_dokumentasi1)
+                            <p>Foto Dokumentasi 1 Sebelumnya:</p>
+                            <img src="{{ asset('uploads/' . $eskul->foto_dokumentasi1) }}" alt="Foto Dokumentasi 1 Sebelumnya" style="max-width: 200px;">
+                        @else
+                            <p>Tidak ada foto dokumentasi 1 sebelumnya.</p>
+                        @endif
                     </div>
 
                     <div class="form-group">
                         <label for="foto_dokumentasi2">Foto Dokumentasi 2:</label>
                         <input type="file" name="foto_dokumentasi2" class="form-control-file" accept="image/*">
+                        
+                        <!-- Tampilkan foto yang sebelumnya diupload jika ada -->
+                        @if($eskul->foto_dokumentasi2)
+                            <p>Foto Dokumentasi 2 Sebelumnya:</p>
+                            <img src="{{ asset('uploads/' . $eskul->foto_dokumentasi2) }}" alt="Foto Dokumentasi 2 Sebelumnya" style="max-width: 200px;">
+                        @else
+                            <p>Tidak ada foto dokumentasi 2 sebelumnya.</p>
+                        @endif
                     </div>
+
 
                     <div class="d-grid gap-2 d-md-flex justify-content-md-between">
                         <button type="submit" class="btn btn-primary me-md-2">Simpan Perubahan</button>

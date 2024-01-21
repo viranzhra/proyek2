@@ -82,16 +82,18 @@
                         {{ session('success') }}
                     </div>
                 @endif
+                
                 @if(session('error'))
-                    <div class="alert alert-danger">
+                    <div id="error-alert" class="alert alert-danger">
                         {{ session('error') }}
                     </div>
                 @endif
+                
                 @if(session('saldo_kurang'))
-                <div class="alert alert-danger" role="alert">
-                    {{ session('saldo_kurang') }}
-                </div>
-            @endif
+                    <div id="saldo_kurang-alert" class="alert alert-danger" role="alert">
+                        {{ session('saldo_kurang') }}
+                    </div>
+                @endif
                     <table id="example" class="table table-striped" style="width:100%">
                         <thead>
                             <tr>
@@ -447,24 +449,24 @@
         }
     </script>
 
-    <script>
-        // Auto-hide success alert after 3 seconds
-        $(document).ready(function () {
-            setTimeout(function () {
-                $("#success-alert").alert('close');
-            }, 3000);
-        });
-    </script>
-    <script>
-        // Auto-hide saldo kurang alert after 3 seconds
-        $(document).ready(function () {
-            setTimeout(function () {
-                $("#saldoKurangAlert").fadeOut(500, function () {
-                    $(this).remove();
-                });
-            }, 3000);
-        });
-    </script>
+<script>
+    $(document).ready(function() {
+        // Sembunyikan pesan kesuksesan setelah 3 detik
+        setTimeout(function() {
+            $('#success-alert').fadeOut();
+        }, 3000);
+
+        // Sembunyikan pesan kesalahan setelah 3 detik
+        setTimeout(function() {
+            $('#error-alert').fadeOut();
+        }, 3000);
+
+        // Sembunyikan pesan saldo kurang setelah 3 detik
+        setTimeout(function() {
+            $('#saldo_kurang-alert').fadeOut();
+        }, 3000);
+    });
+</script>
 
 {{-- <script>
     $(document).ready(function () {

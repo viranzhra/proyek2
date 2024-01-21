@@ -13,9 +13,10 @@
     .guru-img {
         width: 100%;
         height: auto;
-        max-height: 200px;
+        max-height: 350px;
         padding: 10px;
         border-radius: 20px;
+        object-fit: cover;
     }
 
     .guru-card-body {

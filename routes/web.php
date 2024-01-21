@@ -127,6 +127,8 @@ Route::middleware('auth:admin')->group(function () {
     // Rute untuk menambahkan saldo
     Route::post('/transaksi-tabungan/{nisn}/tambah-saldo', [TransaksiTabunganController::class, 'tambahSaldo'])
         ->name('transaksi-tabungan.tambah-saldo');
+    Route::get('/grafik', [TransaksiTabunganController::class, 'showGrafik'])->name('grafik.show');
+    Route::get('/get-chart-data', [TransaksiTabunganController::class, 'getChartData'])->name('getChartData');
 
     Route::get('/download-pdf', [PdfTransaksiController::class, 'downloadPDF'])->name('download-pdf');
     Route::get('/download-pdf-siswa', [PdfDatasiswaController::class, 'downloadPDF'])->name('download-pdf-siswa');

@@ -5,6 +5,14 @@
 @extends('admin.main')
 
 @section('content')
+<style>
+    .ql-toolbar.ql-snow{
+        background-color: #e7e7ff;
+    }
+    .ql-editor {
+        background-color: white;
+    }
+</style>
 <div id="content" class="p-4 p-md-5 pt-5">
     <div class="container">
         <div class="card">
@@ -18,19 +26,19 @@
                     @method('PUT')
 
                     <div class="mb-3">
-                        <label for="subjudul" class="form-label">Subjudul</label>
+                        <label for="subjudul" class="form-label"><b>Subjudul :</b></label>
                         <input type="text" name="subjudul" class="form-control" value="{{ $allPrestasi->subjudul }}"
                             required>
                     </div>
 
                     <div class="mb-3">
-                        <label for="deskripsi" class="form-label">Deskripsi</label>
+                        <label for="deskripsi" class="form-label"><b>Deskripsi :</b></label>
                         <div id="editor-deskripsi" style="height: 300px;">{!! $allPrestasi->deskripsi !!}</div>
                         <textarea name="deskripsi" id="deskripsi" style="display:none;"></textarea>
                     </div>
 
                     <div class="mb-3">
-                        <label for="foto_tampilan" class="form-label">Foto Tampilan</label>
+                        <label for="foto_tampilan" class="form-label"><b>Foto Tampilan :</b></label>
                         <input type="file" name="foto_tampilan" class="form-control" accept="image/*">
                         @if($allPrestasi->foto_tampilan)
                         <p>File Foto Tampilan Saat Ini: {{ $allPrestasi->foto_tampilan }}</p>
@@ -38,7 +46,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="foto_dokumentasi" class="form-label">Foto Dokumentasi</label>
+                        <label for="foto_dokumentasi" class="form-label"><b>Foto Dokumentasi :</b></label>
                         <input type="file" name="foto_dokumentasi" class="form-control" accept="image/*">
                         @if($allPrestasi->foto_dokumentasi)
                         <p>File Foto Dokumentasi Saat Ini: {{ $allPrestasi->foto_dokumentasi }}</p>

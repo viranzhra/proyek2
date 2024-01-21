@@ -67,6 +67,23 @@ class TransaksiTabunganController extends Controller
         return view('admin/pemasukkan/isi_saldo', compact('murids', 'kelas', 'kategoriTransaksis'));
     }
 
+    private function getTotalSaldoBulananForStudent($studentId, $classId)
+{
+    // Cari arsip bulanan terbaru untuk siswa dan kelas tertentu
+    $latestArsipBulanan = ArsipTabungan::where('id_siswa', $studentId)
+        ->where('id_kelas', $classId)
+        ->latest('tanggal_arsip')
+        ->first();
+
+    // Jika arsip bulanan tidak ditemukan, kembalikan nilai 0
+    if (!$latestArsipBulanan) {
+        return 0;
+    }
+
+    // Jika ditemukan, kembalikan total dari arsip bulanan terbaru
+    return $latestArsipBulanan->total;
+}
+
     // Fungsi untuk menyimpan transaksi baru
     public function store(Request $request)
     {
@@ -78,6 +95,17 @@ class TransaksiTabunganController extends Controller
             'id_kategori' => 'required',
             'nominal' => 'required',
         ]);
+    
+        // Jika kategori transaksi adalah pengeluaran
+        if ($request->id_kategori == 2) {
+            // Hitung total saldo siswa
+            $totalSaldo = $this->getTotalSaldoBulananForStudent($request->id_siswa, $request->id_kelas);
+    
+            // Check if the withdrawal amount is greater than the total balance or if the student has no prior transactions
+            if ($request->nominal > $totalSaldo) {
+                return redirect()->route('transaksi-tabungan.index')->with('saldo_kurang', 'Maaf, Saldo Siswa Tidak Mencukupi');
+            }
+        }
     
         // Buat transaksi baru
         $transaksi = TransaksiTabungan::create($request->all());
@@ -92,8 +120,13 @@ class TransaksiTabunganController extends Controller
         // Lakukan pemrosesan arsip tabungan, update saldo, dll. sesuai kebutuhan
         $this->processTabungan($transaksi);
     
-        return redirect()->route('transaksi-tabungan.index')->with('success', 'Transaksi berhasil ditambahkan');
+        // Tentukan pesan sukses berdasarkan kategori transaksi
+        $pesanSukses = $request->id_kategori == 2 ? 'Transaksi pengeluaran berhasil' : 'Transaksi berhasil ditambahkan';
+    
+        // Redirect ke halaman indeks dengan pesan sukses
+        return redirect()->route('transaksi-tabungan.index')->with('success', $pesanSukses);
     }
+    
 
     private function processTabungan(TransaksiTabungan $transaksi)
     {
@@ -214,25 +247,22 @@ class TransaksiTabunganController extends Controller
 
     public function getClassByStudent(Request $request)
     {
-        // Dapatkan nama murid dari request
         $studentName = $request->input('id_siswa');
     
-        // Cari data murid berdasarkan nama
         $murid = Murid::where('nama_murid', $studentName)->first();
     
-        // Jika murid ditemukan, ambil kelasnya
-        if ($murid) { 
-            $classData = Kelas::find($murid->id_kelas);
-    
-            // Jika kelas ditemukan, kembalikan data sebagai respons JSON
-            if ($classData) {
-                return response()->json(['id_kelas' => $classData->id_kelas, 'ket_kelas' => $classData->ket_kelas]);
-            }
+        if ($murid) {
+            return response()->json([
+                'id_siswa' => $murid->id,
+                'id_kelas' => $murid->id_kelas,
+                'nama_murid' => $murid->nama_murid,
+                // tambahkan data lain yang mungkin diperlukan
+            ]);
         }
     
-        // Jika tidak ditemukan, kembalikan respons JSON kosong atau sesuaikan dengan kebutuhan
         return response()->json([]);
     }
+    
 
     public function tambahSaldo(Request $request)
     {

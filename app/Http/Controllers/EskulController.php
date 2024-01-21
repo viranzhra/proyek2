@@ -69,7 +69,7 @@ class EskulController extends Controller
 
     public function update(Request $request, $id)
     {
-        $eskul = Eskul::find($id);
+    
 
         $request->validate([
             'subjudul' => 'required',
@@ -78,7 +78,8 @@ class EskulController extends Controller
             'foto_dokumentasi1' => 'nullable|image|mimes:jpeg,png,jpg,gif',
             'foto_dokumentasi2' => 'nullable|image|mimes:jpeg,png,jpg,gif',
         ]);
-
+        
+        $eskul = Eskul::find($id);
         $input = $request->all();
 
         // Handle file uploads
@@ -96,6 +97,7 @@ class EskulController extends Controller
 
         return redirect()->route('eskuls.index')->with('success', 'Eskstrakurikuler berhasil diperbarui.');
     }
+
 
     public function destroy($id)
     {
